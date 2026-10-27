@@ -1,57 +1,603 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="dark">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>صوتك — بوابة المقترحات والشكاوى</title>
-  <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-  <link rel="stylesheet" href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css)" />
-  <link href="[https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap](https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap)" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Cairo', sans-serif;
       background-color: #080c16;
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.14), transparent 55%),
+      background-image:
+        radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15), transparent 55%),
         radial-gradient(circle at 10% 90%, rgba(16, 185, 129, 0.08), transparent 45%);
       color: #f1f5f9;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
     }
-    .card-dark {
-      background: rgba(17, 24, 39, 0.92);
+
+    button, input, textarea, select {
+      font-family: 'Cairo', sans-serif;
+    }
+
+    .is-hidden {
+      display: none !important;
+    }
+
+    /* الشريط العلوي */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(11, 17, 32, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .header-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: #2563eb;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 19px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .nav-pills {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #060911;
+      padding: 5px;
+      border-radius: 16px;
       border: 1px solid #1e293b;
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
     }
+
+    .nav-btn {
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 7px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+      color: #ffffff;
+      background: rgba(30, 41, 59, 0.5);
+    }
+
+    .nav-btn.active-home,
+    .nav-btn.active-admin {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    .nav-btn.replies-tab {
+      color: #34d399;
+    }
+
+    .nav-btn.active-replies {
+      background: #059669;
+      color: #ffffff;
+    }
+
+    .badge-count {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #6ee7b7;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 999px;
+    }
+
+    /* الحاوية الرئيسية */
+    .main-container {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+      flex: 1;
+    }
+
+    .card-dark {
+      background: rgba(17, 24, 39, 0.94);
+      border: 1px solid #1e293b;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.65);
+      margin-bottom: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* كارت التايمر */
+    .timer-card {
+      text-align: center;
+    }
+
+    .pill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #60a5fa;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .timer-heading {
+      font-size: 20px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .meeting-time-badge {
+      display: inline-block;
+      padding: 5px 16px;
+      border-radius: 12px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+      color: #a5b4fc;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 420px;
+      margin: 0 auto 16px;
+      direction: ltr;
+    }
+
     .timer-box {
       background: #0b1120;
       border: 1px solid #1e293b;
+      border-radius: 16px;
+      padding: 12px 6px;
     }
+
+    .timer-num {
+      font-size: 28px;
+      font-weight: 900;
+      color: #60a5fa;
+      line-height: 1.1;
+    }
+
+    .timer-num.sec-color {
+      color: #34d399;
+    }
+
+    .timer-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .timer-note {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* النموذج */
+    .form-header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .form-header h2 {
+      font-size: 22px;
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .form-header p {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .field-group {
+      margin-bottom: 20px;
+    }
+
+    .field-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .field-label {
+      font-size: 14px;
+      font-weight: 800;
+      color: #e2e8f0;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .field-label-row .field-label {
+      margin-bottom: 0;
+    }
+
+    .anon-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+    }
+
+    .anon-pill.named {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.35);
+      color: #60a5fa;
+    }
+
+    .dark-input, .dark-textarea, .dark-select {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 14px;
+      background: #070b14;
+      border: 1px solid #1e293b;
+      color: #ffffff;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .dark-input::placeholder, .dark-textarea::placeholder {
+      color: #64748b;
+    }
+
+    .dark-input:focus, .dark-textarea:focus, .dark-select:focus {
+      border-color: #3b82f6;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
     .option-btn {
       background: #0b1120;
       border: 2px solid #1e293b;
+      color: #cbd5e1;
+      border-radius: 16px;
+      padding: 12px 8px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
       transition: all 0.2s ease;
     }
+
+    .option-btn.row-btn {
+      flex-direction: row;
+      padding: 10px 12px;
+    }
+
     .option-btn:hover {
       border-color: #334155;
     }
+
     .option-btn.active-blue {
-      background: rgba(37, 99, 235, 0.16);
-      border-color: #3b82f6;
-      color: #ffffff;
-      box-shadow: 0 0 16px rgba(59, 130, 246, 0.22);
+      background: rgba(37, 99, 235, 0.18) !important;
+      border-color: #3b82f6 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 16px rgba(59, 130, 246, 0.25);
     }
+
     .option-btn.active-pink {
-      background: rgba(219, 39, 119, 0.16);
-      border-color: #ec4899;
-      color: #ffffff;
-      box-shadow: 0 0 16px rgba(236, 72, 153, 0.22);
+      background: rgba(219, 39, 119, 0.18) !important;
+      border-color: #ec4899 !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 16px rgba(236, 72, 153, 0.25);
     }
+
     .option-btn.active-red {
-      background: rgba(225, 29, 72, 0.16);
-      border-color: #f43f5e;
-      color: #ffffff;
-      box-shadow: 0 0 16px rgba(244, 63, 94, 0.22);
+      background: rgba(225, 29, 72, 0.18) !important;
+      border-color: #f43f5e !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 16px rgba(244, 63, 94, 0.25);
     }
+
+    .sub-box {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #1e293b;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 16px;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+      transition: background 0.2s;
+    }
+
+    .submit-btn:hover {
+      background: #3b82f6;
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* شاشة النجاح */
+    .overlay-screen {
+      position: absolute;
+      inset: 0;
+      background: rgba(11, 17, 32, 0.96);
+      backdrop-filter: blur(8px);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .check-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    /* نافذة الرمز السري */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(6px);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .pin-card {
+      max-width: 340px;
+      width: 100%;
+      margin-bottom: 0;
+      text-align: center;
+    }
+
+    .pin-input {
+      width: 100%;
+      text-align: center;
+      letter-spacing: 0.45em;
+      font-size: 22px;
+      font-weight: 900;
+      padding: 10px;
+      border-radius: 14px;
+      background: #070b14;
+      border: 1px solid #1e293b;
+      color: #ffffff;
+      outline: none;
+      margin-bottom: 8px;
+    }
+
+    .pin-input:focus {
+      border-color: #3b82f6;
+    }
+
+    /* لوحة اللجنة والبطاقات */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 520px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .header-inner {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .nav-pills {
+        justify-content: space-between;
+      }
+      .nav-btn {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+
+    .stat-box {
+      background: rgba(17, 24, 39, 0.94);
+      border: 1px solid #1e293b;
+      border-radius: 18px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-top: 4px;
+    }
+
+    .action-btn {
+      border: none;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #ffffff;
+      background: #1e293b;
+      transition: opacity 0.2s;
+    }
+
+    .action-btn:hover {
+      opacity: 0.9;
+    }
+
+    .msg-card {
+      background: rgba(17, 24, 39, 0.94);
+      border: 1px solid #1e293b;
+      border-right: 4px solid #3b82f6;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+
+    .msg-card.complaint-card {
+      border-right-color: #f43f5e;
+    }
+
+    .badge-type {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 8px;
+      background: rgba(59, 130, 246, 0.18);
+      color: #60a5fa;
+    }
+
+    .badge-type.complaint {
+      background: rgba(244, 63, 94, 0.18);
+      color: #fb7185;
+    }
+
+    .badge-place {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 8px;
+      background: #1e293b;
+      color: #e2e8f0;
+    }
+
+    .reply-box {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast-item {
+      background: #2563eb;
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       25% { transform: translateX(-6px); }
@@ -60,192 +606,183 @@
     .shake { animation: shake 0.3s ease-in-out; }
   </style>
 </head>
-<body class="flex flex-col">
+<body>
 
   <!-- صندوق الإشعارات -->
-  <div id="toastBox" class="fixed bottom-5 left-5 z-50 flex flex-col gap-2"></div>
+  <div id="toastBox" class="toast-container"></div>
 
-  <!-- الشريط العلوي (معدل للموبايل والكمبيوتر بدون ضغط النص) -->
-  <header class="border-b border-slate-800/80 bg-[#0b1120]/95 backdrop-blur sticky top-0 z-30">
-    <div class="max-w-3xl mx-auto px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-      
-      <!-- الشعار والاسم -->
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-600/30 shrink-0">
-            <i class="fa-solid fa-bullhorn text-base"></i>
-          </div>
-          <div>
-            <h1 class="font-black text-lg text-white leading-tight">صوتك</h1>
-            <p class="text-[11px] text-slate-400">بوابة المقترحات والشكاوى — اللجنة الاجتماعية</p>
-          </div>
+  <!-- الشريط العلوي -->
+  <header class="top-header">
+    <div class="header-inner">
+      <div class="brand-box">
+        <div class="brand-icon">
+          <i class="fa-solid fa-bullhorn"></i>
+        </div>
+        <div>
+          <div class="brand-title">صوتك</div>
+          <div class="brand-sub">بوابة المقترحات والشكاوى — اللجنة الاجتماعية</div>
         </div>
       </div>
 
-      <!-- أزرار التنقل -->
-      <div class="grid grid-cols-3 sm:flex items-center gap-1.5 bg-[#070b14] p-1 rounded-2xl border border-slate-800/90">
-        <button type="button" id="tabBtnHome" onclick="switchTab('home')" class="px-3 py-1.5 rounded-xl text-xs font-extrabold bg-blue-600 text-white transition text-center">
+      <div class="nav-pills">
+        <button type="button" id="tabBtnHome" class="nav-btn active-home" onclick="switchTab('home')">
           الرئيسية
         </button>
-        <button type="button" id="tabBtnReplies" onclick="switchTab('replies')" class="px-3 py-1.5 rounded-xl text-xs font-extrabold text-emerald-400 hover:bg-slate-800/60 transition flex items-center justify-center gap-1.5">
-          <i class="fa-solid fa-reply text-[11px]"></i>
+        <button type="button" id="tabBtnReplies" class="nav-btn replies-tab" onclick="switchTab('replies')">
+          <i class="fa-solid fa-reply"></i>
           <span>الردود</span>
-          <span id="repliesBadge" class="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-500/20 border border-emerald-500/40 text-emerald-300">0</span>
+          <span id="repliesBadge" class="badge-count">0</span>
         </button>
-        <button type="button" id="tabBtnAdmin" onclick="handleCommitteeClick()" class="px-3 py-1.5 rounded-xl text-xs font-extrabold text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5">
-          <i class="fa-solid fa-lock text-[11px]"></i>
+        <button type="button" id="tabBtnAdmin" class="nav-btn" onclick="handleCommitteeClick()">
+          <i class="fa-solid fa-lock"></i>
           <span>اللجنة</span>
         </button>
       </div>
-
     </div>
   </header>
 
   <!-- المحتوى الرئيسي -->
-  <main class="flex-1 max-w-2xl w-full mx-auto px-4 py-6 space-y-6">
+  <main class="main-container">
 
     <!-- ================= 1. القسم الرئيسي (التايمر + النموذج) ================= -->
-    <section id="homeSection" class="space-y-6">
+    <section id="homeSection">
 
-      <!-- كارت التايمر (اجتماع اللجنة مع مديرة المدرسة) -->
-      <div class="card-dark rounded-3xl p-5 sm:p-6 text-center relative overflow-hidden">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-400 text-xs font-bold mb-3">
+      <!-- كارت التايمر -->
+      <div class="card-dark timer-card">
+        <div class="pill-tag">
           <i class="fa-regular fa-calendar-check"></i>
           <span>اجتماع اللجنة مع مديرة المدرسة</span>
         </div>
 
-        <h2 class="text-lg sm:text-xl font-black text-white leading-snug">
-          موعد الرد القادم على المقترحات والشكاوى
-        </h2>
+        <h2 class="timer-heading">موعد الرد القادم على المقترحات والشكاوى</h2>
 
-        <div class="inline-block mt-2.5 mb-5 px-4 py-1 rounded-xl bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-bold">
-          الأربعاء — 8:00 مساءً
-        </div>
+        <div class="meeting-time-badge">الأربعاء — 8:00 مساءً</div>
 
-        <!-- صناديق العداد التنازلي -->
-        <div class="grid grid-cols-4 gap-2.5 max-w-md mx-auto mb-4" dir="ltr">
-          <div class="timer-box rounded-2xl py-3 px-2">
-            <div id="tDays" class="text-2xl sm:text-3xl font-black text-blue-400">00</div>
-            <div class="text-[11px] text-slate-400 font-bold mt-1">يوم</div>
+        <div class="timer-grid">
+          <div class="timer-box">
+            <div id="tDays" class="timer-num">00</div>
+            <div class="timer-label">يوم</div>
           </div>
-          <div class="timer-box rounded-2xl py-3 px-2">
-            <div id="tHours" class="text-2xl sm:text-3xl font-black text-blue-400">00</div>
-            <div class="text-[11px] text-slate-400 font-bold mt-1">ساعة</div>
+          <div class="timer-box">
+            <div id="tHours" class="timer-num">00</div>
+            <div class="timer-label">ساعة</div>
           </div>
-          <div class="timer-box rounded-2xl py-3 px-2">
-            <div id="tMinutes" class="text-2xl sm:text-3xl font-black text-blue-400">00</div>
-            <div class="text-[11px] text-slate-400 font-bold mt-1">دقيقة</div>
+          <div class="timer-box">
+            <div id="tMinutes" class="timer-num">00</div>
+            <div class="timer-label">دقيقة</div>
           </div>
-          <div class="timer-box rounded-2xl py-3 px-2">
-            <div id="tSeconds" class="text-2xl sm:text-3xl font-black text-emerald-400">00</div>
-            <div class="text-[11px] text-slate-400 font-bold mt-1">ثانية</div>
+          <div class="timer-box">
+            <div id="tSeconds" class="timer-num sec-color">00</div>
+            <div class="timer-label">ثانية</div>
           </div>
         </div>
 
-        <p id="nextMeetingDateText" class="text-[11px] sm:text-xs text-slate-400 leading-relaxed">
+        <p class="timer-note">
           يتم عقد الاجتماع ومراجعة كافة الرسائل كل أسبوعين يوم الأربعاء الساعة 8:00 مساءً.
         </p>
       </div>
 
       <!-- كارت تقديم اقتراح أو شكوى -->
-      <div class="card-dark rounded-3xl p-5 sm:p-7 relative overflow-hidden">
+      <div class="card-dark">
 
-        <!-- شاشة التأكيد بعد الإرسال -->
-        <div id="successOverlay" class="hidden absolute inset-0 bg-[#0b1120]/95 backdrop-blur-md z-20 flex flex-col items-center justify-center p-6 text-center">
-          <div class="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center text-3xl mb-4">
+        <!-- شاشة النجاح بعد الإرسال -->
+        <div id="successOverlay" class="overlay-screen is-hidden">
+          <div class="check-circle">
             <i class="fa-solid fa-check"></i>
           </div>
-          <h3 class="text-2xl font-black text-white mb-2">تم الإرسال بنجاح!</h3>
-          <p class="text-sm text-slate-400 mb-6 max-w-xs">وصلت رسالتك إلى اللجنة الاجتماعية، وسيتم عرضها في الاجتماع القادم ونشر الرد في قسم «الردود».</p>
-          <button type="button" onclick="resetVoiceForm()" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition">
+          <h3 style="font-size: 22px; font-weight: 900; margin-bottom: 8px;">تم الإرسال بنجاح!</h3>
+          <p style="font-size: 13px; color: #94a3b8; max-width: 320px; margin-bottom: 20px;">
+            وصلت رسالتك إلى اللجنة الاجتماعية، وسيتم عرضها في الاجتماع القادم ونشر الرد في قسم «الردود».
+          </p>
+          <button type="button" class="action-btn" style="background: #2563eb; padding: 10px 22px; font-size: 14px;" onclick="resetVoiceForm()">
             إرسال رسالة أخرى
           </button>
         </div>
 
-        <div class="text-center mb-6">
-          <h2 class="text-xl sm:text-2xl font-black text-white">تقديم اقتراح أو شكوى</h2>
-          <p class="text-xs text-slate-400 mt-1">شاركنا رأيك لتطوير السكن والمدرسة بكل سرية وسهولة</p>
+        <div class="form-header">
+          <h2>تقديم اقتراح أو شكوى</h2>
+          <p>شاركنا رأيك لتطوير السكن والمدرسة بكل سرية وسهولة</p>
         </div>
 
-        <form id="voiceForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
+        <form id="voiceForm" onsubmit="handleFormSubmit(event)" novalidate>
 
           <!-- 1. الاسم (اختياري) -->
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <label for="studentName" class="text-sm font-bold text-slate-200">
-                1. الاسم <span class="text-xs font-normal text-slate-400">(اختياري)</span>
+          <div class="field-group">
+            <div class="field-label-row">
+              <label for="studentName" class="field-label">
+                1. الاسم <span style="font-size: 12px; font-weight: 400; color: #94a3b8;">(اختياري)</span>
               </label>
-              <span id="anonBadge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                <i class="fa-solid fa-user-secret ml-1"></i> مجهول الهوية
+              <span id="anonBadge" class="anon-pill">
+                <i class="fa-solid fa-user-secret"></i> مجهول الهوية
               </span>
             </div>
             <input
               type="text"
               id="studentName"
+              class="dark-input"
               oninput="updateAnonState()"
               placeholder="اتركه فارغاً للإرسال بدون اسم..."
-              class="w-full px-4 py-3 rounded-2xl bg-[#070b14] border border-slate-800 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition"
             />
           </div>
 
           <!-- 2. السكن / مبنى المدرسة -->
-          <div>
-            <label class="block text-sm font-bold text-slate-200 mb-2.5">
-              2. السكن / مبنى المدرسة <span class="text-rose-500">*</span>
+          <div class="field-group">
+            <label class="field-label">
+              2. السكن / مبنى المدرسة <span style="color: #f43f5e;">*</span>
             </label>
 
-            <div class="grid grid-cols-3 gap-2.5">
-              <button type="button" id="btnPlaceDorm" onclick="setMainPlace('dorm')" class="option-btn active-blue py-3.5 px-2 rounded-2xl font-bold text-xs sm:text-sm flex flex-col items-center gap-2">
-                <i class="fa-solid fa-bed text-blue-400 text-lg"></i>
+            <div class="grid-3">
+              <button type="button" id="btnPlaceDorm" class="option-btn active-blue" onclick="setMainPlace('dorm')">
+                <i class="fa-solid fa-bed" style="color: #60a5fa; font-size: 18px;"></i>
                 <span>السكن</span>
               </button>
 
-              <button type="button" id="btnPlaceSchool" onclick="setMainPlace('school')" class="option-btn py-3.5 px-2 rounded-2xl font-bold text-xs sm:text-sm text-slate-300 flex flex-col items-center gap-2">
-                <i class="fa-solid fa-school text-amber-400 text-lg"></i>
+              <button type="button" id="btnPlaceSchool" class="option-btn" onclick="setMainPlace('school')">
+                <i class="fa-solid fa-school" style="color: #fbbf24; font-size: 18px;"></i>
                 <span>مبنى المدرسة</span>
               </button>
 
-              <button type="button" id="btnPlaceOther" onclick="setMainPlace('other')" class="option-btn py-3.5 px-2 rounded-2xl font-bold text-xs sm:text-sm text-slate-300 flex flex-col items-center gap-2">
-                <i class="fa-solid fa-location-dot text-purple-400 text-lg"></i>
+              <button type="button" id="btnPlaceOther" class="option-btn" onclick="setMainPlace('other')">
+                <i class="fa-solid fa-location-dot" style="color: #c084fc; font-size: 18px;"></i>
                 <span>أخرى</span>
               </button>
             </div>
 
             <!-- خيارات السكن الفرعية (بنين / بنات) -->
-            <div id="dormSubBox" class="grid grid-cols-2 gap-2.5 mt-3 pt-3 border-t border-slate-800/80">
-              <button type="button" id="btnSubBoys" onclick="setDormSide('boys')" class="option-btn active-blue py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2">
-                <i class="fa-solid fa-mars text-blue-400"></i>
+            <div id="dormSubBox" class="sub-box grid-2">
+              <button type="button" id="btnSubBoys" class="option-btn row-btn active-blue" onclick="setDormSide('boys')">
+                <i class="fa-solid fa-mars" style="color: #60a5fa;"></i>
                 <span>سكن بنين</span>
               </button>
-              <button type="button" id="btnSubGirls" onclick="setDormSide('girls')" class="option-btn py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-slate-300 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-venus text-pink-400"></i>
+              <button type="button" id="btnSubGirls" class="option-btn row-btn" onclick="setDormSide('girls')">
+                <i class="fa-solid fa-venus" style="color: #f472b6;"></i>
                 <span>سكن بنات</span>
               </button>
             </div>
 
             <!-- حقل كتابة مكان آخر -->
-            <div id="otherPlaceWrap" class="hidden mt-3">
+            <div id="otherPlaceWrap" class="is-hidden" style="margin-top: 12px;">
               <input
                 type="text"
                 id="otherPlaceInput"
+                class="dark-input"
                 placeholder="اكتب المكان بالتحديد (مثال: المطعم، المعمل، الملعب...)"
-                class="w-full px-4 py-2.5 rounded-xl bg-[#070b14] border border-slate-800 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500"
               />
             </div>
           </div>
 
           <!-- 3. اقتراح أو شكوى -->
-          <div>
-            <label class="block text-sm font-bold text-slate-200 mb-2.5">
-              3. اقتراح / شكوى <span class="text-rose-500">*</span>
+          <div class="field-group">
+            <label class="field-label">
+              3. اقتراح / شكوى <span style="color: #f43f5e;">*</span>
             </label>
 
-            <div class="grid grid-cols-2 gap-2.5 mb-3">
-              <button type="button" id="btnKindSuggest" onclick="setMsgKind('اقتراح')" class="option-btn active-blue py-2.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
+            <div class="grid-2" style="margin-bottom: 12px;">
+              <button type="button" id="btnKindSuggest" class="option-btn row-btn active-blue" onclick="setMsgKind('اقتراح')">
                 <span>💡</span>
                 <span>اقتراح</span>
               </button>
-              <button type="button" id="btnKindComplaint" onclick="setMsgKind('شكوى')" class="option-btn py-2.5 px-4 rounded-xl font-bold text-sm text-slate-300 flex items-center justify-center gap-2">
+              <button type="button" id="btnKindComplaint" class="option-btn row-btn" onclick="setMsgKind('شكوى')">
                 <span>⚠️</span>
                 <span>شكوى</span>
               </button>
@@ -254,18 +791,12 @@
             <textarea
               id="messageInput"
               rows="4"
-              required
+              class="dark-textarea"
               placeholder="اكتب تفاصيل الاقتراح أو الشكوى هنا بوضوح..."
-              class="w-full px-4 py-3 rounded-2xl bg-[#070b14] border border-slate-800 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition resize-none"
             ></textarea>
           </div>
 
-          <!-- زر الإرسال -->
-          <button
-            type="submit"
-            id="submitBtn"
-            class="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 active:scale-[0.99] text-white font-black text-sm sm:text-base shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2"
-          >
+          <button type="submit" id="submitBtn" class="submit-btn">
             <i class="fa-solid fa-paper-plane"></i>
             <span id="submitBtnText">إرسال للجنة الاجتماعية</span>
           </button>
@@ -275,68 +806,70 @@
     </section>
 
     <!-- ================= 2. قسم الردود (للطلاب) ================= -->
-    <section id="repliesSection" class="hidden space-y-4">
-      <div class="card-dark rounded-3xl p-5 flex items-center justify-between">
+    <section id="repliesSection" class="is-hidden">
+      <div class="card-dark" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
         <div>
-          <h2 class="text-lg sm:text-xl font-black text-white flex items-center gap-2">
-            <i class="fa-solid fa-comments text-emerald-400"></i>
-            <span>ردود اللجنة ومديرة المدرسة</span>
+          <h2 style="font-size: 18px; font-weight: 900; color: #ffffff;">
+            <i class="fa-solid fa-comments" style="color: #34d399; margin-left: 6px;"></i>
+            ردود اللجنة ومديرة المدرسة
           </h2>
-          <p class="text-xs text-slate-400 mt-1">جميع المقترحات والشكاوى التي تمت مناقشتها والرد عليها رسمياً</p>
+          <p style="font-size: 12px; color: #94a3b8; margin-top: 4px;">
+            جميع المقترحات والشكاوى التي تمت مناقشتها والرد عليها رسمياً
+          </p>
         </div>
-        <button type="button" onclick="fetchAllMessages()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition">
-          <i class="fa-solid fa-rotate"></i>
+        <button type="button" class="action-btn" onclick="fetchAllMessages()">
+          <i class="fa-solid fa-rotate"></i> تحديث
         </button>
       </div>
 
-      <div id="publicRepliesList" class="space-y-3"></div>
+      <div id="publicRepliesList"></div>
     </section>
 
     <!-- ================= 3. قسم اللجنة الاجتماعية (PIN: 020260) ================= -->
-    <section id="adminSection" class="hidden space-y-5">
+    <section id="adminSection" class="is-hidden">
 
-      <div class="card-dark rounded-3xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="card-dark" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
         <div>
-          <h2 class="text-xl font-black text-white">لوحة تحكم اللجنة الاجتماعية</h2>
-          <p class="text-xs text-slate-400 mt-0.5">مراجعة الرسائل، كتابة الردود الرسمية، وتصدير تقرير الواتساب</p>
+          <h2 style="font-size: 19px; font-weight: 900; color: #ffffff;">لوحة تحكم اللجنة الاجتماعية</h2>
+          <p style="font-size: 12px; color: #94a3b8; margin-top: 2px;">مراجعة الرسائل، كتابة الردود الرسمية، وتصدير تقرير الواتساب</p>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2">
-          <button type="button" onclick="fetchAllMessages()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition flex items-center gap-1.5">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="action-btn" onclick="fetchAllMessages()">
             <i class="fa-solid fa-rotate"></i> تحديث
           </button>
-          <button type="button" onclick="exportWhatsApp()" class="px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center gap-1.5">
+          <button type="button" class="action-btn" style="background: #059669;" onclick="exportWhatsApp()">
             <i class="fa-brands fa-whatsapp"></i> نسخ للواتساب
           </button>
-          <button type="button" onclick="clearAllMessages()" class="px-3 py-2 rounded-xl bg-rose-600/20 hover:bg-rose-600/30 text-rose-400 border border-rose-500/30 text-xs font-bold transition flex items-center gap-1.5">
+          <button type="button" class="action-btn" style="background: rgba(225, 29, 72, 0.25); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.3);" onclick="clearAllMessages()">
             <i class="fa-solid fa-trash"></i> مسح الكل
           </button>
         </div>
       </div>
 
       <!-- إحصائيات سريعة -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div class="card-dark p-4 rounded-2xl text-center">
-          <p class="text-xs text-slate-400 font-bold">الإجمالي</p>
-          <p id="statTotal" class="text-2xl font-black text-white mt-1">0</p>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div style="font-size: 12px; color: #94a3b8; font-weight: 700;">الإجمالي</div>
+          <div id="statTotal" class="stat-num">0</div>
         </div>
-        <div class="card-dark p-4 rounded-2xl text-center border-b-2 border-b-blue-500">
-          <p class="text-xs text-blue-400 font-bold">💡 مقترحات</p>
-          <p id="statSuggest" class="text-2xl font-black text-white mt-1">0</p>
+        <div class="stat-box" style="border-bottom: 3px solid #3b82f6;">
+          <div style="font-size: 12px; color: #60a5fa; font-weight: 700;">💡 مقترحات</div>
+          <div id="statSuggest" class="stat-num">0</div>
         </div>
-        <div class="card-dark p-4 rounded-2xl text-center border-b-2 border-b-rose-500">
-          <p class="text-xs text-rose-400 font-bold">⚠️ شكاوى</p>
-          <p id="statComplaint" class="text-2xl font-black text-white mt-1">0</p>
+        <div class="stat-box" style="border-bottom: 3px solid #f43f5e;">
+          <div style="font-size: 12px; color: #fb7185; font-weight: 700;">⚠️ شكاوى</div>
+          <div id="statComplaint" class="stat-num">0</div>
         </div>
-        <div class="card-dark p-4 rounded-2xl text-center border-b-2 border-b-emerald-500">
-          <p class="text-xs text-emerald-400 font-bold">✅ تم الرد</p>
-          <p id="statReplied" class="text-2xl font-black text-white mt-1">0</p>
+        <div class="stat-box" style="border-bottom: 3px solid #10b981;">
+          <div style="font-size: 12px; color: #34d399; font-weight: 700;">✅ تم الرد</div>
+          <div id="statReplied" class="stat-num">0</div>
         </div>
       </div>
 
       <!-- الفلاتر -->
-      <div class="card-dark p-4 rounded-2xl grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <select id="adminFilterPlace" onchange="renderAdminCards()" class="px-3 py-2.5 rounded-xl bg-[#070b14] border border-slate-800 text-xs sm:text-sm text-white font-bold focus:outline-none focus:border-blue-500">
+      <div class="card-dark grid-2" style="padding: 16px;">
+        <select id="adminFilterPlace" class="dark-select" onchange="renderAdminCards()">
           <option value="ALL">كل الأماكن (السكن والمدرسة)</option>
           <option value="سكن بنين">سكن بنين فقط</option>
           <option value="سكن بنات">سكن بنات فقط</option>
@@ -344,7 +877,7 @@
           <option value="أخرى">أماكن أخرى</option>
         </select>
 
-        <select id="adminFilterKind" onchange="renderAdminCards()" class="px-3 py-2.5 rounded-xl bg-[#070b14] border border-slate-800 text-xs sm:text-sm text-white font-bold focus:outline-none focus:border-blue-500">
+        <select id="adminFilterKind" class="dark-select" onchange="renderAdminCards()">
           <option value="ALL">الكل (مقترحات وشكاوى)</option>
           <option value="اقتراح">💡 المقترحات فقط</option>
           <option value="شكوى">⚠️ الشكاوى فقط</option>
@@ -352,36 +885,39 @@
       </div>
 
       <!-- قائمة الرسائل للجنة -->
-      <div id="adminCardsList" class="space-y-3"></div>
+      <div id="adminCardsList"></div>
 
     </section>
 
   </main>
 
   <!-- ================= نافذة الرمز السري (020260) ================= -->
-  <div id="pinModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div id="pinModalCard" class="card-dark max-w-xs w-full rounded-3xl p-6 text-center">
-      <div class="w-12 h-12 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center mx-auto mb-3 text-xl">
+  <div id="pinModal" class="modal-backdrop is-hidden">
+    <div id="pinModalCard" class="card-dark pin-card">
+      <div style="width: 48px; height: 48px; border-radius: 14px; background: rgba(37, 99, 235, 0.2); color: #60a5fa; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 20px;">
         <i class="fa-solid fa-shield-halved"></i>
       </div>
-      <h3 class="text-lg font-black text-white">دخول اللجنة الاجتماعية</h3>
-      <p class="text-xs text-slate-400 mt-1 mb-4">أدخل الرمز السري المكون من 6 أرقام</p>
+      <h3 style="font-size: 18px; font-weight: 900; color: #ffffff;">دخول اللجنة الاجتماعية</h3>
+      <p style="font-size: 12px; color: #94a3b8; margin: 4px 0 16px;">أدخل الرمز السري (020260)</p>
 
       <input
         type="password"
         id="pinField"
+        class="pin-input"
         maxlength="6"
         inputmode="numeric"
         placeholder="••••••"
-        class="w-full text-center tracking-[0.5em] text-xl font-black py-2.5 rounded-xl bg-[#070b14] border border-slate-800 text-white focus:outline-none focus:border-blue-500 mb-2"
+        oninput="handlePinTyping()"
       />
-      <p id="pinErrorMsg" class="hidden text-xs text-rose-400 font-bold mb-3">الرمز السري غير صحيح!</p>
+      <p id="pinErrorMsg" class="is-hidden" style="font-size: 12px; color: #fb7185; font-weight: 700; margin-bottom: 10px;">
+        الرمز السري غير صحيح!
+      </p>
 
-      <div class="grid grid-cols-2 gap-2 mt-4">
-        <button type="button" onclick="checkCommitteePin()" class="py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition">
+      <div class="grid-2" style="margin-top: 12px;">
+        <button type="button" class="action-btn" style="background: #2563eb; justify-content: center; padding: 10px;" onclick="checkCommitteePin()">
           دخول
         </button>
-        <button type="button" onclick="closePinPopup()" class="py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm transition">
+        <button type="button" class="action-btn" style="justify-content: center; padding: 10px;" onclick="closePinPopup()">
           إلغاء
         </button>
       </div>
@@ -391,8 +927,8 @@
   <!-- ================= الكود البرمجي (JavaScript) ================= -->
   <script>
     const COMMITTEE_PIN = "020260";
-    const FIREBASE_ENDPOINT = "[https://supermarket-438b0-default-rtdb.firebaseio.com/suggestions](https://supermarket-438b0-default-rtdb.firebaseio.com/suggestions)";
-    const LOCAL_BACKUP_KEY = "sawtak_backup_v2";
+    const FIREBASE_ENDPOINT = "https://supermarket-438b0-default-rtdb.firebaseio.com/suggestions";
+    const LOCAL_BACKUP_KEY = "sawtak_messages_store_v3";
 
     let selectedPlace = "dorm"; // dorm | school | other
     let selectedDormSide = "boys"; // boys | girls
@@ -400,10 +936,31 @@
     let committeeUnlocked = false;
     let allMessages = [];
 
-    // 1. تشغيل العداد التنازلي (الأربعاء الساعة 8:00 مساءً كل أسبوعين)
+    // تحويل الأرقام العربية/الهندية إلى إنجليزية (لمنع مشكلة الكيبورد العربي في الـ PIN)
+    function normalizeDigits(str) {
+      return String(str || "")
+        .replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d))
+        .replace(/[۰-۹]/g, d => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+        .trim();
+    }
+
+    // طلب شبكة بمهلة محددة (4 ثوانٍ) حتى لا يعلق زر الإرسال أبداً
+    async function fetchWithTimeout(url, options = {}, timeoutMs = 4000) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const response = await fetch(url, { ...options, signal: controller.signal });
+        clearTimeout(timer);
+        return response;
+      } catch (err) {
+        clearTimeout(timer);
+        throw err;
+      }
+    }
+
+    // 1. حساب وتشغيل العداد التنازلي (كل أسبوعين يوم الأربعاء الساعة 8:00 مساءً)
     function getNextMeetingDate() {
-      // نقطة البداية: الأربعاء 28 أكتوبر 2026 الساعة 8:00 مساءً، ويتكرر كل 14 يوم
-      const anchor = new Date(2026, 9, 28, 20, 0, 0).getTime();
+      const anchor = new Date(2026, 9, 28, 20, 0, 0).getTime(); // الأربعاء 28 أكتوبر 2026 - 8:00 مساءً
       const twoWeeksMs = 14 * 24 * 60 * 60 * 1000;
       const now = Date.now();
 
@@ -413,34 +970,35 @@
     }
 
     function updateCountdownTimer() {
-      const target = getNextMeetingDate();
-      const diff = Math.max(0, target.getTime() - Date.now());
+      try {
+        const target = getNextMeetingDate();
+        const diff = Math.max(0, target.getTime() - Date.now());
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
 
-      document.getElementById("tDays").textContent = String(days).padStart(2, "0");
-      document.getElementById("tHours").textContent = String(hours).padStart(2, "0");
-      document.getElementById("tMinutes").textContent = String(minutes).padStart(2, "0");
-      document.getElementById("tSeconds").textContent = String(seconds).padStart(2, "0");
+        document.getElementById("tDays").textContent = String(days).padStart(2, "0");
+        document.getElementById("tHours").textContent = String(hours).padStart(2, "0");
+        document.getElementById("tMinutes").textContent = String(minutes).padStart(2, "0");
+        document.getElementById("tSeconds").textContent = String(seconds).padStart(2, "0");
+      } catch (e) {}
     }
 
-    // تشغيل التايمر فوراً وتحديثه كل ثانية
     updateCountdownTimer();
     setInterval(updateCountdownTimer, 1000);
 
-    // 2. دوال نموذج الطالب
+    // 2. دوال التفاعل مع نموذج الطالب
     function updateAnonState() {
       const val = document.getElementById("studentName").value.trim();
       const badge = document.getElementById("anonBadge");
       if (val) {
-        badge.className = "text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-blue-500/15 text-blue-400 border border-blue-500/30";
-        badge.innerHTML = `<i class="fa-solid fa-user ml-1"></i> باسم: ${escapeHtml(val)}`;
+        badge.className = "anon-pill named";
+        badge.innerHTML = `<i class="fa-solid fa-user"></i> باسم: ${escapeHtml(val)}`;
       } else {
-        badge.className = "text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30";
-        badge.innerHTML = `<i class="fa-solid fa-user-secret ml-1"></i> مجهول الهوية`;
+        badge.className = "anon-pill";
+        badge.innerHTML = `<i class="fa-solid fa-user-secret"></i> مجهول الهوية`;
       }
     }
 
@@ -452,22 +1010,22 @@
       const subBox = document.getElementById("dormSubBox");
       const otherWrap = document.getElementById("otherPlaceWrap");
 
-      [bDorm, bSchool, bOther].forEach(btn => {
-        btn.className = "option-btn py-3.5 px-2 rounded-2xl font-bold text-xs sm:text-sm text-slate-300 flex flex-col items-center gap-2";
-      });
+      bDorm.classList.remove("active-blue");
+      bSchool.classList.remove("active-blue");
+      bOther.classList.remove("active-blue");
 
       if (place === "dorm") {
         bDorm.classList.add("active-blue");
-        subBox.classList.remove("hidden");
-        otherWrap.classList.add("hidden");
+        subBox.classList.remove("is-hidden");
+        otherWrap.classList.add("is-hidden");
       } else if (place === "school") {
         bSchool.classList.add("active-blue");
-        subBox.classList.add("hidden");
-        otherWrap.classList.add("hidden");
+        subBox.classList.add("is-hidden");
+        otherWrap.classList.add("is-hidden");
       } else {
         bOther.classList.add("active-blue");
-        subBox.classList.add("hidden");
-        otherWrap.classList.remove("hidden");
+        subBox.classList.add("is-hidden");
+        otherWrap.classList.remove("is-hidden");
         document.getElementById("otherPlaceInput").focus();
       }
     }
@@ -477,8 +1035,8 @@
       const bBoys = document.getElementById("btnSubBoys");
       const bGirls = document.getElementById("btnSubGirls");
 
-      bBoys.className = "option-btn py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-slate-300 flex items-center justify-center gap-2";
-      bGirls.className = "option-btn py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-slate-300 flex items-center justify-center gap-2";
+      bBoys.classList.remove("active-blue");
+      bGirls.classList.remove("active-pink");
 
       if (side === "boys") bBoys.classList.add("active-blue");
       else bGirls.classList.add("active-pink");
@@ -489,11 +1047,27 @@
       const bSug = document.getElementById("btnKindSuggest");
       const bComp = document.getElementById("btnKindComplaint");
 
-      bSug.className = "option-btn py-2.5 px-4 rounded-xl font-bold text-sm text-slate-300 flex items-center justify-center gap-2";
-      bComp.className = "option-btn py-2.5 px-4 rounded-xl font-bold text-sm text-slate-300 flex items-center justify-center gap-2";
+      bSug.classList.remove("active-blue");
+      bComp.classList.remove("active-red");
 
       if (kind === "اقتراح") bSug.classList.add("active-blue");
       else bComp.classList.add("active-red");
+    }
+
+    function getLocalMessages() {
+      try {
+        const raw = localStorage.getItem(LOCAL_BACKUP_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function setLocalMessages(list) {
+      try {
+        localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(list));
+      } catch (e) {}
     }
 
     async function handleFormSubmit(e) {
@@ -504,6 +1078,7 @@
 
       if (!msgVal) {
         showToast("يرجى كتابة تفاصيل الاقتراح أو الشكوى أولاً");
+        document.getElementById("messageInput").focus();
         return;
       }
 
@@ -516,6 +1091,7 @@
         finalBuilding = otherVal ? `أخرى (${otherVal})` : "أخرى";
       }
 
+      const tempId = "msg_" + Date.now();
       const newEntry = {
         name: nameVal,
         building: finalBuilding,
@@ -531,23 +1107,33 @@
       btn.disabled = true;
       btnTxt.textContent = "جاري الإرسال...";
 
+      let savedId = tempId;
+
       try {
-        const res = await fetch(`${FIREBASE_ENDPOINT}.json`, {
+        const res = await fetchWithTimeout(`${FIREBASE_ENDPOINT}.json`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newEntry)
         });
-        if (!res.ok) throw new Error("Firebase Error");
-      } catch (err) {
-        const local = JSON.parse(localStorage.getItem(LOCAL_BACKUP_KEY) || "[]");
-        local.unshift({ id: "local_" + Date.now(), ...newEntry });
-        localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(local));
-      }
+        if (res.ok) {
+          const resData = await res.json();
+          if (resData && resData.name) savedId = resData.name;
+        }
+      } catch (err) {}
+
+      // حفظ نسخة محلية أيضاً لضمان عدم ضياع أي رسالة أبداً
+      const localList = getLocalMessages();
+      localList.unshift({ id: savedId, ...newEntry });
+      setLocalMessages(localList);
+
+      allMessages.unshift({ id: savedId, ...newEntry });
+      updateDashboardCounts();
+      renderPublicReplies();
+      renderAdminCards();
 
       btn.disabled = false;
       btnTxt.textContent = "إرسال للجنة الاجتماعية";
-      document.getElementById("successOverlay").classList.remove("hidden");
-      fetchAllMessages();
+      document.getElementById("successOverlay").classList.remove("is-hidden");
     }
 
     function resetVoiceForm() {
@@ -556,10 +1142,10 @@
       setMainPlace("dorm");
       setDormSide("boys");
       setMsgKind("اقتراح");
-      document.getElementById("successOverlay").classList.add("hidden");
+      document.getElementById("successOverlay").classList.add("is-hidden");
     }
 
-    // 3. التنقل بين الأقسام والرمز السري
+    // 3. التنقل بين التبويبات والرمز السري
     function switchTab(tab) {
       const secHome = document.getElementById("homeSection");
       const secReplies = document.getElementById("repliesSection");
@@ -569,24 +1155,24 @@
       const bReplies = document.getElementById("tabBtnReplies");
       const bAdmin = document.getElementById("tabBtnAdmin");
 
-      secHome.classList.add("hidden");
-      secReplies.classList.add("hidden");
-      secAdmin.classList.add("hidden");
+      secHome.classList.add("is-hidden");
+      secReplies.classList.add("is-hidden");
+      secAdmin.classList.add("is-hidden");
 
-      bHome.className = "px-3 py-1.5 rounded-xl text-xs font-extrabold text-slate-400 hover:text-white transition text-center";
-      bReplies.className = "px-3 py-1.5 rounded-xl text-xs font-extrabold text-emerald-400 hover:bg-slate-800/60 transition flex items-center justify-center gap-1.5";
-      bAdmin.className = "px-3 py-1.5 rounded-xl text-xs font-extrabold text-slate-400 hover:text-white transition flex items-center justify-center gap-1.5";
+      bHome.className = "nav-btn";
+      bReplies.className = "nav-btn replies-tab";
+      bAdmin.className = "nav-btn";
 
       if (tab === "home") {
-        secHome.classList.remove("hidden");
-        bHome.className = "px-3 py-1.5 rounded-xl text-xs font-extrabold bg-blue-600 text-white transition text-center";
+        secHome.classList.remove("is-hidden");
+        bHome.className = "nav-btn active-home";
       } else if (tab === "replies") {
-        secReplies.classList.remove("hidden");
-        bReplies.className = "px-3 py-1.5 rounded-xl text-xs font-extrabold bg-emerald-600 text-white transition flex items-center justify-center gap-1.5";
+        secReplies.classList.remove("is-hidden");
+        bReplies.className = "nav-btn active-replies";
         fetchAllMessages();
       } else if (tab === "admin") {
-        secAdmin.classList.remove("hidden");
-        bAdmin.className = "px-3 py-1.5 rounded-xl text-xs font-extrabold bg-blue-600 text-white transition flex items-center justify-center gap-1.5";
+        secAdmin.classList.remove("is-hidden");
+        bAdmin.className = "nav-btn active-admin";
         fetchAllMessages();
       }
     }
@@ -596,18 +1182,26 @@
         switchTab("admin");
         return;
       }
-      document.getElementById("pinField").value = "";
-      document.getElementById("pinErrorMsg").classList.add("hidden");
-      document.getElementById("pinModal").classList.remove("hidden");
-      setTimeout(() => document.getElementById("pinField").focus(), 100);
+      const pinField = document.getElementById("pinField");
+      pinField.value = "";
+      document.getElementById("pinErrorMsg").classList.add("is-hidden");
+      document.getElementById("pinModal").classList.remove("is-hidden");
+      setTimeout(() => pinField.focus(), 80);
     }
 
     function closePinPopup() {
-      document.getElementById("pinModal").classList.add("hidden");
+      document.getElementById("pinModal").classList.add("is-hidden");
+    }
+
+    function handlePinTyping() {
+      const raw = normalizeDigits(document.getElementById("pinField").value);
+      if (raw === COMMITTEE_PIN) {
+        checkCommitteePin();
+      }
     }
 
     function checkCommitteePin() {
-      const entered = document.getElementById("pinField").value.trim();
+      const entered = normalizeDigits(document.getElementById("pinField").value);
       if (entered === COMMITTEE_PIN) {
         committeeUnlocked = true;
         closePinPopup();
@@ -615,7 +1209,7 @@
         showToast("تم فتح لوحة اللجنة الاجتماعية");
       } else {
         const card = document.getElementById("pinModalCard");
-        document.getElementById("pinErrorMsg").classList.remove("hidden");
+        document.getElementById("pinErrorMsg").classList.remove("is-hidden");
         card.classList.remove("shake");
         void card.offsetWidth;
         card.classList.add("shake");
@@ -623,22 +1217,46 @@
     }
 
     document.getElementById("pinField").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") checkCommitteePin();
+      if (e.key === "Enter") {
+        e.preventDefault();
+        checkCommitteePin();
+      }
     });
 
-    // 4. جلب البيانات وعرض الردود ولوحة اللجنة
+    // 4. جلب وعرض الرسائل والردود
     async function fetchAllMessages() {
+      let remoteList = null;
       try {
-        const res = await fetch(`${FIREBASE_ENDPOINT}.json`);
-        const data = await res.json();
-        const list = [];
-        if (data) {
-          Object.entries(data).forEach(([id, item]) => list.push({ id, ...item }));
+        const res = await fetchWithTimeout(`${FIREBASE_ENDPOINT}.json`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && typeof data === "object" && !data.error) {
+            remoteList = [];
+            Object.entries(data).forEach(([id, item]) => {
+              if (item && typeof item === "object" && item.message) {
+                remoteList.push({ id, ...item });
+              }
+            });
+          } else if (data === null) {
+            remoteList = [];
+          }
         }
-        list.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-        allMessages = list;
-      } catch (err) {
-        allMessages = JSON.parse(localStorage.getItem(LOCAL_BACKUP_KEY) || "[]");
+      } catch (err) {}
+
+      const localList = getLocalMessages();
+
+      if (remoteList !== null) {
+        // دمج الرسائل السحابية مع أي رسائل محلية لم تُرفع بعد
+        const map = new Map();
+        remoteList.forEach(item => map.set(item.id, item));
+        localList.forEach(item => {
+          if (!map.has(item.id)) map.set(item.id, item);
+        });
+        allMessages = Array.from(map.values());
+        allMessages.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        setLocalMessages(allMessages);
+      } else {
+        allMessages = localList;
       }
 
       updateDashboardCounts();
@@ -647,7 +1265,7 @@
     }
 
     function updateDashboardCounts() {
-      const repliedCount = allMessages.filter(m => m.reply && m.reply.trim() !== "").length;
+      const repliedCount = allMessages.filter(m => m.reply && String(m.reply).trim() !== "").length;
       document.getElementById("repliesBadge").textContent = repliedCount;
       document.getElementById("statTotal").textContent = allMessages.length;
       document.getElementById("statSuggest").textContent = allMessages.filter(m => m.type === "اقتراح").length;
@@ -657,14 +1275,14 @@
 
     function renderPublicReplies() {
       const box = document.getElementById("publicRepliesList");
-      const repliedItems = allMessages.filter(m => m.reply && m.reply.trim() !== "");
+      const repliedItems = allMessages.filter(m => m.reply && String(m.reply).trim() !== "");
 
       if (repliedItems.length === 0) {
         box.innerHTML = `
-          <div class="card-dark rounded-3xl p-10 text-center text-slate-400">
-            <i class="fa-regular fa-comment-dots text-3xl mb-3 text-slate-500"></i>
-            <p class="font-bold text-sm text-white">لا توجد ردود منشورة حتى الآن</p>
-            <p class="text-xs mt-1">سيتم نشر الردود هنا عقب اجتماع اللجنة مع مديرة المدرسة.</p>
+          <div class="card-dark" style="text-align: center; padding: 40px 20px; color: #94a3b8;">
+            <i class="fa-regular fa-comment-dots" style="font-size: 32px; margin-bottom: 10px; color: #64748b;"></i>
+            <p style="font-weight: 800; font-size: 15px; color: #ffffff;">لا توجد ردود منشورة حتى الآن</p>
+            <p style="font-size: 12px; margin-top: 4px;">سيتم نشر الردود هنا عقب اجتماع اللجنة مع مديرة المدرسة.</p>
           </div>
         `;
         return;
@@ -673,26 +1291,24 @@
       box.innerHTML = repliedItems.map(item => {
         const isComp = item.type === "شكوى";
         return `
-          <div class="card-dark rounded-2xl p-5 border-r-4 ${isComp ? 'border-r-rose-500' : 'border-r-blue-500'} space-y-3">
-            <div class="flex items-center justify-between flex-wrap gap-2">
-              <div class="flex items-center gap-2">
-                <span class="px-2.5 py-0.5 rounded-lg text-xs font-black ${isComp ? 'bg-rose-500/20 text-rose-400' : 'bg-blue-500/20 text-blue-400'}">
+          <div class="msg-card ${isComp ? 'complaint-card' : ''}">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="badge-type ${isComp ? 'complaint' : ''}">
                   ${isComp ? '⚠️ شكوى' : '💡 اقتراح'}
                 </span>
-                <span class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-200">
-                  📍 ${escapeHtml(item.building || '')}
-                </span>
+                <span class="badge-place">📍 ${escapeHtml(item.building || '')}</span>
               </div>
-              <span class="text-[11px] text-slate-400">👤 ${escapeHtml(item.name || 'مجهول')}</span>
+              <span style="font-size: 11px; color: #94a3b8;">👤 ${escapeHtml(item.name || 'مجهول')}</span>
             </div>
 
-            <p class="text-sm text-slate-200 whitespace-pre-line">${escapeHtml(item.message || '')}</p>
+            <p style="font-size: 14px; color: #f1f5f9; white-space: pre-line;">${escapeHtml(item.message || '')}</p>
 
-            <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
-              <p class="text-xs font-black text-emerald-400 mb-1">
-                <i class="fa-solid fa-circle-check ml-1"></i> رد اللجنة الاجتماعية وإدارة المدرسة:
-              </p>
-              <p class="text-sm text-white whitespace-pre-line">${escapeHtml(item.reply)}</p>
+            <div class="reply-box">
+              <div style="font-size: 12px; font-weight: 900; color: #34d399; margin-bottom: 4px;">
+                <i class="fa-solid fa-circle-check"></i> رد اللجنة الاجتماعية وإدارة المدرسة:
+              </div>
+              <p style="font-size: 14px; color: #ffffff; white-space: pre-line;">${escapeHtml(item.reply)}</p>
             </div>
           </div>
         `;
@@ -717,60 +1333,58 @@
 
       if (list.length === 0) {
         container.innerHTML = `
-          <div class="card-dark rounded-3xl p-10 text-center text-slate-400">
-            <i class="fa-regular fa-folder-open text-2xl mb-2"></i>
-            <p class="font-bold text-sm">لا توجد رسائل مطابقة حالياً</p>
+          <div class="card-dark" style="text-align: center; padding: 40px 20px; color: #94a3b8;">
+            <i class="fa-regular fa-folder-open" style="font-size: 28px; margin-bottom: 8px;"></i>
+            <p style="font-weight: 800; font-size: 14px;">لا توجد رسائل مطابقة حالياً</p>
           </div>
         `;
         return;
       }
 
-      container.innerHTML = list.map(item => {
+      container.innerHTML = list.map((item, idx) => {
         const isComp = item.type === "شكوى";
-        const hasReply = item.reply && item.reply.trim() !== "";
+        const hasReply = item.reply && String(item.reply).trim() !== "";
 
         return `
-          <div class="card-dark rounded-2xl p-5 border-r-4 ${isComp ? 'border-r-rose-500' : 'border-r-blue-500'} space-y-3">
-            <div class="flex items-center justify-between flex-wrap gap-2">
-              <div class="flex items-center gap-2">
-                <span class="px-2.5 py-0.5 rounded-lg text-xs font-black ${isComp ? 'bg-rose-500/20 text-rose-400' : 'bg-blue-500/20 text-blue-400'}">
+          <div class="msg-card ${isComp ? 'complaint-card' : ''}">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 10px;">
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <span class="badge-type ${isComp ? 'complaint' : ''}">
                   ${isComp ? '⚠️ شكوى' : '💡 اقتراح'}
                 </span>
-                <span class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-200">
-                  📍 ${escapeHtml(item.building || '')}
-                </span>
-                ${hasReply ? '<span class="px-2 py-0.5 rounded-lg text-[11px] font-bold bg-emerald-500/20 text-emerald-300">✅ تم الرد</span>' : ''}
+                <span class="badge-place">📍 ${escapeHtml(item.building || '')}</span>
+                ${hasReply ? '<span style="font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 8px; background: rgba(16, 185, 129, 0.2); color: #6ee7b7;">✅ تم الرد</span>' : ''}
               </div>
-              <button type="button" onclick="deleteMessage('${item.id}')" class="text-slate-500 hover:text-rose-400 text-xs transition">
+              <button type="button" class="action-btn" style="background: transparent; color: #94a3b8; padding: 4px 8px;" data-del-idx="${idx}" onclick="deleteMessageByIndex(${idx})">
                 <i class="fa-solid fa-trash"></i>
               </button>
             </div>
 
-            <p class="text-sm text-slate-100 whitespace-pre-line leading-relaxed">${escapeHtml(item.message || '')}</p>
+            <p style="font-size: 14px; color: #f1f5f9; white-space: pre-line; margin-bottom: 12px;">${escapeHtml(item.message || '')}</p>
 
             ${hasReply ? `
-              <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs">
-                <span class="font-bold text-emerald-400">الرد المسجل: </span>
-                <span class="text-slate-200">${escapeHtml(item.reply)}</span>
+              <div class="reply-box" style="margin-bottom: 12px;">
+                <span style="font-size: 12px; font-weight: 800; color: #34d399;">الرد المسجل: </span>
+                <span style="font-size: 13px; color: #ffffff;">${escapeHtml(item.reply)}</span>
               </div>
             ` : ''}
 
-            <!-- خانة كتابة رد من اللجنة -->
-            <div class="flex gap-2 pt-2">
+            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
               <input
                 type="text"
-                id="replyInput_${item.id}"
+                id="replyInput_${idx}"
+                class="dark-input"
+                style="padding: 8px 12px; font-size: 12px;"
                 value="${escapeHtml(item.reply || '')}"
                 placeholder="اكتب رد اللجنة ليظهر للطلاب في قسم الردود..."
-                class="flex-1 px-3 py-2 rounded-xl bg-[#070b14] border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
               />
-              <button type="button" onclick="saveReply('${item.id}')" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition shrink-0">
+              <button type="button" class="action-btn" style="background: #059669; flex-shrink: 0;" onclick="saveReplyByIndex(${idx})">
                 حفظ الرد
               </button>
             </div>
 
-            <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
-              <span>👤 الاسم: <strong class="text-slate-200">${escapeHtml(item.name || 'مجهول')}</strong></span>
+            <div style="padding-top: 10px; border-top: 1px solid #1e293b; display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: #94a3b8;">
+              <span>👤 الاسم: <strong style="color: #e2e8f0;">${escapeHtml(item.name || 'مجهول')}</strong></span>
               <span>🕒 ${escapeHtml(item.time || '')}</span>
             </div>
           </div>
@@ -778,33 +1392,45 @@
       }).join("");
     }
 
-    async function saveReply(id) {
-      const inputEl = document.getElementById(`replyInput_${id}`);
+    async function saveReplyByIndex(idx) {
+      const list = getFilteredAdminItems();
+      const item = list[idx];
+      if (!item) return;
+
+      const inputEl = document.getElementById(`replyInput_${idx}`);
       if (!inputEl) return;
       const replyText = inputEl.value.trim();
 
+      item.reply = replyText;
+      setLocalMessages(allMessages);
+
       try {
-        await fetch(`${FIREBASE_ENDPOINT}/${id}.json`, {
+        await fetchWithTimeout(`${FIREBASE_ENDPOINT}/${encodeURIComponent(item.id)}.json`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ reply: replyText })
         });
       } catch (e) {}
 
-      const target = allMessages.find(m => m.id === id);
-      if (target) target.reply = replyText;
       updateDashboardCounts();
       renderPublicReplies();
       renderAdminCards();
       showToast("تم حفظ الرد ونشره في قسم الردود!");
     }
 
-    async function deleteMessage(id) {
+    async function deleteMessageByIndex(idx) {
+      const list = getFilteredAdminItems();
+      const item = list[idx];
+      if (!item) return;
       if (!confirm("هل تريد حذف هذه الرسالة؟")) return;
+
+      allMessages = allMessages.filter(m => m.id !== item.id);
+      setLocalMessages(allMessages);
+
       try {
-        await fetch(`${FIREBASE_ENDPOINT}/${id}.json`, { method: "DELETE" });
+        await fetchWithTimeout(`${FIREBASE_ENDPOINT}/${encodeURIComponent(item.id)}.json`, { method: "DELETE" });
       } catch (e) {}
-      allMessages = allMessages.filter(m => m.id !== id);
+
       updateDashboardCounts();
       renderPublicReplies();
       renderAdminCards();
@@ -813,11 +1439,13 @@
 
     async function clearAllMessages() {
       if (!confirm("هل أنت متأكد من مسح جميع الرسائل؟")) return;
-      try {
-        await fetch(`${FIREBASE_ENDPOINT}.json`, { method: "DELETE" });
-      } catch (e) {}
-      localStorage.removeItem(LOCAL_BACKUP_KEY);
       allMessages = [];
+      setLocalMessages([]);
+
+      try {
+        await fetchWithTimeout(`${FIREBASE_ENDPOINT}.json`, { method: "DELETE" });
+      } catch (e) {}
+
       updateDashboardCounts();
       renderPublicReplies();
       renderAdminCards();
@@ -843,7 +1471,7 @@
     }
 
     function escapeHtml(str) {
-      return String(str).replace(/[&<>"']/g, m => ({
+      return String(str || "").replace(/[&<>"']/g, m => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
       }[m]));
     }
@@ -851,13 +1479,13 @@
     function showToast(msg) {
       const box = document.getElementById("toastBox");
       const toast = document.createElement("div");
-      toast.className = "px-4 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-lg";
+      toast.className = "toast-item";
       toast.textContent = msg;
       box.appendChild(toast);
-      setTimeout(() => toast.remove(), 2500);
+      setTimeout(() => toast.remove(), 2600);
     }
 
-    // جلب البيانات عند فتح الموقع لتحديث عداد الردود تلقائياً
+    // جلب الرسائل تلقائياً عند فتح الموقع
     fetchAllMessages();
   </script>
 </body>
