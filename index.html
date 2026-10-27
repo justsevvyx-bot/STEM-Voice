@@ -6,20 +6,24 @@
   <title>صوتك — بوابة المقترحات والشكاوى</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Cairo', sans-serif;
-      background-color: #0b0f19;
-      background-image: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.12), transparent 60%);
+      background-color: #080c14;
+      background-image: 
+        radial-gradient(circle at 15% 0%, rgba(59, 130, 246, 0.14), transparent 45%),
+        radial-gradient(circle at 85% 10%, rgba(16, 185, 129, 0.10), transparent 45%);
+      background-attachment: fixed;
       color: #f1f5f9;
     }
     .card-dark {
-      background: #111827;
-      border: 1px solid #1f2937;
+      background: rgba(17, 24, 39, 0.88);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
     .option-btn {
-      background: #0f172a;
+      background: #0b1120;
       border: 2px solid #1e293b;
       transition: all 0.2s ease;
     }
@@ -27,22 +31,27 @@
       border-color: #334155;
     }
     .option-btn.active-blue {
-      background: rgba(37, 99, 235, 0.15);
+      background: rgba(37, 99, 235, 0.16);
       border-color: #3b82f6;
       color: #ffffff;
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+      box-shadow: 0 0 16px rgba(59, 130, 246, 0.22);
     }
     .option-btn.active-pink {
-      background: rgba(219, 39, 119, 0.15);
+      background: rgba(219, 39, 119, 0.16);
       border-color: #ec4899;
       color: #ffffff;
-      box-shadow: 0 0 15px rgba(236, 72, 153, 0.2);
+      box-shadow: 0 0 16px rgba(236, 72, 153, 0.22);
     }
     .option-btn.active-red {
-      background: rgba(225, 29, 72, 0.15);
+      background: rgba(225, 29, 72, 0.16);
       border-color: #f43f5e;
       color: #ffffff;
-      box-shadow: 0 0 15px rgba(244, 63, 94, 0.2);
+      box-shadow: 0 0 16px rgba(244, 63, 94, 0.22);
+    }
+    .timer-box {
+      background: rgba(11, 17, 32, 0.9);
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      box-shadow: inset 0 0 12px rgba(59, 130, 246, 0.08);
     }
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
@@ -58,11 +67,11 @@
   <div id="toastBox" class="fixed bottom-5 left-5 z-50 flex flex-col gap-2"></div>
 
   <!-- الشريط العلوي -->
-  <header class="border-b border-gray-800 bg-gray-900/90 backdrop-blur sticky top-0 z-30">
+  <header class="border-b border-gray-800/80 bg-gray-900/90 backdrop-blur sticky top-0 z-30">
     <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-600/30">
-          <i class="fa-solid fa-comment-dots text-lg"></i>
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-blue-600/30">
+          <i class="fa-solid fa-bullhorn text-lg"></i>
         </div>
         <div>
           <h1 class="font-extrabold text-base sm:text-lg text-white leading-tight">صوتك</h1>
@@ -70,23 +79,70 @@
         </div>
       </div>
 
-      <div class="flex items-center gap-2 bg-gray-950 p-1 rounded-xl border border-gray-800">
+      <div class="flex items-center gap-1.5 bg-gray-950 p-1 rounded-xl border border-gray-800">
         <button id="btnStudentTab" onclick="showTab('student')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-blue-600 text-white transition">
-          إرسال
+          الرئيسية
+        </button>
+        <button onclick="scrollToReplies()" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-emerald-400 hover:bg-gray-900 transition flex items-center gap-1">
+          <i class="fa-solid fa-reply-all text-xs"></i>
+          <span>الردود</span>
+          <span id="navRepliesBadge" class="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">0</span>
         </button>
         <button id="btnAdminTab" onclick="openPinModal()" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-gray-400 hover:text-white transition flex items-center gap-1.5">
-          <i class="fa-solid fa-lock text-xs"></i> اللجنة الاجتماعية
+          <i class="fa-solid fa-lock text-xs"></i> اللجنة
         </button>
       </div>
     </div>
   </header>
 
   <!-- المحتوى الرئيسي -->
-  <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-8">
+  <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-6 sm:py-8">
 
     <!-- ================= واجهة الطالب ================= -->
-    <section id="studentSection" class="max-w-xl mx-auto">
-      <div class="card-dark rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+    <section id="studentSection" class="space-y-8">
+
+      <!-- 1. بانر موعد اجتماع المديرة واللجنة القادم + التايمر -->
+      <div class="max-w-xl mx-auto card-dark rounded-2xl p-5 sm:p-6 border border-blue-500/25 shadow-xl relative overflow-hidden">
+        <div class="absolute -top-12 -left-12 w-36 h-36 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 text-center sm:text-right">
+          <div>
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-500/15 text-blue-300 border border-blue-500/30 mb-1.5">
+              <i class="fa-regular fa-calendar-check"></i> اجتماع اللجنة مع مديرة المدرسة
+            </span>
+            <h2 class="text-base sm:text-lg font-extrabold text-white">موعد الرد القادم على المقترحات والشكاوى</h2>
+          </div>
+          <div class="text-xs font-bold text-indigo-300 bg-indigo-500/10 border border-indigo-500/25 px-3 py-1.5 rounded-xl self-center sm:self-auto">
+            <span id="nextMeetingDateText">الأربعاء — 8:00 مساءً</span>
+          </div>
+        </div>
+
+        <!-- عداد تنازلي لاجتماع الأربعاء 8 مساءً -->
+        <div class="grid grid-cols-4 gap-2 sm:gap-3 text-center" dir="ltr">
+          <div class="timer-box rounded-xl py-2.5 px-2">
+            <div id="meetDays" class="text-xl sm:text-2xl font-black text-blue-400">00</div>
+            <div class="text-[11px] text-gray-400 font-bold mt-0.5">يوم</div>
+          </div>
+          <div class="timer-box rounded-xl py-2.5 px-2">
+            <div id="meetHours" class="text-xl sm:text-2xl font-black text-blue-400">00</div>
+            <div class="text-[11px] text-gray-400 font-bold mt-0.5">ساعة</div>
+          </div>
+          <div class="timer-box rounded-xl py-2.5 px-2">
+            <div id="meetMinutes" class="text-xl sm:text-2xl font-black text-blue-400">00</div>
+            <div class="text-[11px] text-gray-400 font-bold mt-0.5">دقيقة</div>
+          </div>
+          <div class="timer-box rounded-xl py-2.5 px-2">
+            <div id="meetSeconds" class="text-xl sm:text-2xl font-black text-emerald-400">00</div>
+            <div class="text-[11px] text-gray-400 font-bold mt-0.5">ثانية</div>
+          </div>
+        </div>
+        <p class="text-[11px] text-gray-400 text-center mt-3">
+          يتم عقد الاجتماع ومراجعة كافة الرسائل كل أسبوعين يوم الأربعاء الساعة 8:00 مساءً.
+        </p>
+      </div>
+
+      <!-- 2. كارت تقديم اقتراح أو شكوى -->
+      <div class="max-w-xl mx-auto card-dark rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
 
         <!-- شاشة النجاح بعد الإرسال -->
         <div id="successScreen" class="hidden absolute inset-0 bg-gray-900/95 backdrop-blur-md z-20 flex flex-col items-center justify-center p-6 text-center">
@@ -94,7 +150,7 @@
             <i class="fa-solid fa-check"></i>
           </div>
           <h2 class="text-2xl font-extrabold text-white mb-2">تم الإرسال بنجاح!</h2>
-          <p class="text-sm text-gray-400 mb-6">وصلت رسالتك عبر «صوتك» إلى اللجنة الاجتماعية وسيتم مراجعتها.</p>
+          <p class="text-sm text-gray-400 mb-6">وصلت رسالتك عبر «صوتك» إلى اللجنة الاجتماعية وسيتم عرض الرد في خانة الردود بالأسفل.</p>
           <button onclick="resetForm()" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition">
             إرسال رسالة أخرى
           </button>
@@ -132,7 +188,6 @@
               2. السكن / مبنى المدرسة <span class="text-rose-500">*</span>
             </label>
 
-            <!-- الخيارات الثلاثة الرئيسية -->
             <div class="grid grid-cols-3 gap-2.5">
               <button type="button" id="locDormBtn" onclick="selectMainPlace('dorm')" class="option-btn active-blue py-3 px-2 rounded-xl font-bold text-xs sm:text-sm flex flex-col items-center gap-1.5">
                 <i class="fa-solid fa-bed text-blue-400 text-lg"></i>
@@ -150,7 +205,7 @@
               </button>
             </div>
 
-            <!-- خيارات السكن الفرعية (بنين - بنات) تظهر عند اختيار السكن -->
+            <!-- خيارات السكن الفرعية (بنين - بنات) -->
             <div id="dormSubOptions" class="grid grid-cols-2 gap-2.5 mt-3 pt-3 border-t border-gray-800/80">
               <button type="button" id="subBoysBtn" onclick="selectDormGender('boys')" class="option-btn active-blue py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2">
                 <i class="fa-solid fa-mars text-blue-400"></i>
@@ -199,29 +254,79 @@
             ></textarea>
           </div>
 
-          <button
-            type="submit"
-            id="submitBtn"
-            class="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-sm sm:text-base shadow-lg shadow-blue-600/25 transition flex items-center justify-center gap-2"
-          >
-            <i class="fa-solid fa-paper-plane"></i>
-            <span id="submitBtnText">إرسال للجنة الاجتماعية</span>
-          </button>
+          <!-- منطقة زرار الإرسال + حالة الإغلاق الأسبوعي (الخميس 11:59م إلى الأحد 8:00ص) -->
+          <div class="space-y-3">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <button
+                type="submit"
+                id="submitBtn"
+                class="flex-1 py-3.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-sm sm:text-base shadow-lg shadow-blue-600/25 transition flex items-center justify-center gap-2"
+              >
+                <i id="submitBtnIcon" class="fa-solid fa-paper-plane"></i>
+                <span id="submitBtnText">إرسال للجنة الاجتماعية</span>
+              </button>
+
+              <!-- البوكس اللي بيظهر جنب الزرار لما الإرسال يكون قافل -->
+              <div id="closedTimerBadge" class="hidden sm:w-auto px-4 py-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-center flex flex-col justify-center">
+                <span class="text-[11px] text-amber-300 font-bold">يفتح يوم الأحد 8:00 ص — متبقي:</span>
+                <span id="reopenCountdownText" class="text-sm font-black text-white tracking-wider mt-0.5" dir="ltr">00d : 00h : 00m : 00s</span>
+              </div>
+            </div>
+            <p class="text-[11px] text-gray-500 text-center">
+              مواعيد استقبال الرسائل: من الأحد 8:00 صباحاً حتى الخميس 11:59 مساءً.
+            </p>
+          </div>
 
         </form>
       </div>
+
+      <!-- 3. خانة الردود على الشكاوى والمقترحات -->
+      <div id="publicRepliesSection" class="max-w-3xl mx-auto pt-4">
+        <div class="card-dark rounded-2xl p-6 sm:p-8 border border-emerald-500/20 shadow-2xl">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 mb-6 border-b border-gray-800">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-comments"></i>
+              </div>
+              <div>
+                <h2 class="text-lg sm:text-xl font-extrabold text-white">الردود على الشكاوى والمقترحات</h2>
+                <p class="text-xs text-gray-400 mt-0.5">ردود اللجنة الاجتماعية وإدارة المدرسة على رسائل الطلاب</p>
+              </div>
+            </div>
+
+            <!-- فلتر سريع للردود -->
+            <select id="publicReplyFilter" onchange="renderPublicReplies()" class="px-3.5 py-2 rounded-xl bg-gray-950 border border-gray-800 text-xs font-bold text-gray-200 focus:outline-none focus:border-emerald-500">
+              <option value="ALL">كل الأماكن</option>
+              <option value="سكن بنين">سكن بنين</option>
+              <option value="سكن بنات">سكن بنات</option>
+              <option value="مبنى المدرسة">مبنى المدرسة</option>
+              <option value="أخرى">أماكن أخرى</option>
+            </select>
+          </div>
+
+          <!-- قائمة الردود المنشورة -->
+          <div id="publicRepliesContainer" class="space-y-4"></div>
+        </div>
+      </div>
+
     </section>
-        <!-- ================= لوحة اللجنة الاجتماعية ================= -->
+    <!-- ================= لوحة اللجنة الاجتماعية ================= -->
     <section id="adminSection" class="hidden space-y-5">
 
       <!-- شريط التحكم والإحصائيات -->
-      <div class="card-dark rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="card-dark rounded-2xl p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
-          <h2 class="text-xl font-extrabold text-white">لوحة تحكم اللجنة الاجتماعية</h2>
-          <p class="text-xs text-gray-400 mt-0.5">متابعة وتصفية جميع المقترحات والشكاوى</p>
+          <div class="flex items-center gap-2">
+            <h2 class="text-xl font-extrabold text-white">لوحة تحكم اللجنة الاجتماعية</h2>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">متصل مباشر</span>
+          </div>
+          <p class="text-xs text-gray-400 mt-0.5">متابعة الرسائل، كتابة الردود الرسمية، وتصدير التقارير</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
+          <button onclick="toggleMeetingWeekOffset()" class="px-3 py-2 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 text-xs font-bold transition flex items-center gap-1.5" title="تغيير موعد الاجتماع بين هذا الأسبوع أو الأسبوع القادم">
+            <i class="fa-solid fa-calendar-week"></i> تبديل أسبوع الاجتماع
+          </button>
           <button onclick="loadData()" class="px-3.5 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-bold transition flex items-center gap-1.5">
             <i class="fa-solid fa-rotate"></i> تحديث
           </button>
@@ -235,7 +340,7 @@
       </div>
 
       <!-- عدادات سريعة -->
-      <div class="grid grid-cols-3 gap-3">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div class="card-dark p-4 rounded-2xl text-center">
           <p class="text-xs text-gray-400 font-bold">الإجمالي</p>
           <p id="countTotal" class="text-2xl font-extrabold text-white mt-1">0</p>
@@ -248,10 +353,14 @@
           <p class="text-xs text-rose-400 font-bold">⚠️ الشكاوى</p>
           <p id="countComplaint" class="text-2xl font-extrabold text-white mt-1">0</p>
         </div>
+        <div class="card-dark p-4 rounded-2xl text-center border-b-2 border-b-emerald-500">
+          <p class="text-xs text-emerald-400 font-bold">✅ تم الرد عليها</p>
+          <p id="countReplied" class="text-2xl font-extrabold text-white mt-1">0</p>
+        </div>
       </div>
 
       <!-- فلاتر البحث -->
-      <div class="card-dark p-4 rounded-2xl grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div class="card-dark p-4 rounded-2xl grid grid-cols-1 sm:grid-cols-3 gap-3">
         <select id="filterPlace" onchange="renderAdminList()" class="px-3 py-2.5 rounded-xl bg-gray-950 border border-gray-800 text-xs sm:text-sm text-white font-bold focus:outline-none focus:border-blue-500">
           <option value="ALL">كل الأماكن (السكن والمدرسة)</option>
           <option value="سكن بنين">سكن بنين فقط</option>
@@ -265,10 +374,16 @@
           <option value="اقتراح">💡 المقترحات فقط</option>
           <option value="شكوى">⚠️ الشكاوى فقط</option>
         </select>
+
+        <select id="filterReplyStatus" onchange="renderAdminList()" class="px-3 py-2.5 rounded-xl bg-gray-950 border border-gray-800 text-xs sm:text-sm text-white font-bold focus:outline-none focus:border-blue-500">
+          <option value="ALL">كل الحالات (تم الرد / بدون رد)</option>
+          <option value="UNREPLIED">⏳ بانتظار الرد فقط</option>
+          <option value="REPLIED">✅ تم الرد عليها فقط</option>
+        </select>
       </div>
 
-      <!-- قائمة البطاقات -->
-      <div id="itemsContainer" class="space-y-3"></div>
+      <!-- قائمة البطاقات للجنة -->
+      <div id="itemsContainer" class="space-y-4"></div>
 
     </section>
 
@@ -281,7 +396,7 @@
         <i class="fa-solid fa-shield-halved"></i>
       </div>
       <h3 class="text-lg font-extrabold text-white">دخول اللجنة الاجتماعية</h3>
-      <p class="text-xs text-gray-400 mt-1 mb-4">أدخل الرمز السري المكون من 6 أرقام</p>
+      <p class="text-xs text-gray-400 mt-1 mb-4">أدخل الرمز السري المكون من 6 أرقام (مفتوح دائماً)</p>
 
       <input
         type="password"
@@ -303,20 +418,147 @@
       </div>
     </div>
   </div>
-  <script>
+    <script>
     // الإعدادات وقاعدة البيانات
     const ADMIN_PIN = "020260";
     const DB_URL = "https://supermarket-438b0-default-rtdb.firebaseio.com/suggestions";
+    const CONFIG_URL = "https://supermarket-438b0-default-rtdb.firebaseio.com/sawtak_config";
     const LOCAL_KEY = "stem_voice_ar_backup";
 
     // الحالة الافتراضية للنموذج
-    let currentMainPlace = "dorm"; // dorm | school | other
-    let currentDormGender = "boys"; // boys | girls
-    let currentPostType = "اقتراح"; // اقتراح | شكوى
+    let currentMainPlace = "dorm";
+    let currentDormGender = "boys";
+    let currentPostType = "اقتراح";
     let isUnlocked = false;
     let allItems = [];
 
-    // 1. تحديث شارة الاسم (مجهول أو باسم)
+    // تاريخ مرجعي لدورة الأسبوعين (الأربعاء 8:00 مساءً)
+    // يمكن تبديله بضغطة زر من لوحة اللجنة بين هذا الأسبوع والأسبوع القادم
+    let weekOffset = 0; 
+
+    // ================= 1. حساب موعد اجتماع الأربعاء (كل أسبوعين 8:00 م) =================
+    async function loadMeetingConfig() {
+      try {
+        const res = await fetch(`${CONFIG_URL}.json`);
+        const data = await res.json();
+        if (data && typeof data.weekOffset === "number") {
+          weekOffset = data.weekOffset;
+        }
+      } catch (e) {}
+    }
+
+    async function toggleMeetingWeekOffset() {
+      weekOffset = weekOffset === 0 ? 1 : 0;
+      try {
+        await fetch(`${CONFIG_URL}.json`, { method: "PUT", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ weekOffset })
+        });
+      } catch (e) {}
+      updateTimers();
+      notify("تم تبديل أسبوع الاجتماع القادم بنجاح!");
+    }
+
+    function getNextBiWeeklyWednesday(now) {
+      // نقطة الأساس: الأربعاء 28 أكتوبر 2026 الساعة 20:00 (8:00 مساءً)
+      const baseAnchor = new Date(2026, 9, 28, 20, 0, 0, 0).getTime();
+      const oneWeekMs = 7 * 24 * 60 * 60 * 1000;
+      const twoWeeksMs = 14 * 24 * 60 * 60 * 1000;
+
+      let anchor = baseAnchor + (weekOffset * oneWeekMs);
+      const nowMs = now.getTime();
+
+      if (nowMs >= anchor) {
+        const cyclesPassed = Math.floor((nowMs - anchor) / twoWeeksMs) + 1;
+        anchor += cyclesPassed * twoWeeksMs;
+      }
+      return new Date(anchor);
+    }
+
+    // ================= 2. فحص فترة إغلاق الإرسال (الخميس 11:59 م حتى الأحد 8:00 ص) =================
+    function checkPortalClosure(now) {
+      const day = now.getDay(); // 0=الأحد, 4=الخميس, 5=الجمعة, 6=السبت
+      const hours = now.getHours();
+      const mins = now.getMinutes();
+
+      const isClosed =
+        (day === 4 && hours === 23 && mins >= 59) || // الخميس من 11:59 مساءً
+        (day === 5) ||                               // طوال يوم الجمعة
+        (day === 6) ||                               // طوال يوم السبت
+        (day === 0 && hours < 8);                    // الأحد قبل 8:00 صباحاً
+
+      if (!isClosed) return { closed: false, reopenDate: null };
+
+      // حساب موعد الفتح القادم (الأحد الساعة 8:00 صباحاً)
+      const reopen = new Date(now);
+      const daysUntilSunday = (7 - day) % 7;
+      reopen.setDate(now.getDate() + daysUntilSunday);
+      reopen.setHours(8, 0, 0, 0);
+
+      return { closed: true, reopenDate: reopen };
+    }
+
+    function padNum(n) {
+      return String(n).padStart(2, "0");
+    }
+
+    function updateTimers() {
+      const now = new Date();
+
+      // أ) تحديث تايمر اجتماع الأربعاء 8 مساءً
+      const nextMeet = getNextBiWeeklyWednesday(now);
+      const diffMeet = Math.max(0, nextMeet.getTime() - now.getTime());
+
+      const mDays = Math.floor(diffMeet / (1000 * 60 * 60 * 24));
+      const mHours = Math.floor((diffMeet / (1000 * 60 * 60)) % 24);
+      const mMins = Math.floor((diffMeet / (1000 * 60)) % 60);
+      const mSecs = Math.floor((diffMeet / 1000) % 60);
+
+      document.getElementById("meetDays").textContent = padNum(mDays);
+      document.getElementById("meetHours").textContent = padNum(mHours);
+      document.getElementById("meetMinutes").textContent = padNum(mMins);
+      document.getElementById("meetSeconds").textContent = padNum(mSecs);
+
+      const formattedMeetDate = nextMeet.toLocaleDateString("ar-EG", {
+        weekday: "long",
+        day: "numeric",
+        month: "long"
+      });
+      document.getElementById("nextMeetingDateText").textContent = `${formattedMeetDate} — 8:00 م`;
+
+      // ب) تحديث حالة زرار الإرسال وتايمر الفتح (الأحد 8 صباحاً)
+      const closure = checkPortalClosure(now);
+      const submitBtn = document.getElementById("submitBtn");
+      const submitBtnText = document.getElementById("submitBtnText");
+      const submitBtnIcon = document.getElementById("submitBtnIcon");
+      const closedBadge = document.getElementById("closedTimerBadge");
+      const reopenText = document.getElementById("reopenCountdownText");
+
+      if (closure.closed) {
+        submitBtn.disabled = true;
+        submitBtn.className = "flex-1 py-3.5 px-5 rounded-xl bg-gray-800/90 border border-amber-500/40 text-gray-300 font-extrabold text-sm sm:text-base cursor-not-allowed flex items-center justify-center gap-2";
+        submitBtnIcon.className = "fa-solid fa-lock text-amber-400";
+        submitBtnText.textContent = "الإرسال مغلق حالياً";
+        closedBadge.classList.remove("hidden");
+
+        const diffOpen = Math.max(0, closure.reopenDate.getTime() - now.getTime());
+        const oDays = Math.floor(diffOpen / (1000 * 60 * 60 * 24));
+        const oHours = Math.floor((diffOpen / (1000 * 60 * 60)) % 24);
+        const oMins = Math.floor((diffOpen / (1000 * 60)) % 60);
+        const oSecs = Math.floor((diffOpen / 1000) % 60);
+
+        reopenText.textContent = `${padNum(oDays)} يوم : ${padNum(oHours)} س : ${padNum(oMins)} د : ${padNum(oSecs)} ث`;
+      } else {
+        if (!submitBtn.dataset.sending) {
+          submitBtn.disabled = false;
+          submitBtn.className = "flex-1 py-3.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-sm sm:text-base shadow-lg shadow-blue-600/25 transition flex items-center justify-center gap-2";
+          submitBtnIcon.className = "fa-solid fa-paper-plane";
+          submitBtnText.textContent = "إرسال للجنة الاجتماعية";
+        }
+        closedBadge.classList.add("hidden");
+      }
+    }
+
+    // ================= 3. دوال نموذج الطالب =================
     function updateNameBadge() {
       const val = document.getElementById("studentName").value.trim();
       const badge = document.getElementById("anonStatus");
@@ -329,18 +571,14 @@
       }
     }
 
-    // 2. اختيار المكان الرئيسي (السكن / مبنى المدرسة / أخرى)
     function selectMainPlace(place) {
       currentMainPlace = place;
-
       const dormBtn = document.getElementById("locDormBtn");
       const schoolBtn = document.getElementById("locSchoolBtn");
       const otherBtn = document.getElementById("locOtherBtn");
-
       const dormSub = document.getElementById("dormSubOptions");
       const otherBox = document.getElementById("otherPlaceBox");
 
-      // إعادة ضبط الأزرار
       [dormBtn, schoolBtn, otherBtn].forEach(b => {
         b.className = "option-btn py-3 px-2 rounded-xl font-bold text-xs sm:text-sm text-gray-300 flex flex-col items-center gap-1.5";
       });
@@ -361,7 +599,6 @@
       }
     }
 
-    // اختيار نوع السكن (بنين / بنات)
     function selectDormGender(gender) {
       currentDormGender = gender;
       const boysBtn = document.getElementById("subBoysBtn");
@@ -370,14 +607,10 @@
       boysBtn.className = "option-btn py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-gray-300 flex items-center justify-center gap-2";
       girlsBtn.className = "option-btn py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm text-gray-300 flex items-center justify-center gap-2";
 
-      if (gender === "boys") {
-        boysBtn.classList.add("active-blue");
-      } else {
-        girlsBtn.classList.add("active-pink");
-      }
+      if (gender === "boys") boysBtn.classList.add("active-blue");
+      else girlsBtn.classList.add("active-pink");
     }
 
-    // 3. اختيار النوع (اقتراح / شكوى)
     function selectPostType(type) {
       currentPostType = type;
       const sugBtn = document.getElementById("btnTypeSuggest");
@@ -386,16 +619,18 @@
       sugBtn.className = "option-btn py-2.5 px-4 rounded-xl font-bold text-sm text-gray-300 flex items-center justify-center gap-2";
       compBtn.className = "option-btn py-2.5 px-4 rounded-xl font-bold text-sm text-gray-300 flex items-center justify-center gap-2";
 
-      if (type === "اقتراح") {
-        sugBtn.classList.add("active-blue");
-      } else {
-        compBtn.classList.add("active-red");
-      }
+      if (type === "اقتراح") sugBtn.classList.add("active-blue");
+      else compBtn.classList.add("active-red");
     }
 
-    // إرسال النموذج
     async function submitForm(e) {
       e.preventDefault();
+
+      // التأكد من عدم الإرسال وقت القفل
+      if (checkPortalClosure(new Date()).closed) {
+        notify("الإرسال مغلق حالياً، يفتح يوم الأحد 8:00 صباحاً");
+        return;
+      }
 
       const nameVal = document.getElementById("studentName").value.trim() || "مجهول";
       const msgVal = document.getElementById("messageInput").value.trim();
@@ -417,104 +652,20 @@
         building: finalBuilding,
         type: currentPostType,
         message: msgVal,
+        reply: "",
+        repliedAt: "",
         time: new Date().toLocaleString("ar-EG", { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' }),
         timestamp: Date.now()
       };
 
       const btn = document.getElementById("submitBtn");
       const btnText = document.getElementById("submitBtnText");
+      btn.dataset.sending = "true";
       btn.disabled = true;
       btnText.textContent = "جاري الإرسال...";
 
       try {
-        await fetch(`${DB_URL}.json`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-      } catch (err) {
-        const local = JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]");
-        local.unshift({ id: "loc_" + Date.now(), ...payload });
-        localStorage.setItem(LOCAL_KEY, JSON.stringify(local));
-      }
-
-      btn.disabled = false;
-      btnText.textContent = "إرسال للجنة الاجتماعية";
-      document.getElementById("successScreen").classList.remove("hidden");
-    }
-
-    function resetForm() {
-      document.getElementById("voiceForm").reset();
-      updateNameBadge();
-      selectMainPlace("dorm");
-      selectDormGender("boys");
-      selectPostType("اقتراح");
-      document.getElementById("successScreen").classList.add("hidden");
-    }
-
-    // التنقل والرمز السري
-    function showTab(tab) {
-      const studentSec = document.getElementById("studentSection");
-      const adminSec = document.getElementById("adminSection");
-      const btnStudent = document.getElementById("btnStudentTab");
-      const btnAdmin = document.getElementById("btnAdminTab");
-
-      if (tab === "student") {
-        studentSec.classList.remove("hidden");
-        adminSec.classList.add("hidden");
-        btnStudent.className = "px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-blue-600 text-white transition";
-        btnAdmin.className = "px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-gray-400 hover:text-white transition flex items-center gap-1.5";
-      } else {
-        studentSec.classList.add("hidden");
-        adminSec.classList.remove("hidden");
-        btnAdmin.className = "px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-blue-600 text-white transition flex items-center gap-1.5";
-        btnStudent.className = "px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-gray-400 hover:text-white transition";
-        loadData();
-      }
-    }
-
-    function openPinModal() {
-      if (isUnlocked) {
-        showTab("admin");
-        return;
-      }
-      document.getElementById("pinInput").value = "";
-      document.getElementById("pinError").classList.add("hidden");
-      document.getElementById("pinModal").classList.remove("hidden");
-      setTimeout(() => document.getElementById("pinInput").focus(), 100);
-    }
-
-    function closePinModal() {
-      document.getElementById("pinModal").classList.add("hidden");
-    }
-
-    function verifyPin() {
-      const val = document.getElementById("pinInput").value.trim();
-      if (val === ADMIN_PIN) {
-        isUnlocked = true;
-        closePinModal();
-        showTab("admin");
-        notify("تم فتح لوحة اللجنة الاجتماعية");
-      } else {
-        const card = document.getElementById("pinCard");
-        document.getElementById("pinError").classList.remove("hidden");
-        card.classList.remove("shake");
-        void card.offsetWidth;
-        card.classList.add("shake");
-      }
-    }
-
-    document.getElementById("pinInput").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") verifyPin();
-    });
-
-    // تحميل وعرض البيانات للجنة الاجتماعية
-    async function loadData() {
-      const container = document.getElementById("itemsContainer");
-      container.innerHTML = `<div class="card-dark p-8 rounded-2xl text-center text-gray-400 text-sm">جاري التحميل...</div>`;
-
-      try {
-        const res = await fetch(`${DB_URL}.json`);
+        await fetch(`${DB_URL}.json`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }); } catch (err) { const local = JSON.parse(localStorage.getItem(LOCAL_KEY) \vert{}\vert{} "[]"); local.unshift({ id: "loc_" + Date.now(), ...payload }); localStorage.setItem(LOCAL_KEY, JSON.stringify(local)); }  delete btn.dataset.sending; updateTimers(); document.getElementById("successScreen").classList.remove("hidden"); loadData(); }  function resetForm() { document.getElementById("voiceForm").reset(); updateNameBadge(); selectMainPlace("dorm"); selectDormGender("boys"); selectPostType("اقتراح"); document.getElementById("successScreen").classList.add("hidden"); }  function scrollToReplies() { showTab("student"); setTimeout(() => { document.getElementById("publicRepliesSection").scrollIntoView({ behavior: "smooth" }); }, 100); }  // ================= 4. التنقل والرمز السري (مفتوح دائماً للجنة) ================= function showTab(tab) { const studentSec = document.getElementById("studentSection"); const adminSec = document.getElementById("adminSection"); const btnStudent = document.getElementById("btnStudentTab"); const btnAdmin = document.getElementById("btnAdminTab");  if (tab === "student") { studentSec.classList.remove("hidden"); adminSec.classList.add("hidden"); btnStudent.className = "px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-blue-600 text-white transition"; btnAdmin.className = "px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-gray-400 hover:text-white transition flex items-center gap-1.5"; loadData(); } else { studentSec.classList.add("hidden"); adminSec.classList.remove("hidden"); btnAdmin.className = "px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-blue-600 text-white transition flex items-center gap-1.5"; btnStudent.className = "px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-gray-400 hover:text-white transition"; loadData(); } }  function openPinModal() { if (isUnlocked) { showTab("admin"); return; } document.getElementById("pinInput").value = ""; document.getElementById("pinError").classList.add("hidden"); document.getElementById("pinModal").classList.remove("hidden"); setTimeout(() => document.getElementById("pinInput").focus(), 100); }  function closePinModal() { document.getElementById("pinModal").classList.add("hidden"); }  function verifyPin() { const val = document.getElementById("pinInput").value.trim(); if (val === ADMIN_PIN) { isUnlocked = true; closePinModal(); showTab("admin"); notify("تم فتح لوحة اللجنة الاجتماعية"); } else { const card = document.getElementById("pinCard"); document.getElementById("pinError").classList.remove("hidden"); card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake"); } }  document.getElementById("pinInput").addEventListener("keydown", (e) => { if (e.key === "Enter") verifyPin(); });  // ================= 5. تحميل البيانات وعرض الردود للطلاب وللجنة ================= async function loadData() { try { const res = await fetch(`${DB_URL}.json`);
         const data = await res.json();
         const arr = [];
         if (data) {
@@ -527,25 +678,96 @@
       }
 
       updateCounters();
-      renderAdminList();
+      renderPublicReplies();
+      if (isUnlocked) renderAdminList();
     }
 
     function updateCounters() {
+      const repliedCount = allItems.filter(i => i.reply && i.reply.trim() !== "").length;
       document.getElementById("countTotal").textContent = allItems.length;
       document.getElementById("countSuggest").textContent = allItems.filter(i => i.type === "اقتراح").length;
       document.getElementById("countComplaint").textContent = allItems.filter(i => i.type === "شكوى").length;
+      document.getElementById("countReplied").textContent = repliedCount;
+      document.getElementById("navRepliesBadge").textContent = repliedCount;
     }
 
+    // عرض الردود المعتمدة في الصفحة العامة للطلاب
+    function renderPublicReplies() {
+      const container = document.getElementById("publicRepliesContainer");
+      const filterVal = document.getElementById("publicReplyFilter").value;
+
+      const repliedItems = allItems.filter(item => {
+        const hasReply = item.reply && item.reply.trim() !== "";
+        if (!hasReply) return false;
+        const b = item.building || "";
+        return filterVal === "ALL" || (filterVal === "أخرى" ? b.startsWith("أخرى") : b === filterVal);
+      });
+
+      if (repliedItems.length === 0) {
+        container.innerHTML = `
+          <div class="bg-gray-950/70 border border-gray-800/80 rounded-2xl p-8 text-center text-gray-400">
+            <i class="fa-regular fa-comment-dots text-2xl text-emerald-400/70 mb-2"></i>
+            <p class="font-bold text-sm text-gray-300">لا توجد ردود منشورة في هذا القسم حتى الآن</p>
+            <p class="text-xs text-gray-500 mt-1">تظهر هنا جميع الردود فور اعتمادها من اللجنة الاجتماعية وإدارة المدرسة.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = repliedItems.map(item => {
+        const isComp = item.type === "شكوى";
+        return `
+          <div class="bg-gray-950/90 border border-gray-800 rounded-2xl p-5 space-y-4 shadow-lg">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-lg text-xs font-extrabold ${isComp ? 'bg-rose-500/20 text-rose-400' : 'bg-blue-500/20 text-blue-400'}">
+                  ${isComp ? '⚠️ شكوى' : '💡 اقتراح'}
+                </span>
+                <span class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-gray-800 text-gray-200">
+                  📍 ${escapeHTML(item.building || '')}
+                </span>
+              </div>
+              <span class="text-[11px] text-gray-400">
+                👤 ${escapeHTML(item.name \vert{}\vert{} 'مجهول')} • ${escapeHTML(item.time || '')}
+              </span>
+            </div>
+
+            <p class="text-sm text-gray-200 whitespace-pre-line leading-relaxed bg-gray-900/70 p-3.5 rounded-xl border border-gray-800/70">
+              ${escapeHTML(item.message || '')}
+            </p>
+
+            <!-- صندوق رد اللجنة والمديرة -->
+            <div class="bg-emerald-950/30 border border-emerald-500/30 rounded-xl p-4 relative">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-extrabold text-emerald-400 flex items-center gap-1.5">
+                  <i class="fa-solid fa-circle-check"></i> رد اللجنة الاجتماعية والإدارة:
+                </span>
+                <span class="text-[10px] text-emerald-300/70 font-semibold">${escapeHTML(item.repliedAt || '')}</span>
+              </div>
+              <p class="text-sm text-white font-semibold whitespace-pre-line leading-relaxed">
+                ${escapeHTML(item.reply)}
+              </p>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // فلترة وعرض الرسائل داخل لوحة اللجنة الاجتماعية
     function getFilteredList() {
       const placeFilter = document.getElementById("filterPlace").value;
       const kindFilter = document.getElementById("filterKind").value;
+      const statusFilter = document.getElementById("filterReplyStatus").value;
 
       return allItems.filter(item => {
         const b = item.building || "";
         const matchPlace = placeFilter === "ALL" ||
           (placeFilter === "أخرى" ? b.startsWith("أخرى") : b === placeFilter);
         const matchKind = kindFilter === "ALL" || item.type === kindFilter;
-        return matchPlace && matchKind;
+        const hasReply = Boolean(item.reply && item.reply.trim() !== "");
+        const matchStatus = statusFilter === "ALL" ||
+          (statusFilter === "REPLIED" ? hasReply : !hasReply);
+        return matchPlace && matchKind && matchStatus;
       });
     }
 
@@ -557,7 +779,7 @@
         container.innerHTML = `
           <div class="card-dark rounded-2xl p-10 text-center text-gray-400">
             <i class="fa-regular fa-folder-open text-2xl mb-2"></i>
-            <p class="font-bold text-sm">لا توجد رسائل حالياً</p>
+            <p class="font-bold text-sm">لا توجد رسائل مطابقة للفلتر</p>
           </div>
         `;
         return;
@@ -565,8 +787,10 @@
 
       container.innerHTML = list.map(item => {
         const isComp = item.type === "شكوى";
+        const hasReply = Boolean(item.reply && item.reply.trim() !== "");
+
         return `
-          <div class="card-dark rounded-2xl p-5 border-r-4 ${isComp ? 'border-r-rose-500' : 'border-r-blue-500'} flex flex-col justify-between gap-3">
+          <div class="card-dark rounded-2xl p-5 border-r-4 ${isComp ? 'border-r-rose-500' : 'border-r-blue-500'} space-y-4">
             <div class="flex items-center justify-between flex-wrap gap-2">
               <div class="flex items-center gap-2">
                 <span class="px-2.5 py-0.5 rounded-lg text-xs font-extrabold ${isComp ? 'bg-rose-500/20 text-rose-400' : 'bg-blue-500/20 text-blue-400'}">
@@ -575,76 +799,4 @@
                 <span class="px-2.5 py-0.5 rounded-lg text-xs font-bold bg-gray-800 text-gray-200">
                   📍 ${escapeHTML(item.building || '')}
                 </span>
-              </div>
-              <button onclick="deleteOne('${item.id}')" class="text-gray-500 hover:text-rose-400 text-xs transition" title="حذف">
-                <i class="fa-solid fa-trash"></i>
-              </button>
-            </div>
-
-            <p class="text-sm text-gray-100 whitespace-pre-line leading-relaxed">${escapeHTML(item.message || '')}</p>
-
-            <div class="pt-2 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400">
-              <span>👤 الاسم: <strong class="text-gray-200">${escapeHTML(item.name || 'مجهول')}</strong></span>
-              <span>🕒 ${escapeHTML(item.time || '')}</span>
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-
-    async function deleteOne(id) {
-      if (!confirm("هل تريد حذف هذه الرسالة؟")) return;
-      try {
-        await fetch(`${DB_URL}/${id}.json`, { method: "DELETE" });
-      } catch (e) {}
-      allItems = allItems.filter(i => i.id !== id);
-      updateCounters();
-      renderAdminList();
-      notify("تم حذف الرسالة");
-    }
-
-    async function clearAllItems() {
-      if (!confirm("هل أنت متأكد من مسح جميع المقترحات والشكاوى؟")) return;
-      try {
-        await fetch(`${DB_URL}.json`, { method: "DELETE" });
-      } catch (e) {}
-      localStorage.removeItem(LOCAL_KEY);
-      allItems = [];
-      updateCounters();
-      renderAdminList();
-      notify("تم مسح جميع الرسائل");
-    }
-
-    function copyAllForWhatsApp() {
-      const list = getFilteredList();
-      if (list.length === 0) {
-        notify("لا توجد رسائل لنسخها");
-        return;
-      }
-      let txt = `📋 *تقرير اللجنة الاجتماعية — STEM (${list.length})*\n\n`;
-      list.forEach((item, i) => {
-        const icon = item.type === "شكوى" ? "⚠️" : "💡";
-        txt += `*${i + 1}. ${icon} [${item.building}]* — الاسم: ${item.name || 'مجهول'}\n`;
-        txt += `💬 ${item.message}\n\n`;
-      });
-      navigator.clipboard.writeText(txt.trim());
-      notify("تم نسخ التقرير للواتساب بنجاح!");
-    }
-
-    function escapeHTML(str) {
-      return String(str).replace(/[&<>"']/g, m => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[m]));
-    }
-
-    function notify(msg) {
-      const box = document.getElementById("toastBox");
-      const el = document.createElement("div");
-      el.className = "px-4 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-bold shadow-lg";
-      el.textContent = msg;
-      box.appendChild(el);
-      setTimeout(() => el.remove(), 2500);
-    }
-  </script>
-</body>
-</html>
+                <span class="px-2.5 py-0.5 rounded-lg text-[11px] font-bold ${hasReply ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/15 text-amber-300 border border-amber
