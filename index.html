@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
   <title>صوتك — بوابة المقترحات والشكاوى | مدرسة STEM دمياط</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -97,6 +97,7 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   transition: var(--transition-theme);
+  overflow-x: hidden;
 }
 
 /* ================== الهيدر ================== */
@@ -108,7 +109,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 14px 0;
+  padding: 10px 0;
   box-shadow: var(--shadow-sm);
   transition: var(--transition-theme);
 }
@@ -116,45 +117,50 @@ body {
 .header-inner {
   max-width: 960px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 8px;
 }
 
-.brand-box { display: flex; align-items: center; gap: 14px; }
-.brand-logo { width: 48px; height: 48px; object-fit: contain; border-radius: var(--radius-sm); }
-.brand-title { font-size: 22px; font-weight: 900; color: var(--primary); line-height: 1.2; letter-spacing: -.3px; transition: color .35s; }
-.brand-sub { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
+.brand-box { display: flex; align-items: center; gap: 10px; }
+.brand-logo { width: 36px; height: 36px; object-fit: contain; border-radius: var(--radius-sm); }
+.brand-title { font-size: 18px; font-weight: 900; color: var(--primary); line-height: 1.2; letter-spacing: -.3px; transition: color .35s; }
+.brand-sub { font-size: 10px; color: var(--text-muted); font-weight: 600; margin-top: 1px; }
 
 .nav-pills {
   display: flex;
-  gap: 4px;
+  gap: 3px;
   background-color: var(--bg-body);
-  padding: 5px;
+  padding: 4px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-light);
   transition: var(--transition-theme);
   flex-wrap: wrap;
+  flex: 1 1 auto;
+  justify-content: center;
 }
 
 .nav-btn {
   background: transparent;
   border: none;
-  padding: 9px 14px;
+  padding: 7px 10px;
   border-radius: var(--radius-sm);
   font-family: inherit;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 11.5px;
   color: var(--text-muted);
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 4px;
   transition: all .25s cubic-bezier(.4,0,.2,1);
   position: relative;
+  flex: 1 1 auto;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 .nav-btn:hover { background-color: var(--border-light); color: var(--text-secondary); }
@@ -184,26 +190,26 @@ body {
 .badge-count {
   background-color: var(--secondary);
   color: #fff;
-  padding: 2px 8px;
+  padding: 1px 6px;
   border-radius: 10px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
-  min-width: 18px;
+  min-width: 16px;
   text-align: center;
 }
 
 .theme-toggle {
   background: var(--bg-body);
   border: 1px solid var(--border-light);
-  width: 40px;
-  height: 40px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   color: var(--text-secondary);
-  font-size: 15px;
+  font-size: 13px;
   transition: all .3s ease;
   flex-shrink: 0;
 }
@@ -214,14 +220,14 @@ body {
 [data-theme="dark"] .theme-toggle .fa-moon { display: none; }
 
 /* ================== الحاوية ================== */
-.main-container { max-width: 960px; margin: 32px auto; padding: 0 24px; }
+.main-container { max-width: 960px; margin: 20px auto; padding: 0 14px; }
 
 .card-dark {
   background-color: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
-  padding: 28px;
-  margin-bottom: 24px;
+  padding: 20px 16px;
+  margin-bottom: 18px;
   box-shadow: var(--shadow-md);
   position: relative;
   overflow: hidden;
@@ -237,61 +243,61 @@ body {
 .pill-tag {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background-color: var(--primary-light);
   color: var(--primary);
-  padding: 7px 16px;
+  padding: 5px 12px;
   border-radius: 24px;
-  font-size: 13px;
+  font-size: 11.5px;
   font-weight: 800;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   border: 1px solid var(--primary-soft);
 }
-.timer-heading { font-size: 22px; font-weight: 900; color: var(--text-main); margin-bottom: 8px; letter-spacing: -.3px; }
+.timer-heading { font-size: 17px; font-weight: 900; color: var(--text-main); margin-bottom: 6px; letter-spacing: -.3px; }
 .meeting-time-badge {
   display: inline-block;
   background-color: var(--bg-body);
   color: var(--text-secondary);
-  padding: 7px 18px;
+  padding: 5px 14px;
   border-radius: var(--radius-sm);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
-  margin-bottom: 26px;
+  margin-bottom: 18px;
   border: 1px solid var(--border-light);
 }
-.timer-grid { display: flex; justify-content: center; gap: 14px; margin-bottom: 18px; direction: ltr; }
+.timer-grid { display: flex; justify-content: center; gap: 8px; margin-bottom: 14px; direction: ltr; flex-wrap: wrap; }
 .timer-box {
   background-color: var(--bg-card);
   border: 1.5px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 14px 10px;
-  width: 82px;
+  padding: 8px 6px;
+  width: 64px;
   box-shadow: var(--shadow-sm);
   transition: all .3s ease;
 }
 .timer-box:hover { border-color: var(--primary-soft); transform: translateY(-2px); }
-.timer-num { font-size: 28px; font-weight: 900; color: var(--primary); line-height: 1.2; font-variant-numeric: tabular-nums; }
+.timer-num { font-size: 22px; font-weight: 900; color: var(--primary); line-height: 1.2; font-variant-numeric: tabular-nums; }
 .timer-num.sec-color { color: var(--secondary); }
-.timer-label { font-size: 11.5px; color: var(--text-muted); font-weight: 700; margin-top: 4px; }
-.timer-note { font-size: 13px; color: var(--text-muted); max-width: 420px; margin: 0 auto; }
+.timer-label { font-size: 10px; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
+.timer-note { font-size: 11.5px; color: var(--text-muted); max-width: 380px; margin: 0 auto; line-height: 1.6; }
 
 /* ================== النماذج ================== */
-.form-header h2 { font-size: 22px; font-weight: 900; color: var(--text-main); margin-bottom: 6px; letter-spacing: -.3px; }
-.form-header p { color: var(--text-muted); font-size: 13.5px; margin-bottom: 26px; }
-.field-group { margin-bottom: 26px; }
-.field-label { display: block; font-weight: 800; font-size: 14.5px; color: var(--text-main); margin-bottom: 10px; }
-.field-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.form-header h2 { font-size: 18px; font-weight: 900; color: var(--text-main); margin-bottom: 4px; letter-spacing: -.3px; }
+.form-header p { color: var(--text-muted); font-size: 12px; margin-bottom: 18px; }
+.field-group { margin-bottom: 18px; }
+.field-label { display: block; font-weight: 800; font-size: 13px; color: var(--text-main); margin-bottom: 8px; }
+.field-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 4px; }
 
 .anon-pill {
-  font-size: 11.5px;
+  font-size: 10.5px;
   font-weight: 700;
   background-color: var(--bg-body);
   color: var(--text-muted);
-  padding: 5px 14px;
+  padding: 4px 10px;
   border-radius: 14px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   border: 1px solid var(--border-light);
 }
 .anon-pill.named { background-color: var(--primary-light); color: var(--primary); border-color: var(--primary-soft); }
@@ -301,10 +307,10 @@ body {
   background-color: var(--bg-input);
   border: 1.5px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 14px 16px;
+  padding: 11px 12px;
   color: var(--text-main);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   transition: all .25s ease;
 }
@@ -313,34 +319,35 @@ body {
   outline: none;
   border-color: var(--primary);
   background-color: var(--bg-card);
-  box-shadow: 0 0 0 4px var(--primary-light);
+  box-shadow: 0 0 0 3px var(--primary-light);
 }
-.dark-textarea { resize: vertical; min-height: 110px; }
+.dark-textarea { resize: vertical; min-height: 90px; }
 
-.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
-.grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; }
 
 .option-btn {
   background-color: var(--bg-elevated);
   border: 1.5px solid var(--border-light);
-  padding: 15px 12px;
+  padding: 10px 6px;
   border-radius: var(--radius-md);
   color: var(--text-secondary);
   font-family: inherit;
   font-weight: 700;
-  font-size: 13.5px;
+  font-size: 11.5px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   transition: all .2s ease;
+  line-height: 1.3;
 }
-.option-btn.row-btn { flex-direction: row; justify-content: center; gap: 10px; }
+.option-btn.row-btn { flex-direction: row; justify-content: center; gap: 6px; font-size: 11.5px; padding: 10px 4px; }
 .option-btn:hover { background-color: var(--bg-hover); border-color: var(--border-medium); }
-.option-btn.active-blue { background-color: var(--primary-light); border-color: var(--primary); color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); font-weight: 800; }
-.option-btn.active-pink { background-color: var(--girls-bg); border-color: var(--girls-color); color: var(--girls-color); box-shadow: 0 0 0 3px var(--girls-bg); font-weight: 800; }
-.option-btn.active-red { background-color: var(--error-bg); border-color: var(--error); color: var(--error); box-shadow: 0 0 0 3px var(--error-bg); font-weight: 800; }
+.option-btn.active-blue { background-color: var(--primary-light); border-color: var(--primary); color: var(--primary); box-shadow: 0 0 0 2px var(--primary-light); font-weight: 800; }
+.option-btn.active-pink { background-color: var(--girls-bg); border-color: var(--girls-color); color: var(--girls-color); box-shadow: 0 0 0 2px var(--girls-bg); font-weight: 800; }
+.option-btn.active-red { background-color: var(--error-bg); border-color: var(--error); color: var(--error); box-shadow: 0 0 0 2px var(--error-bg); font-weight: 800; }
 
 .submit-btn {
   background-color: var(--primary);
@@ -348,15 +355,15 @@ body {
   width: 100%;
   border: none;
   border-radius: var(--radius-md);
-  padding: 17px;
-  font-size: 16px;
+  padding: 13px;
+  font-size: 14px;
   font-weight: 800;
   font-family: inherit;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   transition: all .3s ease;
 }
 .submit-btn:hover:not(:disabled) {
@@ -371,83 +378,84 @@ body {
   background-color: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 20px;
-  margin-bottom: 16px;
+  padding: 14px 12px;
+  margin-bottom: 12px;
   box-shadow: var(--shadow-sm);
   transition: var(--transition-theme);
 }
 .msg-card:hover { box-shadow: var(--shadow-md); }
-.msg-card.complaint-card { border-right: 4px solid var(--error); background: linear-gradient(90deg, var(--bg-card) 0%, var(--error-bg) 100%); }
+.msg-card.complaint-card { border-right: 3px solid var(--error); background: linear-gradient(90deg, var(--bg-card) 0%, var(--error-bg) 100%); }
 .badge-type {
-  font-size: 11.5px;
+  font-size: 10.5px;
   font-weight: 800;
-  padding: 5px 12px;
+  padding: 3px 8px;
   border-radius: var(--radius-sm);
   background-color: var(--primary-light);
   color: var(--primary);
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 .badge-type.complaint { background-color: var(--error-bg); color: var(--error); }
 .badge-place {
-  font-size: 11.5px;
+  font-size: 10.5px;
   font-weight: 700;
   color: var(--text-secondary);
   background-color: var(--bg-body);
-  padding: 5px 12px;
+  padding: 3px 8px;
   border-radius: var(--radius-sm);
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 .reply-box {
   background-color: var(--bg-elevated);
   border: 1px dashed var(--border-medium);
-  padding: 16px;
+  padding: 10px 12px;
   border-radius: var(--radius-md);
-  margin-top: 16px;
+  margin-top: 10px;
   position: relative;
 }
 .reply-box::before {
   content: '';
   position: absolute;
   top: -1px;
-  right: 20px;
-  width: 40px;
+  right: 16px;
+  width: 30px;
   height: 3px;
   background: var(--primary);
   border-radius: 0 0 3px 3px;
 }
 
 /* ================== الإحصائيات ================== */
-.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 24px; }
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 18px; }
 .stat-box {
   background-color: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
-  padding: 16px 12px;
+  padding: 10px 6px;
   text-align: center;
   box-shadow: var(--shadow-sm);
   transition: var(--transition-theme);
 }
 .stat-box:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-.stat-num { font-size: 26px; font-weight: 900; color: var(--text-main); margin-top: 6px; line-height: 1.2; }
+.stat-num { font-size: 20px; font-weight: 900; color: var(--text-main); margin-top: 4px; line-height: 1.2; }
 
 .action-btn {
   background-color: var(--bg-body);
   border: 1px solid var(--border-light);
   color: var(--text-main);
-  padding: 9px 18px;
+  padding: 7px 12px;
   border-radius: var(--radius-sm);
   font-family: inherit;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 11.5px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   transition: all .2s ease;
+  white-space: nowrap;
 }
 .action-btn:hover { background-color: var(--border-light); border-color: var(--border-medium); }
 .action-btn.primary { background: var(--primary); color: var(--text-on-primary); border-color: var(--primary); }
@@ -458,28 +466,28 @@ body {
 .seg-tabs {
   display: flex;
   background: var(--bg-body);
-  padding: 5px;
+  padding: 4px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-light);
-  margin-bottom: 24px;
-  gap: 4px;
+  margin-bottom: 18px;
+  gap: 3px;
 }
 .seg-tab {
   flex: 1;
   background: transparent;
   border: none;
-  padding: 11px;
+  padding: 9px 6px;
   border-radius: var(--radius-sm);
   font-family: inherit;
   font-weight: 700;
-  font-size: 13.5px;
+  font-size: 11.5px;
   color: var(--text-muted);
   cursor: pointer;
   transition: all .25s;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 4px;
 }
 .seg-tab:hover { color: var(--text-secondary); }
 .seg-tab.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-sm); font-weight: 800; }
@@ -488,15 +496,15 @@ body {
 .user-chip {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: var(--primary-light);
   color: var(--primary);
-  padding: 6px 12px;
+  padding: 4px 10px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   border: 1px solid var(--primary-soft);
-  max-width: 220px;
+  max-width: 180px;
 }
 .user-chip .u-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .user-chip button {
@@ -504,22 +512,22 @@ body {
   border: none;
   color: var(--primary);
   cursor: pointer;
-  font-size: 12px;
+  font-size: 11px;
   padding: 0;
   display: flex;
 }
 
 /* ================== التنبيهات ================== */
 .alert {
-  padding: 12px 16px;
+  padding: 9px 12px;
   border-radius: var(--radius-sm);
-  font-size: 13px;
+  font-size: 11.5px;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: flex-start;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 .alert-error { background: var(--error-bg); color: var(--error); border: 1px solid rgba(199,58,58,.2); }
 .alert-success { background: var(--success-bg); color: var(--success); border: 1px solid rgba(30,142,107,.2); }
@@ -536,30 +544,30 @@ body {
   justify-content: center;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  padding: 20px;
+  padding: 14px;
 }
 .modal-card {
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   background: var(--bg-card);
   border-radius: var(--radius-xl);
-  padding: 30px 26px;
+  padding: 22px 18px;
   box-shadow: var(--shadow-xl);
   border: 1px solid var(--border-light);
   position: relative;
   max-height: 92vh;
   overflow-y: auto;
 }
-.modal-card h3 { font-size: 19px; font-weight: 900; color: var(--text-main); text-align: center; margin-bottom: 6px; }
-.modal-card p.sub { font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 22px; }
+.modal-card h3 { font-size: 17px; font-weight: 900; color: var(--text-main); text-align: center; margin-bottom: 4px; }
+.modal-card p.sub { font-size: 11px; color: var(--text-muted); text-align: center; margin-bottom: 16px; }
 .modal-close {
   position: absolute;
-  top: 14px;
-  left: 14px;
+  top: 10px;
+  left: 10px;
   background: var(--bg-body);
   border: 1px solid var(--border-light);
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -567,6 +575,7 @@ body {
   cursor: pointer;
   color: var(--text-secondary);
   transition: all .2s;
+  font-size: 13px;
 }
 .modal-close:hover { background: var(--error-bg); color: var(--error); }
 
@@ -583,44 +592,46 @@ body {
   text-align: center;
   border-radius: var(--radius-lg);
   backdrop-filter: blur(6px);
-  padding: 24px;
+  padding: 18px;
 }
 .check-circle {
-  width: 72px;
-  height: 72px;
+  width: 60px;
+  height: 60px;
   background-color: var(--success);
   color: #fff;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
-  margin-bottom: 18px;
+  font-size: 26px;
+  margin-bottom: 14px;
   box-shadow: 0 8px 24px rgba(30,142,107,.25);
 }
 
 /* ================== التوست ================== */
 .toast-container {
   position: fixed;
-  bottom: 28px;
+  bottom: 18px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
+  z-index: 1100;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
+  width: 100%;
+  padding: 0 14px;
 }
 .toast-item {
   background-color: var(--bg-toast);
   color: #fff;
-  padding: 13px 26px;
+  padding: 10px 18px;
   border-radius: var(--radius-sm);
-  font-size: 13.5px;
+  font-size: 12px;
   font-weight: 700;
   box-shadow: var(--shadow-lg);
   animation: slideUp .35s;
-  max-width: 90vw;
+  max-width: 100%;
   text-align: center;
 }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -630,29 +641,248 @@ body {
 @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }
 
 /* ================== سكرول ================== */
-::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-body); }
 ::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
-/* ================== استجابة ================== */
-@media (max-width: 700px) {
-  .header-inner { padding: 0 16px; justify-content: center; }
-  .brand-box { width: 100%; justify-content: center; }
-  .nav-pills { width: 100%; justify-content: center; }
-  .nav-btn { flex: 1; justify-content: center; padding: 8px 6px; font-size: 11.5px; }
-  .theme-toggle { position: absolute; top: 14px; left: 16px; width: 36px; height: 36px; font-size: 13px; }
-  .top-header { position: relative; }
-  .main-container { padding: 0 16px; margin: 20px auto; }
-  .card-dark { padding: 20px; }
-  .grid-3, .grid-2 { grid-template-columns: 1fr; }
-  .stats-grid { grid-template-columns: repeat(2,1fr); }
-  .timer-grid { gap: 8px; }
-  .timer-box { width: 68px; padding: 10px 6px; }
-  .timer-num { font-size: 22px; }
-  .submit-btn { padding: 15px; font-size: 15px; }
+/* ================== استجابة دقيقة للموبايل ================== */
+@media (max-width: 480px) {
+  .header-inner { padding: 0 10px; gap: 6px; }
+  .brand-logo { width: 30px; height: 30px; }
+  .brand-title { font-size: 15px; }
+  .brand-sub { font-size: 8.5px; }
+  .nav-btn { font-size: 10px; padding: 6px 6px; gap: 3px; }
+  .badge-count { font-size: 9px; padding: 1px 4px; min-width: 14px; }
+  .theme-toggle { width: 30px; height: 30px; font-size: 11px; }
+  .main-container { padding: 0 10px; margin: 14px auto; }
+  .card-dark { padding: 14px 12px; margin-bottom: 14px; }
+  .timer-heading { font-size: 15px; }
+  .meeting-time-badge { font-size: 11px; padding: 4px 10px; margin-bottom: 14px; }
+  .timer-box { width: 54px; padding: 6px 4px; }
+  .timer-num { font-size: 18px; }
+  .timer-label { font-size: 8.5px; }
+  .timer-note { font-size: 10.5px; }
+  .form-header h2 { font-size: 16px; }
+  .form-header p { font-size: 11px; }
+  .field-label { font-size: 12px; }
+  .dark-input, .dark-textarea, .dark-select { font-size: 12px; padding: 9px 10px; }
+  .option-btn { font-size: 10.5px; padding: 8px 4px; gap: 3px; }
+  .option-btn.row-btn { font-size: 10.5px; padding: 8px 3px; }
+  .option-btn i { font-size: 14px !important; }
+  .grid-3 { gap: 5px; }
+  .grid-2 { gap: 5px; }
+  .submit-btn { font-size: 13px; padding: 11px; }
+  .stats-grid { grid-template-columns: repeat(4,1fr); gap: 5px; }
+  .stat-num { font-size: 16px; }
+  .stat-box div:first-child { font-size: 9.5px !important; }
+  .action-btn { font-size: 10.5px; padding: 6px 8px; }
+  .msg-card { padding: 10px 9px; }
+  .badge-type, .badge-place { font-size: 9.5px; padding: 2px 6px; }
+  .reply-box { padding: 8px 10px; }
+  .modal-card { padding: 18px 14px; }
+  .modal-card h3 { font-size: 15px; }
+  .modal-card p.sub { font-size: 10px; margin-bottom: 12px; }
+  .seg-tab { font-size: 10.5px; padding: 7px 4px; }
+  .alert { font-size: 10.5px; padding: 7px 10px; }
+  .user-chip { font-size: 10px; padding: 3px 8px; max-width: 150px; }
+  .toast-item { font-size: 11px; padding: 8px 14px; }
 }
+
+@media (max-width: 360px) {
+  .nav-btn { font-size: 9px; padding: 5px 4px; gap: 2px; }
+  .brand-title { font-size: 13px; }
+  .brand-sub { font-size: 7.5px; }
+  .timer-box { width: 46px; }
+  .timer-num { font-size: 15px; }
+  .timer-label { font-size: 7.5px; }
+  .option-btn { font-size: 9.5px; }
+  .option-btn.row-btn { font-size: 9.5px; }
+  .stat-num { font-size: 14px; }
+  .stat-box div:first-child { font-size: 8.5px !important; }
+}
+
 .hide { display: none; }
+
+/* ================== تبويب المميزات (أهم المقترحات/الشكاوى) ================== */
+.featured-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+  background: var(--bg-body);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  flex-wrap: wrap;
+}
+.featured-tab {
+  flex: 1 1 auto;
+  min-width: 100px;
+  background: transparent;
+  border: none;
+  padding: 9px 8px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all .25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.featured-tab:hover { color: var(--text-secondary); }
+.featured-tab.active {
+  background: var(--bg-card);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+  font-weight: 800;
+}
+
+/* ================== زر تمييز ================== */
+.star-btn {
+  background: transparent;
+  border: 1.5px solid var(--border-light);
+  color: var(--text-muted);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.star-btn:hover { border-color: var(--secondary); color: var(--secondary); transform: scale(1.1); }
+.star-btn.starred {
+  background: var(--secondary-light);
+  border-color: var(--secondary);
+  color: var(--secondary);
+}
+
+.featured-card {
+  border-right: 3px solid var(--secondary) !important;
+  background: linear-gradient(90deg, var(--bg-card) 0%, var(--secondary-light) 100%) !important;
+}
+
+/* ================== نافذة الإعدادات ================== */
+.settings-modal-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: 24px 20px;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-light);
+  position: relative;
+  max-height: 92vh;
+  overflow-y: auto;
+  animation: modalIn .3s ease-out;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(.94) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.settings-modal-card h3 {
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--text-main);
+  text-align: center;
+  margin-bottom: 4px;
+}
+.settings-modal-card p.sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 18px;
+}
+.settings-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  background: var(--primary-light);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  font-size: 20px;
+}
+.settings-section-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.settings-divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 16px 0;
+  position: relative;
+}
+.settings-divider span {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background: var(--bg-card);
+  padding: 0 10px;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: .5px;
+}
+.settings-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+@media (max-width: 480px) {
+  .settings-row { grid-template-columns: 1fr; }
+}
+.logout-btn {
+  background: var(--error-bg);
+  color: var(--error);
+  border: 1.5px solid rgba(199,58,58,.3);
+  width: 100%;
+  padding: 11px;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  transition: all .25s ease;
+}
+.logout-btn:hover {
+  background: var(--error);
+  color: #fff;
+  border-color: var(--error);
+}
+
+/* تنسيق أزرار رأس اللوحة */
+.admin-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.admin-actions .action-btn {
+  padding: 8px 13px;
+  font-size: 12px;
+  border-radius: var(--radius-md);
+}
 </style>
 </head>
 <body>
@@ -672,14 +902,14 @@ body {
 
     <div class="nav-pills">
       <button type="button" id="tabBtnHome" class="nav-btn active-home" onclick="switchTab('home')">
-        <i class="fa-solid fa-house" style="font-size:12px;"></i> الرئيسية
+        <i class="fa-solid fa-house" style="font-size:10px;"></i> الرئيسية
       </button>
       <button type="button" id="tabBtnReplies" class="nav-btn" onclick="switchTab('replies')">
-        <i class="fa-solid fa-reply" style="font-size:12px;"></i> <span>الردود</span>
+        <i class="fa-solid fa-reply" style="font-size:10px;"></i> <span>الردود</span>
         <span id="repliesBadge" class="badge-count">0</span>
       </button>
       <button type="button" id="tabBtnAdmin" class="nav-btn" onclick="handleCommitteeClick()">
-        <i class="fa-solid fa-lock" style="font-size:12px;"></i> <span>اللجنة</span>
+        <i class="fa-solid fa-lock" style="font-size:10px;"></i> <span>اللجنة</span>
       </button>
     </div>
 
@@ -713,8 +943,8 @@ body {
     <div class="card-dark">
       <div id="successOverlay" class="overlay-screen is-hidden">
         <div class="check-circle"><i class="fa-solid fa-check"></i></div>
-        <h3 style="font-size:22px;font-weight:900;margin-bottom:8px;color:var(--text-main);">تم الإرسال بنجاح!</h3>
-        <p style="font-size:13px;color:var(--text-muted);max-width:320px;margin-bottom:22px;">وصلت رسالتك إلى اللجنة الاجتماعية، وسيتم عرضها في الاجتماع القادم ونشر الرد في قسم «الردود».</p>
+        <h3 style="font-size:18px;font-weight:900;margin-bottom:6px;color:var(--text-main);">تم الإرسال بنجاح!</h3>
+        <p style="font-size:11.5px;color:var(--text-muted);max-width:280px;margin-bottom:16px;">وصلت رسالتك إلى اللجنة الاجتماعية، وسيتم عرضها في الاجتماع القادم ونشر الرد في قسم «الردود».</p>
         <button type="button" class="action-btn primary" onclick="resetVoiceForm()"><i class="fa-solid fa-plus"></i> إرسال رسالة أخرى</button>
       </div>
 
@@ -726,7 +956,7 @@ body {
       <form id="voiceForm" onsubmit="handleFormSubmit(event)" novalidate>
         <div class="field-group">
           <div class="field-label-row">
-            <label for="studentName" class="field-label">1. الاسم <span style="font-size:12px;font-weight:400;color:var(--text-muted);">(اختياري)</span></label>
+            <label for="studentName" class="field-label">1. الاسم <span style="font-size:10px;font-weight:400;color:var(--text-muted);">(اختياري)</span></label>
             <span id="anonBadge" class="anon-pill"><i class="fa-solid fa-user-secret"></i> مجهول الهوية</span>
           </div>
           <input type="text" id="studentName" class="dark-input" oninput="updateAnonState()" placeholder="اتركه فارغاً للإرسال بدون اسم..." />
@@ -736,16 +966,16 @@ body {
           <label class="field-label">2. السكن / مبنى المدرسة <span style="color:var(--error);">*</span></label>
           <div class="grid-3">
             <button type="button" id="btnPlaceDorm" class="option-btn active-blue" onclick="setMainPlace('dorm')">
-              <i class="fa-solid fa-bed" style="font-size:18px;color:var(--primary);"></i><span>السكن</span>
+              <i class="fa-solid fa-bed" style="font-size:16px;color:var(--primary);"></i><span>السكن</span>
             </button>
             <button type="button" id="btnPlaceSchool" class="option-btn" onclick="setMainPlace('school')">
-              <i class="fa-solid fa-school" style="font-size:18px;color:var(--secondary);"></i><span>مبنى المدرسة</span>
+              <i class="fa-solid fa-school" style="font-size:16px;color:var(--secondary);"></i><span>مبنى المدرسة</span>
             </button>
             <button type="button" id="btnPlaceOther" class="option-btn" onclick="setMainPlace('other')">
-              <i class="fa-solid fa-location-dot" style="font-size:18px;color:var(--primary);"></i><span>أخرى</span>
+              <i class="fa-solid fa-location-dot" style="font-size:16px;color:var(--primary);"></i><span>أخرى</span>
             </button>
           </div>
-          <div id="dormSubBox" class="grid-2" style="margin-top:10px;">
+          <div id="dormSubBox" class="grid-2" style="margin-top:8px;">
             <button type="button" id="btnSubBoys" class="option-btn row-btn active-blue" onclick="setDormSide('boys')">
               <i class="fa-solid fa-mars" style="color:var(--boys-color);"></i><span>سكن بنين</span>
             </button>
@@ -753,14 +983,14 @@ body {
               <i class="fa-solid fa-venus" style="color:var(--girls-color);"></i><span>سكن بنات</span>
             </button>
           </div>
-          <div id="otherPlaceWrap" class="is-hidden" style="margin-top:12px;">
+          <div id="otherPlaceWrap" class="is-hidden" style="margin-top:10px;">
             <input type="text" id="otherPlaceInput" class="dark-input" placeholder="اكتب المكان بالتحديد (مثال: المطعم، المعمل...)" />
           </div>
         </div>
 
         <div class="field-group">
           <label class="field-label">3. اقتراح / شكوى <span style="color:var(--error);">*</span></label>
-          <div class="grid-2" style="margin-bottom:12px;">
+          <div class="grid-2" style="margin-bottom:10px;">
             <button type="button" id="btnKindSuggest" class="option-btn row-btn active-blue" onclick="setMsgKind('اقتراح')"><span>💡</span><span>اقتراح</span></button>
             <button type="button" id="btnKindComplaint" class="option-btn row-btn" onclick="setMsgKind('شكوى')"><span>⚠️</span><span>شكوى</span></button>
           </div>
@@ -777,13 +1007,13 @@ body {
 
   <!-- ========== الردود ========== -->
   <section id="repliesSection" class="is-hidden">
-    <div class="card-dark" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <div class="card-dark" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
       <div>
-        <h2 style="font-size:18px;font-weight:900;color:var(--text-main);">
-          <i class="fa-solid fa-comments" style="color:var(--primary);margin-left:6px;"></i>
+        <h2 style="font-size:16px;font-weight:900;color:var(--text-main);">
+          <i class="fa-solid fa-comments" style="color:var(--primary);margin-left:4px;"></i>
           ردود اللجنة ومديرة المدرسة
         </h2>
-        <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">جميع المقترحات والشكاوى التي تمت مناقشتها والرد عليها رسمياً</p>
+        <p style="font-size:11px;color:var(--text-muted);margin-top:2px;">جميع المقترحات والشكاوى التي تمت مناقشتها والرد عليها رسمياً</p>
       </div>
       <button type="button" class="action-btn" onclick="fetchAllMessages()"><i class="fa-solid fa-rotate"></i> تحديث</button>
     </div>
@@ -792,29 +1022,48 @@ body {
 
   <!-- ========== اللجنة ========== -->
   <section id="adminSection" class="is-hidden">
-    <div class="card-dark" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <!-- رأس اللجنة -->
+    <div class="card-dark" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
       <div>
-        <h2 style="font-size:19px;font-weight:900;color:var(--text-main);">لوحة تحكم اللجنة الاجتماعية</h2>
-        <p style="font-size:12px;color:var(--text-muted);margin-top:2px;">مراجعة الرسائل، كتابة الردود الرسمية، وتصدير تقرير الواتساب</p>
-        <div id="adminUserChip" style="margin-top:8px;"></div>
+        <h2 style="font-size:16px;font-weight:900;color:var(--text-main);">لوحة تحكم اللجنة الاجتماعية</h2>
+        <p style="font-size:11px;color:var(--text-muted);margin-top:1px;">مراجعة الرسائل، كتابة الردود الرسمية، وتصدير تقرير الواتساب</p>
+        <div id="adminUserChip" style="margin-top:6px;"></div>
       </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <div class="admin-actions">
         <button type="button" class="action-btn" onclick="fetchAllMessages()"><i class="fa-solid fa-rotate"></i> تحديث</button>
         <button type="button" class="action-btn" style="background:var(--secondary);color:#fff;border-color:var(--secondary);" onclick="exportWhatsApp()">
           <i class="fa-brands fa-whatsapp"></i> نسخ للواتساب
+        </button>
+        <button type="button" class="action-btn" onclick="openSettingsModal()">
+          <i class="fa-solid fa-gear"></i> الإعدادات
         </button>
         <button type="button" class="action-btn danger" onclick="clearAllMessages()"><i class="fa-solid fa-trash"></i> مسح الكل</button>
       </div>
     </div>
 
-    <div class="stats-grid">
-      <div class="stat-box"><div style="font-size:12px;color:var(--text-muted);font-weight:700;">الإجمالي</div><div id="statTotal" class="stat-num">0</div></div>
-      <div class="stat-box" style="border-bottom:3px solid var(--primary);"><div style="font-size:12px;color:var(--primary);font-weight:700;">💡 مقترحات</div><div id="statSuggest" class="stat-num">0</div></div>
-      <div class="stat-box" style="border-bottom:3px solid var(--error);"><div style="font-size:12px;color:var(--error);font-weight:700;">⚠️ شكاوى</div><div id="statComplaint" class="stat-num">0</div></div>
-      <div class="stat-box" style="border-bottom:3px solid var(--secondary);"><div style="font-size:12px;color:var(--secondary);font-weight:700;">✅ تم الرد</div><div id="statReplied" class="stat-num">0</div></div>
+    <!-- ★★★ تبويبات العرض (الكل / أهم المقترحات / أهم الشكاوى) ★★★ -->
+    <div class="featured-tabs">
+      <button type="button" class="featured-tab active" data-view="all" onclick="switchAdminView('all')">
+        <i class="fa-solid fa-list"></i> الكل
+      </button>
+      <button type="button" class="featured-tab" data-view="featured-suggest" onclick="switchAdminView('featured-suggest')">
+        <i class="fa-solid fa-star"></i> أهم المقترحات
+      </button>
+      <button type="button" class="featured-tab" data-view="featured-complaint" onclick="switchAdminView('featured-complaint')">
+        <i class="fa-solid fa-triangle-exclamation"></i> أهم الشكاوى
+      </button>
     </div>
 
-    <div class="card-dark grid-2" style="padding:18px;">
+    <!-- الإحصائيات -->
+    <div class="stats-grid">
+      <div class="stat-box"><div style="font-size:10px;color:var(--text-muted);font-weight:700;">الإجمالي</div><div id="statTotal" class="stat-num">0</div></div>
+      <div class="stat-box" style="border-bottom:2px solid var(--primary);"><div style="font-size:10px;color:var(--primary);font-weight:700;">💡 مقترحات</div><div id="statSuggest" class="stat-num">0</div></div>
+      <div class="stat-box" style="border-bottom:2px solid var(--error);"><div style="font-size:10px;color:var(--error);font-weight:700;">⚠️ شكاوى</div><div id="statComplaint" class="stat-num">0</div></div>
+      <div class="stat-box" style="border-bottom:2px solid var(--secondary);"><div style="font-size:10px;color:var(--secondary);font-weight:700;">✅ تم الرد</div><div id="statReplied" class="stat-num">0</div></div>
+    </div>
+
+    <!-- الفلاتر -->
+    <div class="card-dark grid-2" style="padding:12px;">
       <select id="adminFilterPlace" class="dark-select" onchange="renderAdminCards()">
         <option value="ALL">كل الأماكن (السكن والمدرسة)</option>
         <option value="سكن بنين">سكن بنين فقط</option>
@@ -834,14 +1083,14 @@ body {
 
 </main>
 
-<!-- ================== مودال الدخول (يظهر فقط عند الضغط على اللجنة) ================== -->
+<!-- ================== مودال الدخول ================== -->
 <div id="pinModal" class="modal-backdrop is-hidden">
   <div class="modal-card">
     <button type="button" class="modal-close" onclick="closePinPopup()" aria-label="إغلاق">
       <i class="fa-solid fa-xmark"></i>
     </button>
 
-    <div style="width:52px;height:52px;border-radius:16px;background:var(--primary-light);color:var(--primary);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;">
+    <div style="width:44px;height:44px;border-radius:14px;background:var(--primary-light);color:var(--primary);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:18px;">
       <i class="fa-solid fa-shield-halved"></i>
     </div>
     <h3>دخول اللجنة الاجتماعية</h3>
@@ -858,7 +1107,6 @@ body {
 
     <div id="pinErrorMsg" class="alert alert-error is-hidden"><i class="fa-solid fa-circle-exclamation"></i><span></span></div>
 
-    <!-- نموذج تسجيل الدخول داخل المودال -->
     <form id="quickLoginForm" onsubmit="handleQuickLogin(event)" novalidate>
       <div class="field-group">
         <label class="field-label" for="quickEmail">البريد الإلكتروني</label>
@@ -874,7 +1122,6 @@ body {
       </button>
     </form>
 
-    <!-- نموذج إنشاء الحساب داخل المودال -->
     <form id="quickRegisterForm" class="is-hidden" onsubmit="handleQuickRegister(event)" novalidate>
       <div class="field-group">
         <label class="field-label" for="qregName">الاسم الكامل</label>
@@ -900,6 +1147,51 @@ body {
   </div>
 </div>
 
+<!-- ================== نافذة الإعدادات (Modal) ================== -->
+<div id="settingsModal" class="modal-backdrop is-hidden">
+  <div class="settings-modal-card">
+    <button type="button" class="modal-close" onclick="closeSettingsModal()" aria-label="إغلاق">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div class="settings-icon"><i class="fa-solid fa-gear"></i></div>
+    <h3>الإعدادات</h3>
+    <p class="sub">إدارة حسابك في اللجنة الاجتماعية</p>
+
+    <div class="settings-section-title">
+      <i class="fa-solid fa-key"></i> تغيير كلمة المرور
+    </div>
+
+    <form id="changePasswordForm" onsubmit="handleChangePassword(event)" novalidate>
+      <div class="field-group" style="margin-bottom:10px;">
+        <label class="field-label" for="cpOld">كلمة المرور الحالية</label>
+        <input type="password" id="cpOld" class="dark-input" placeholder="••••••••" dir="ltr" style="text-align:left;" required />
+      </div>
+      <div class="settings-row">
+        <div class="field-group" style="margin-bottom:0;">
+          <label class="field-label" for="cpNew">كلمة المرور الجديدة</label>
+          <input type="password" id="cpNew" class="dark-input" placeholder="6 أحرف على الأقل" dir="ltr" style="text-align:left;" minlength="6" required />
+        </div>
+        <div class="field-group" style="margin-bottom:0;">
+          <label class="field-label" for="cpNew2">تأكيد كلمة المرور</label>
+          <input type="password" id="cpNew2" class="dark-input" placeholder="أعد الكتابة" dir="ltr" style="text-align:left;" minlength="6" required />
+        </div>
+      </div>
+      <div id="cpErrorMsg" class="alert alert-error is-hidden" style="margin-top:10px;"><i class="fa-solid fa-circle-exclamation"></i><span></span></div>
+      <div id="cpSuccessMsg" class="alert alert-success is-hidden" style="margin-top:10px;"><i class="fa-solid fa-circle-check"></i><span></span></div>
+      <button type="submit" class="submit-btn" id="cpSubmitBtn" style="margin-top:12px;font-size:12px;padding:11px;">
+        <i class="fa-solid fa-key"></i> <span>تغيير كلمة المرور</span>
+      </button>
+    </form>
+
+    <div class="settings-divider"><span>لكل</span></div>
+
+    <button type="button" class="logout-btn" onclick="logoutUser()">
+      <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
+    </button>
+  </div>
+</div>
+
 <script>
 /* ================================================================
    الإعدادات
@@ -916,6 +1208,9 @@ let selectedKind = "اقتراح";
 let committeeUnlocked = false;
 let allMessages = [];
 let currentUser = null;
+
+/* حالة تبويب اللجنة */
+let currentAdminView = "all"; // all | featured-suggest | featured-complaint
 
 /* ================================================================
    الوضع الداكن
@@ -1027,6 +1322,7 @@ function logoutUser() {
   currentUser = null;
   clearSession();
   reflectUserUI();
+  closeSettingsModal();
   showToast("تم تسجيل الخروج");
   switchTab("home");
 }
@@ -1061,7 +1357,6 @@ function handleCommitteeClick() {
     switchTab("admin");
     return;
   }
-  // افتح المودال على وضع تسجيل الدخول
   switchModalAuthMode('login');
   hideAlert("pinErrorMsg");
   document.getElementById("quickEmail").value = "";
@@ -1155,7 +1450,7 @@ async function verifyCredentials(email, password) {
 }
 
 /* ================================================================
-   تسجيل الدخول السريع (داخل المودال)
+   تسجيل الدخول السريع
 ================================================================ */
 async function handleQuickLogin(e) {
   e.preventDefault();
@@ -1183,7 +1478,7 @@ async function handleQuickLogin(e) {
 }
 
 /* ================================================================
-   إنشاء حساب سريع (داخل المودال)
+   إنشاء حساب سريع
 ================================================================ */
 async function handleQuickRegister(e) {
   e.preventDefault();
@@ -1202,7 +1497,6 @@ async function handleQuickRegister(e) {
   setBtnLoading("quickRegisterBtn", true, "جاري إنشاء الحساب...");
 
   try {
-    // تحقق من عدم تكرار البريد
     const checkRes = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}.json`);
     if (checkRes.ok) {
       const existing = await checkRes.json();
@@ -1232,7 +1526,7 @@ async function handleQuickRegister(e) {
 
     if (!res.ok) {
       setBtnLoading("quickRegisterBtn", false);
-      return showAlert("pinErrorMsg", "تعذر إنشاء الحساب. تأكد من إعدادات Firebase Rules (يجب السماح بالكتابة).");
+      return showAlert("pinErrorMsg", "تعذر إنشاء الحساب. تأكد من إعدادات Firebase Rules.");
     }
 
     const result = await res.json();
@@ -1341,6 +1635,7 @@ async function handleFormSubmit(e) {
   const newEntry = {
     name: nameVal, building: finalBuilding, type: selectedKind,
     message: msgVal, reply: "",
+    featured: false,
     time: new Date().toLocaleString("ar-EG", { hour: "2-digit", minute: "2-digit", day: "numeric", month: "short" }),
     timestamp: Date.now()
   };
@@ -1431,10 +1726,10 @@ function renderPublicReplies() {
 
   if (repliedItems.length === 0) {
     box.innerHTML = `
-      <div class="card-dark" style="text-align:center;padding:48px 24px;color:var(--text-muted);">
-        <i class="fa-regular fa-comment-dots" style="font-size:36px;margin-bottom:14px;color:var(--border-medium);"></i>
-        <p style="font-weight:800;font-size:15px;color:var(--text-secondary);">لا توجد ردود منشورة حتى الآن</p>
-        <p style="font-size:12px;margin-top:6px;">سيتم نشر الردود هنا عقب اجتماع اللجنة مع مديرة المدرسة.</p>
+      <div class="card-dark" style="text-align:center;padding:36px 18px;color:var(--text-muted);">
+        <i class="fa-regular fa-comment-dots" style="font-size:30px;margin-bottom:10px;color:var(--border-medium);"></i>
+        <p style="font-weight:800;font-size:13px;color:var(--text-secondary);">لا توجد ردود منشورة حتى الآن</p>
+        <p style="font-size:11px;margin-top:4px;">سيتم نشر الردود هنا عقب اجتماع اللجنة مع مديرة المدرسة.</p>
       </div>`;
     return;
   }
@@ -1443,24 +1738,126 @@ function renderPublicReplies() {
     const isComp = item.type === "شكوى";
     return `
       <div class="msg-card ${isComp ? 'complaint-card' : ''}">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-          <div style="display:flex;align-items:center;gap:8px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
             <span class="badge-type ${isComp ? 'complaint' : ''}">${isComp ? '⚠️ شكوى' : '💡 اقتراح'}</span>
             <span class="badge-place">📍 ${escapeHtml(item.building || '')}</span>
           </div>
-          <span style="font-size:11px;color:var(--text-muted);font-weight:600;">👤 ${escapeHtml(item.name || 'مجهول')}</span>
+          <span style="font-size:10px;color:var(--text-muted);font-weight:600;">👤 ${escapeHtml(item.name || 'مجهول')}</span>
         </div>
-        <p style="font-size:14px;color:var(--text-secondary);white-space:pre-line;line-height:1.7;">${escapeHtml(item.message || '')}</p>
+        <p style="font-size:12.5px;color:var(--text-secondary);white-space:pre-line;line-height:1.6;">${escapeHtml(item.message || '')}</p>
         <div class="reply-box">
-          <div style="font-size:12px;font-weight:900;color:var(--primary);margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+          <div style="font-size:10.5px;font-weight:900;color:var(--primary);margin-bottom:4px;display:flex;align-items:center;gap:4px;">
             <i class="fa-solid fa-circle-check"></i> رد اللجنة الاجتماعية وإدارة المدرسة:
           </div>
-          <p style="font-size:14px;color:var(--text-main);white-space:pre-line;line-height:1.7;">${escapeHtml(item.reply)}</p>
+          <p style="font-size:12.5px;color:var(--text-main);white-space:pre-line;line-height:1.6;">${escapeHtml(item.reply)}</p>
         </div>
       </div>`;
   }).join("");
 }
 
+/* ================================================================
+   نافذة الإعدادات (Modal)
+================================================================ */
+function openSettingsModal() {
+  if (!currentUser) {
+    showToast("يجب تسجيل الدخول أولاً");
+    return;
+  }
+  hideAlert("cpErrorMsg");
+  hideAlert("cpSuccessMsg");
+  document.getElementById("changePasswordForm").reset();
+  document.getElementById("settingsModal").classList.remove("is-hidden");
+}
+
+function closeSettingsModal() {
+  document.getElementById("settingsModal").classList.add("is-hidden");
+  hideAlert("cpErrorMsg");
+  hideAlert("cpSuccessMsg");
+}
+
+/* ================================================================
+   تبويبات العرض (الكل / أهم المقترحات / أهم الشكاوى)
+================================================================ */
+function switchAdminView(view) {
+  currentAdminView = view;
+  document.querySelectorAll(".featured-tab").forEach(t => t.classList.remove("active"));
+  const active = document.querySelector(`.featured-tab[data-view="${view}"]`);
+  if (active) active.classList.add("active");
+  renderAdminCards();
+}
+
+/* ================================================================
+   تغيير كلمة المرور
+================================================================ */
+async function handleChangePassword(e) {
+  e.preventDefault();
+  hideAlert("cpErrorMsg");
+  hideAlert("cpSuccessMsg");
+  if (!currentUser) return showAlert("cpErrorMsg", "يجب تسجيل الدخول أولاً.");
+
+  const oldPwd = document.getElementById("cpOld").value;
+  const newPwd = document.getElementById("cpNew").value;
+  const newPwd2 = document.getElementById("cpNew2").value;
+
+  if (!oldPwd) return showAlert("cpErrorMsg", "أدخل كلمة المرور الحالية.");
+  if (!newPwd || newPwd.length < 6) return showAlert("cpErrorMsg", "كلمة المرور الجديدة 6 أحرف على الأقل.");
+  if (newPwd !== newPwd2) return showAlert("cpErrorMsg", "كلمتا المرور غير متطابقتين.");
+
+  setBtnLoading("cpSubmitBtn", true, "جاري التحقق...");
+
+  try {
+    const verify = await verifyCredentials(currentUser.email, oldPwd);
+    if (!verify.ok) {
+      setBtnLoading("cpSubmitBtn", false);
+      return showAlert("cpErrorMsg", verify.message);
+    }
+
+    const newHash = await hashPassword(newPwd);
+    const res = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}/${encodeURIComponent(currentUser.id)}.json`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ pwdHash: newHash, updatedAt: Date.now() })
+    });
+
+    setBtnLoading("cpSubmitBtn", false);
+
+    if (!res.ok) {
+      return showAlert("cpErrorMsg", "تعذر تحديث كلمة المرور. تأكد من إعدادات Firebase Rules.");
+    }
+
+    document.getElementById("changePasswordForm").reset();
+    showAlert("cpSuccessMsg", "تم تغيير كلمة المرور بنجاح!");
+    showToast("تم تغيير كلمة المرور");
+  } catch (err) {
+    console.error(err);
+    setBtnLoading("cpSubmitBtn", false);
+    showAlert("cpErrorMsg", "حدث خطأ في الاتصال. حاول مرة أخرى.");
+  }
+}
+
+/* ================================================================
+   تمييز رسالة كـ"مهمة"
+================================================================ */
+async function toggleFeatured(id) {
+  const item = allMessages.find(m => m.id === id);
+  if (!item) return;
+  item.featured = !item.featured;
+  setLocalMessages(allMessages);
+  try {
+    await fetchWithTimeout(`${FIREBASE_ENDPOINT}/${encodeURIComponent(id)}.json`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ featured: !!item.featured })
+    });
+  } catch (e) {}
+  renderAdminCards();
+  showToast(item.featured ? "تم تمييز الرسالة كأهم رسالة ⭐" : "تم إلغاء التمييز");
+}
+
+/* ================================================================
+   الفلترة والعرض
+================================================================ */
 function getFilteredAdminItems() {
   const pFilter = document.getElementById("adminFilterPlace").value;
   const kFilter = document.getElementById("adminFilterKind").value;
@@ -1468,18 +1865,30 @@ function getFilteredAdminItems() {
     const b = item.building || "";
     const matchPlace = pFilter === "ALL" || (pFilter === "أخرى" ? b.startsWith("أخرى") : b === pFilter);
     const matchKind = kFilter === "ALL" || item.type === kFilter;
-    return matchPlace && matchKind;
+
+    let matchView = true;
+    if (currentAdminView === "featured-suggest") {
+      matchView = !!item.featured && item.type === "اقتراح";
+    } else if (currentAdminView === "featured-complaint") {
+      matchView = !!item.featured && item.type === "شكوى";
+    }
+
+    return matchPlace && matchKind && matchView;
   });
 }
 
 function renderAdminCards() {
   const container = document.getElementById("adminCardsList");
+  if (!container) return;
   const list = getFilteredAdminItems();
   if (list.length === 0) {
+    const emptyMsg = currentAdminView === "all"
+      ? "لا توجد رسائل مطابقة حالياً"
+      : "لا توجد رسائل مميزة في هذا التبويب. اضغط ⭐ على أي رسالة لتمييزها.";
     container.innerHTML = `
-      <div class="card-dark" style="text-align:center;padding:48px 24px;color:var(--text-muted);">
-        <i class="fa-regular fa-folder-open" style="font-size:32px;margin-bottom:12px;color:var(--border-medium);"></i>
-        <p style="font-weight:800;font-size:14px;">لا توجد رسائل مطابقة حالياً</p>
+      <div class="card-dark" style="text-align:center;padding:36px 18px;color:var(--text-muted);">
+        <i class="fa-regular fa-folder-open" style="font-size:28px;margin-bottom:10px;color:var(--border-medium);"></i>
+        <p style="font-weight:800;font-size:13px;">${emptyMsg}</p>
       </div>`;
     return;
   }
@@ -1487,31 +1896,38 @@ function renderAdminCards() {
   container.innerHTML = list.map((item, idx) => {
     const isComp = item.type === "شكوى";
     const hasReply = item.reply && String(item.reply).trim() !== "";
+    const isFeatured = !!item.featured;
     return `
-      <div class="msg-card ${isComp ? 'complaint-card' : ''}">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+      <div class="msg-card ${isComp ? 'complaint-card' : ''} ${isFeatured ? 'featured-card' : ''}">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
             <span class="badge-type ${isComp ? 'complaint' : ''}">${isComp ? '⚠️ شكوى' : '💡 اقتراح'}</span>
             <span class="badge-place">📍 ${escapeHtml(item.building || '')}</span>
-            ${hasReply ? '<span style="font-size:11px;font-weight:800;padding:3px 10px;border-radius:6px;background:var(--secondary-light);color:var(--secondary);border:1px solid rgba(201,154,46,.2);">✅ تم الرد</span>' : ''}
+            ${hasReply ? '<span style="font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;background:var(--secondary-light);color:var(--secondary);border:1px solid rgba(201,154,46,.2);">✅ تم الرد</span>' : ''}
+            ${isFeatured ? '<span style="font-size:10px;font-weight:800;padding:2px 8px;border-radius:6px;background:var(--secondary);color:#fff;">⭐ مهمة</span>' : ''}
           </div>
-          <button type="button" class="action-btn" style="background:transparent;color:var(--text-muted);padding:5px 10px;border-color:transparent;" onclick="deleteMessageByIndex(${idx})" title="حذف">
-            <i class="fa-solid fa-trash" style="font-size:13px;"></i>
-          </button>
+          <div style="display:flex;align-items:center;gap:4px;">
+            <button type="button" class="star-btn ${isFeatured ? 'starred' : ''}" onclick="toggleFeatured('${escapeHtml(item.id)}')" title="${isFeatured ? 'إلغاء التمييز' : 'تمييز كأهم رسالة'}">
+              <i class="fa-solid fa-star"></i>
+            </button>
+            <button type="button" class="action-btn" style="background:transparent;color:var(--text-muted);padding:4px 8px;border-color:transparent;" onclick="deleteMessageByIndex(${idx})" title="حذف">
+              <i class="fa-solid fa-trash" style="font-size:12px;"></i>
+            </button>
+          </div>
         </div>
-        <p style="font-size:14px;color:var(--text-secondary);white-space:pre-line;margin-bottom:14px;line-height:1.7;">${escapeHtml(item.message || '')}</p>
+        <p style="font-size:12.5px;color:var(--text-secondary);white-space:pre-line;margin-bottom:10px;line-height:1.6;">${escapeHtml(item.message || '')}</p>
         ${hasReply ? `
-          <div class="reply-box" style="margin-bottom:14px;">
-            <span style="font-size:12px;font-weight:800;color:var(--primary);">الرد المسجل: </span>
-            <span style="font-size:13px;color:var(--text-main);">${escapeHtml(item.reply)}</span>
+          <div class="reply-box" style="margin-bottom:10px;">
+            <span style="font-size:10.5px;font-weight:800;color:var(--primary);">الرد المسجل: </span>
+            <span style="font-size:11.5px;color:var(--text-main);">${escapeHtml(item.reply)}</span>
           </div>` : ''}
-        <div style="display:flex;gap:8px;margin-bottom:14px;">
-          <input type="text" id="replyInput_${idx}" class="dark-input" style="padding:10px 14px;font-size:12.5px;" value="${escapeHtml(item.reply || '')}" placeholder="اكتب رد اللجنة ليظهر للطلاب..." />
-          <button type="button" class="action-btn" style="background:var(--secondary);color:#fff;border-color:var(--secondary);flex-shrink:0;font-size:12px;" onclick="saveReplyByIndex(${idx})">
-            <i class="fa-solid fa-check" style="font-size:11px;"></i> حفظ
+        <div style="display:flex;gap:6px;margin-bottom:10px;">
+          <input type="text" id="replyInput_${idx}" class="dark-input" style="padding:8px 10px;font-size:11.5px;" value="${escapeHtml(item.reply || '')}" placeholder="اكتب رد اللجنة ليظهر للطلاب..." />
+          <button type="button" class="action-btn" style="background:var(--secondary);color:#fff;border-color:var(--secondary);flex-shrink:0;font-size:11px;" onclick="saveReplyByIndex(${idx})">
+            <i class="fa-solid fa-check" style="font-size:10px;"></i> حفظ
           </button>
         </div>
-        <div style="padding-top:12px;border-top:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--text-muted);flex-wrap:wrap;gap:6px;">
+        <div style="padding-top:8px;border-top:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between;font-size:10px;color:var(--text-muted);flex-wrap:wrap;gap:4px;">
           <span>👤 الاسم: <strong style="color:var(--text-secondary);">${escapeHtml(item.name || 'مجهول')}</strong></span>
           <span>🕒 ${escapeHtml(item.time || '')}</span>
         </div>
