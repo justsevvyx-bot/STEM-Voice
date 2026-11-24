@@ -1194,13 +1194,25 @@ body {
 
 <script>
 /* ================================================================
-   الإعدادات
+   إعدادات Supabase
 ================================================================ */
-const FIREBASE_ENDPOINT = "https://supermarket-438b0-default-rtdb.firebaseio.com/suggestions";
-const ACCOUNTS_ENDPOINT = "https://supermarket-438b0-default-rtdb.firebaseio.com/committeeAccounts";
+const SUPABASE_REST_URL = "https://usmhfjfwvnfhyupikzxd.supabase.co/rest/v1";
+const SUPABASE_KEY = "sb_publishable_7BiwCWhe4RdclXiwL9f-HQ_UFsKjVwR";
+const SUGGESTIONS_ENDPOINT = `${SUPABASE_REST_URL}/suggestions`;
+const ACCOUNTS_ENDPOINT = `${SUPABASE_REST_URL}/committee_accounts`;
+
 const LOCAL_BACKUP_KEY = "sawtak_messages_store_v3";
 const THEME_STORAGE_KEY = "sawtak_theme";
 const SESSION_KEY = "sawtak_committee_session";
+
+function supabaseHeaders(extra = {}) {
+  return {
+    "apikey": SUPABASE_KEY,
+    "Authorization": `Bearer ${SUPABASE_KEY}`,
+    "Content-Type": "application/json",
+    ...extra
+  };
+}
 
 let selectedPlace = "dorm";
 let selectedDormSide = "boys";
@@ -1237,7 +1249,7 @@ function toggleTheme() {
 /* ================================================================
    أدوات مساعدة
 ================================================================ */
-async function fetchWithTimeout(url, options = {}, timeoutMs = 5000) {
+async function fetchWithTimeout(url, options = {}, timeoutMs = 6000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -1394,52 +1406,43 @@ function switchModalAuthMode(mode) {
 }
 
 /* ================================================================
-   التحقق من بيانات الدخول
+   التحقق من بيانات الدخول (Supabase)
 ================================================================ */
 async function verifyCredentials(email, password) {
   try {
     const pwdHash = await hashPassword(password);
-    const res = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}.json`);
+    const res = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}?select=*`, {
+      headers: supabaseHeaders()
+    });
 
     if (!res.ok) {
-      return { ok: false, message: "تعذر الاتصال بقاعدة البيانات. تأكد من إعدادات Firebase Rules." };
+      return { ok: false, message: "تعذر الاتصال بقاعدة البيانات. تأكد من إعدادات Supabase." };
     }
 
-    const data = await res.json();
+    const rows = await res.json();
 
-    if (!data || typeof data !== "object" || data.error) {
+    if (!Array.isArray(rows) || rows.length === 0) {
       return { ok: false, message: "لا توجد حسابات مسجلة حتى الآن. أنشئ حساباً جديداً أولاً." };
     }
 
-    let foundId = null;
-    let foundAcc = null;
+    const matchingAccounts = rows.filter(acc => acc && acc.email && acc.email.toLowerCase() === email);
 
-    for (const [id, acc] of Object.entries(data)) {
-      if (acc && acc.email && acc.email.toLowerCase() === email) {
-        foundId = id;
-        foundAcc = acc;
-        break;
-      }
-    }
-
-    if (!foundAcc) {
+    if (matchingAccounts.length === 0) {
       return { ok: false, message: "لا يوجد حساب بهذا البريد الإلكتروني." };
     }
 
-    if (!foundAcc.pwdHash) {
-      return { ok: false, message: "بيانات الحساب غير مكتملة." };
-    }
+    const validAcc = matchingAccounts.find(acc => acc.pwdHash === pwdHash);
 
-    if (foundAcc.pwdHash !== pwdHash) {
+    if (!validAcc) {
       return { ok: false, message: "كلمة المرور غير صحيحة." };
     }
 
     return {
       ok: true,
       user: {
-        id: foundId,
-        name: foundAcc.name || "مشرف",
-        email: foundAcc.email
+        id: validAcc.id,
+        name: validAcc.name || "مشرف",
+        email: validAcc.email
       }
     };
 
@@ -1478,7 +1481,7 @@ async function handleQuickLogin(e) {
 }
 
 /* ================================================================
-   إنشاء حساب سريع
+   إنشاء حساب سريع (Supabase)
 ================================================================ */
 async function handleQuickRegister(e) {
   e.preventDefault();
@@ -1497,40 +1500,38 @@ async function handleQuickRegister(e) {
   setBtnLoading("quickRegisterBtn", true, "جاري إنشاء الحساب...");
 
   try {
-    const checkRes = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}.json`);
+    const checkRes = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}?select=email`, {
+      headers: supabaseHeaders()
+    });
     if (checkRes.ok) {
       const existing = await checkRes.json();
-      if (existing && typeof existing === "object" && !existing.error) {
-        for (const acc of Object.values(existing)) {
-          if (acc && acc.email && acc.email.toLowerCase() === email) {
-            setBtnLoading("quickRegisterBtn", false);
-            return showAlert("pinErrorMsg", "هذا البريد مسجل بالفعل. جرّب تسجيل الدخول.");
-          }
-        }
+      if (Array.isArray(existing) && existing.some(acc => acc.email && acc.email.toLowerCase() === email)) {
+        setBtnLoading("quickRegisterBtn", false);
+        return showAlert("pinErrorMsg", "هذا البريد مسجل بالفعل. جرّب تسجيل الدخول.");
       }
     }
 
     const pwdHash = await hashPassword(password);
+    const newId = "acc_" + Date.now();
     const newAccount = {
+      id: newId,
       name: name,
       email: email,
       pwdHash: pwdHash,
-      createdAt: Date.now()
+      role: "committee",
+      createdAt: String(Date.now())
     };
 
-    const res = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}.json`, {
+    const res = await fetchWithTimeout(ACCOUNTS_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: supabaseHeaders({ "Prefer": "return=representation" }),
       body: JSON.stringify(newAccount)
     });
 
     if (!res.ok) {
       setBtnLoading("quickRegisterBtn", false);
-      return showAlert("pinErrorMsg", "تعذر إنشاء الحساب. تأكد من إعدادات Firebase Rules.");
+      return showAlert("pinErrorMsg", "تعذر إنشاء الحساب. تأكد من إعدادات Supabase RLS.");
     }
-
-    const result = await res.json();
-    const newId = result && result.name ? result.name : "acc_" + Date.now();
 
     currentUser = { id: newId, name: name, email: email };
     saveSession(currentUser);
@@ -1631,10 +1632,14 @@ async function handleFormSubmit(e) {
   else if (selectedPlace === "school") finalBuilding = "مبنى المدرسة";
   else finalBuilding = otherVal ? `أخرى (${otherVal})` : "أخرى";
 
-  const tempId = "msg_" + Date.now();
+  const savedId = "msg_" + Date.now() + "_" + Math.random().toString(36).slice(2, 6);
   const newEntry = {
-    name: nameVal, building: finalBuilding, type: selectedKind,
-    message: msgVal, reply: "",
+    id: savedId,
+    name: nameVal,
+    building: finalBuilding,
+    type: selectedKind,
+    message: msgVal,
+    reply: "",
     featured: false,
     time: new Date().toLocaleString("ar-EG", { hour: "2-digit", minute: "2-digit", day: "numeric", month: "short" }),
     timestamp: Date.now()
@@ -1645,20 +1650,19 @@ async function handleFormSubmit(e) {
   btn.disabled = true;
   btnTxt.textContent = "جاري الإرسال...";
 
-  let savedId = tempId;
   try {
-    const res = await fetchWithTimeout(`${FIREBASE_ENDPOINT}.json`, {
-      method: "POST", headers: { "Content-Type": "application/json" },
+    await fetchWithTimeout(SUGGESTIONS_ENDPOINT, {
+      method: "POST",
+      headers: supabaseHeaders({ "Prefer": "return=minimal" }),
       body: JSON.stringify(newEntry)
     });
-    if (res.ok) { const r = await res.json(); if (r && r.name) savedId = r.name; }
-  } catch (err) {}
+  } catch (err) { console.error(err); }
 
   const localList = getLocalMessages();
-  localList.unshift({ id: savedId, ...newEntry });
+  localList.unshift(newEntry);
   setLocalMessages(localList);
 
-  allMessages.unshift({ id: savedId, ...newEntry });
+  allMessages.unshift(newEntry);
   updateDashboardCounts();
   renderPublicReplies();
   renderAdminCards();
@@ -1678,30 +1682,26 @@ function resetVoiceForm() {
 }
 
 /* ================================================================
-   جلب الرسائل
+   جلب الرسائل (Supabase)
 ================================================================ */
 async function fetchAllMessages() {
   let remoteList = null;
   try {
-    const res = await fetchWithTimeout(`${FIREBASE_ENDPOINT}.json`);
+    const res = await fetchWithTimeout(`${SUGGESTIONS_ENDPOINT}?select=*&order=timestamp.desc`, {
+      headers: supabaseHeaders()
+    });
     if (res.ok) {
-      const data = await res.json();
-      if (data && typeof data === "object" && !data.error) {
-        remoteList = [];
-        Object.entries(data).forEach(([id, item]) => {
-          if (item && typeof item === "object" && item.message) remoteList.push({ id, ...item });
-        });
-      } else if (data === null) remoteList = [];
+      const rows = await res.json();
+      if (Array.isArray(rows)) {
+        remoteList = rows.filter(item => item && typeof item === "object" && (item.message || item.reply));
+      }
     }
-  } catch (err) {}
+  } catch (err) { console.error(err); }
 
   const localList = getLocalMessages();
   if (remoteList !== null) {
-    const map = new Map();
-    remoteList.forEach(item => map.set(item.id, item));
-    localList.forEach(item => { if (!map.has(item.id)) map.set(item.id, item); });
-    allMessages = Array.from(map.values());
-    allMessages.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+    allMessages = remoteList;
+    allMessages.sort((a, b) => (Number(b.timestamp) || 0) - (Number(a.timestamp) || 0));
     setLocalMessages(allMessages);
   } else {
     allMessages = localList;
@@ -1722,7 +1722,7 @@ function updateDashboardCounts() {
 
 function renderPublicReplies() {
   const box = document.getElementById("publicRepliesList");
-  const repliedItems = allMessages.filter(m => m.reply && String(m.reply).trim() !== "");
+  const repliedItems = allMessages.filter(m => m.reply && String(m.reply).trim() !== "" && m.message && String(m.message).trim() !== "");
 
   if (repliedItems.length === 0) {
     box.innerHTML = `
@@ -1788,7 +1788,7 @@ function switchAdminView(view) {
 }
 
 /* ================================================================
-   تغيير كلمة المرور
+   تغيير كلمة المرور (Supabase)
 ================================================================ */
 async function handleChangePassword(e) {
   e.preventDefault();
@@ -1814,16 +1814,16 @@ async function handleChangePassword(e) {
     }
 
     const newHash = await hashPassword(newPwd);
-    const res = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}/${encodeURIComponent(currentUser.id)}.json`, {
+    const res = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}?email=eq.${encodeURIComponent(currentUser.email)}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ pwdHash: newHash, updatedAt: Date.now() })
+      headers: supabaseHeaders({ "Prefer": "return=minimal" }),
+      body: JSON.stringify({ pwdHash: newHash, updatedAt: String(Date.now()) })
     });
 
     setBtnLoading("cpSubmitBtn", false);
 
     if (!res.ok) {
-      return showAlert("cpErrorMsg", "تعذر تحديث كلمة المرور. تأكد من إعدادات Firebase Rules.");
+      return showAlert("cpErrorMsg", "تعذر تحديث كلمة المرور. تأكد من إعدادات Supabase RLS.");
     }
 
     document.getElementById("changePasswordForm").reset();
@@ -1837,7 +1837,7 @@ async function handleChangePassword(e) {
 }
 
 /* ================================================================
-   تمييز رسالة كـ"مهمة"
+   تمييز رسالة كـ"مهمة" (Supabase)
 ================================================================ */
 async function toggleFeatured(id) {
   const item = allMessages.find(m => m.id === id);
@@ -1845,12 +1845,12 @@ async function toggleFeatured(id) {
   item.featured = !item.featured;
   setLocalMessages(allMessages);
   try {
-    await fetchWithTimeout(`${FIREBASE_ENDPOINT}/${encodeURIComponent(id)}.json`, {
+    await fetchWithTimeout(`${SUGGESTIONS_ENDPOINT}?id=eq.${encodeURIComponent(id)}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      headers: supabaseHeaders({ "Prefer": "return=minimal" }),
       body: JSON.stringify({ featured: !!item.featured })
     });
-  } catch (e) {}
+  } catch (e) { console.error(e); }
   renderAdminCards();
   showToast(item.featured ? "تم تمييز الرسالة كأهم رسالة ⭐" : "تم إلغاء التمييز");
 }
@@ -1945,11 +1945,12 @@ async function saveReplyByIndex(idx) {
   item.reply = replyText;
   setLocalMessages(allMessages);
   try {
-    await fetchWithTimeout(`${FIREBASE_ENDPOINT}/${encodeURIComponent(item.id)}.json`, {
-      method: "PATCH", headers: { "Content-Type": "application/json" },
+    await fetchWithTimeout(`${SUGGESTIONS_ENDPOINT}?id=eq.${encodeURIComponent(item.id)}`, {
+      method: "PATCH",
+      headers: supabaseHeaders({ "Prefer": "return=minimal" }),
       body: JSON.stringify({ reply: replyText })
     });
-  } catch (e) {}
+  } catch (e) { console.error(e); }
   updateDashboardCounts(); renderPublicReplies(); renderAdminCards();
   showToast("تم حفظ الرد ونشره في قسم الردود!");
 }
@@ -1962,8 +1963,11 @@ async function deleteMessageByIndex(idx) {
   allMessages = allMessages.filter(m => m.id !== item.id);
   setLocalMessages(allMessages);
   try {
-    await fetchWithTimeout(`${FIREBASE_ENDPOINT}/${encodeURIComponent(item.id)}.json`, { method: "DELETE" });
-  } catch (e) {}
+    await fetchWithTimeout(`${SUGGESTIONS_ENDPOINT}?id=eq.${encodeURIComponent(item.id)}`, {
+      method: "DELETE",
+      headers: supabaseHeaders()
+    });
+  } catch (e) { console.error(e); }
   updateDashboardCounts(); renderPublicReplies(); renderAdminCards();
   showToast("تم حذف الرسالة");
 }
@@ -1973,8 +1977,11 @@ async function clearAllMessages() {
   allMessages = [];
   setLocalMessages([]);
   try {
-    await fetchWithTimeout(`${FIREBASE_ENDPOINT}.json`, { method: "DELETE" });
-  } catch (e) {}
+    await fetchWithTimeout(`${SUGGESTIONS_ENDPOINT}?id=neq.__none__`, {
+      method: "DELETE",
+      headers: supabaseHeaders()
+    });
+  } catch (e) { console.error(e); }
   updateDashboardCounts(); renderPublicReplies(); renderAdminCards();
   showToast("تم مسح جميع الرسائل");
 }
