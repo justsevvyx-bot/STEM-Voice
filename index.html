@@ -462,36 +462,6 @@ body {
 .action-btn.primary:hover { background: var(--primary-hover); }
 .action-btn.danger { background: var(--error-bg); color: var(--error); border-color: rgba(199,58,58,.25); }
 
-/* ================== التبويبات الداخلية ================== */
-.seg-tabs {
-  display: flex;
-  background: var(--bg-body);
-  padding: 4px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-light);
-  margin-bottom: 18px;
-  gap: 3px;
-}
-.seg-tab {
-  flex: 1;
-  background: transparent;
-  border: none;
-  padding: 9px 6px;
-  border-radius: var(--radius-sm);
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 11.5px;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all .25s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-}
-.seg-tab:hover { color: var(--text-secondary); }
-.seg-tab.active { background: var(--bg-card); color: var(--primary); box-shadow: var(--shadow-sm); font-weight: 800; }
-
 /* ================== بطاقة المستخدم ================== */
 .user-chip {
   display: inline-flex;
@@ -504,7 +474,7 @@ body {
   font-size: 11px;
   font-weight: 700;
   border: 1px solid var(--primary-soft);
-  max-width: 180px;
+  max-width: 220px;
 }
 .user-chip .u-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .user-chip button {
@@ -531,7 +501,6 @@ body {
 }
 .alert-error { background: var(--error-bg); color: var(--error); border: 1px solid rgba(199,58,58,.2); }
 .alert-success { background: var(--success-bg); color: var(--success); border: 1px solid rgba(30,142,107,.2); }
-.alert-info { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-soft); }
 
 /* ================== المودال ================== */
 .modal-backdrop {
@@ -683,9 +652,8 @@ body {
   .modal-card { padding: 18px 14px; }
   .modal-card h3 { font-size: 15px; }
   .modal-card p.sub { font-size: 10px; margin-bottom: 12px; }
-  .seg-tab { font-size: 10.5px; padding: 7px 4px; }
   .alert { font-size: 10.5px; padding: 7px 10px; }
-  .user-chip { font-size: 10px; padding: 3px 8px; max-width: 150px; }
+  .user-chip { font-size: 10px; padding: 3px 8px; max-width: 180px; }
   .toast-item { font-size: 11px; padding: 8px 14px; }
 }
 
@@ -701,8 +669,6 @@ body {
   .stat-num { font-size: 14px; }
   .stat-box div:first-child { font-size: 8.5px !important; }
 }
-
-.hide { display: none; }
 
 /* ================== تبويب المميزات (أهم المقترحات/الشكاوى) ================== */
 .featured-tabs {
@@ -773,7 +739,7 @@ body {
 /* ================== نافذة الإعدادات ================== */
 .settings-modal-card {
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
   background: var(--bg-card);
   border-radius: var(--radius-xl);
   padding: 24px 20px;
@@ -872,7 +838,6 @@ body {
   border-color: var(--error);
 }
 
-/* تنسيق أزرار رأس اللوحة */
 .admin-actions {
   display: flex;
   gap: 6px;
@@ -883,11 +848,113 @@ body {
   font-size: 12px;
   border-radius: var(--radius-md);
 }
+
+/* ================== لوحة التحكم العليا (Super Admin) ================== */
+.super-admin-box {
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--secondary);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-top: 12px;
+}
+.super-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--secondary-light);
+  color: var(--secondary);
+  border: 1px solid rgba(201,154,46,.35);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 800;
+}
+.member-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+}
+.member-info {
+  min-width: 0;
+  flex: 1;
+}
+.member-name {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.member-email {
+  font-size: 10px;
+  color: var(--text-muted);
+  direction: ltr;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.member-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* شاشة حظر الوصول المؤقت */
+.blocked-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-body);
+  z-index: 950;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+.blocked-card {
+  max-width: 400px;
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: 32px 22px;
+  box-shadow: var(--shadow-lg);
+}
 </style>
 </head>
 <body>
 
 <div id="toastBox" class="toast-container"></div>
+
+<!-- ================== شاشة الحظر الوهمي (Connection Error) ================== -->
+<div id="blockedOverlay" class="blocked-screen is-hidden">
+  <div class="blocked-card">
+    <div style="width:58px;height:58px;border-radius:50%;background:var(--error-bg);color:var(--error);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:24px;">
+      <i class="fa-solid fa-wifi"></i>
+    </div>
+    <h3 style="font-size:17px;font-weight:900;color:var(--text-main);margin-bottom:6px;">Check your connection</h3>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:18px;line-height:1.6;">
+      Unable to reach the server. Please check your internet connection and try again.<br/>
+      <span style="font-size:11px;">تعذر الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى.</span>
+    </p>
+    <button type="button" class="submit-btn" onclick="location.reload()">
+      <i class="fa-solid fa-rotate-right"></i> <span>إعادة المحاولة / Retry</span>
+    </button>
+    <div style="margin-top:16px;">
+      <button type="button" style="background:none;border:none;color:var(--text-muted);font-size:10px;cursor:pointer;font-family:inherit;opacity:.6;" onclick="handleCommitteeClick()">
+        دخول الإدارة
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- ================== الهيدر ================== -->
 <header class="top-header">
@@ -930,7 +997,7 @@ body {
         <span>اجتماع اللجنة مع مديرة المدرسة</span>
       </div>
       <h2 class="timer-heading">موعد الرد القادم على المقترحات والشكاوى</h2>
-      <div class="meeting-time-badge">الأربعاء — 8:00 مساءً</div>
+      <div id="meetingTimeBadge" class="meeting-time-badge">الأربعاء — 8:00 مساءً</div>
       <div class="timer-grid">
         <div class="timer-box"><div id="tDays" class="timer-num">00</div><div class="timer-label">يوم</div></div>
         <div class="timer-box"><div id="tHours" class="timer-num">00</div><div class="timer-label">ساعة</div></div>
@@ -1041,7 +1108,7 @@ body {
       </div>
     </div>
 
-    <!-- ★★★ تبويبات العرض (الكل / أهم المقترحات / أهم الشكاوى) ★★★ -->
+    <!-- تبويبات العرض -->
     <div class="featured-tabs">
       <button type="button" class="featured-tab active" data-view="all" onclick="switchAdminView('all')">
         <i class="fa-solid fa-list"></i> الكل
@@ -1094,16 +1161,7 @@ body {
       <i class="fa-solid fa-shield-halved"></i>
     </div>
     <h3>دخول اللجنة الاجتماعية</h3>
-    <p class="sub">سجّل الدخول أو أنشئ حساباً للوصول إلى لوحة اللجنة</p>
-
-    <div style="display: none;" class="seg-tabs">
-      <button style="display: none;" type="button" id="modalLoginTab" class="seg-tab active" onclick="switchModalAuthMode('login')">
-        <i class="fa-solid fa-arrow-right-to-bracket"></i> تسجيل الدخول
-      </button>
-      <button style="display: none;" type="button" id="modalRegisterTab" class="seg-tab" onclick="switchModalAuthMode('register')">
-        <i class="fa-solid fa-user-plus"></i> إنشاء حساب
-      </button>
-    </div>
+    <p class="sub">سجّل الدخول للوصول إلى لوحة اللجنة</p>
 
     <div id="pinErrorMsg" class="alert alert-error is-hidden"><i class="fa-solid fa-circle-exclamation"></i><span></span></div>
 
@@ -1119,29 +1177,6 @@ body {
       <button type="submit" class="submit-btn" id="quickSubmitBtn" style="margin-bottom:6px;">
         <i class="fa-solid fa-arrow-right-to-bracket"></i>
         <span>دخول</span>
-      </button>
-    </form>
-
-    <form id="quickRegisterForm" class="is-hidden" onsubmit="handleQuickRegister(event)" novalidate>
-      <div class="field-group">
-        <label class="field-label" for="qregName">الاسم الكامل</label>
-        <input type="text" id="qregName" class="dark-input" placeholder="اسمك الكامل" required />
-      </div>
-      <div class="field-group">
-        <label class="field-label" for="qregEmail">البريد الإلكتروني</label>
-        <input type="email" id="qregEmail" class="dark-input" placeholder="name@example.com" dir="ltr" style="text-align:left;" required />
-      </div>
-      <div class="field-group">
-        <label class="field-label" for="qregPassword">كلمة المرور</label>
-        <input type="password" id="qregPassword" class="dark-input" placeholder="6 أحرف على الأقل" dir="ltr" style="text-align:left;" minlength="6" required />
-      </div>
-      <div class="field-group">
-        <label class="field-label" for="qregPassword2">تأكيد كلمة المرور</label>
-        <input type="password" id="qregPassword2" class="dark-input" placeholder="أعد كتابة كلمة المرور" dir="ltr" style="text-align:left;" minlength="6" required />
-      </div>
-      <button type="submit" class="submit-btn" id="quickRegisterBtn" style="margin-bottom:6px;">
-        <i class="fa-solid fa-user-plus"></i>
-        <span>إنشاء الحساب</span>
       </button>
     </form>
   </div>
@@ -1184,7 +1219,65 @@ body {
       </button>
     </form>
 
-    <div class="settings-divider"><span>لكل</span></div>
+    <!-- ★★★ لوحة تحكم يوسف خشبة الحصرية (SUPER ADMIN) ★★★ -->
+    <div id="superAdminPanel" class="is-hidden">
+      <div class="settings-divider"><span>تحكم المشرف العام</span></div>
+
+      <!-- 1. التحكم في موعد الاجتماع -->
+      <div class="super-admin-box">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span class="settings-section-title" style="margin:0;"><i class="fa-regular fa-clock"></i> موعد الاجتماع القادم (العداد)</span>
+          <span class="super-badge"><i class="fa-solid fa-crown"></i> Youssef Only</span>
+        </div>
+        <input type="datetime-local" id="adminMeetingInput" class="dark-input" dir="ltr" style="text-align:left;margin-bottom:8px;" />
+        <div style="display:flex;gap:6px;">
+          <button type="button" class="action-btn primary" style="flex:1;justify-content:center;" onclick="saveCustomMeetingTime()">
+            <i class="fa-solid fa-check"></i> حفظ الموعد
+          </button>
+          <button type="button" class="action-btn" onclick="resetCustomMeetingTime()" title="إعادة للوضع التلقائي">
+            <i class="fa-solid fa-rotate-left"></i> تلقائي
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. حظر مؤقت للموقع -->
+      <div class="super-admin-box">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span class="settings-section-title" style="margin:0;"><i class="fa-solid fa-ban"></i> إيقاف الموقع مؤقتاً</span>
+          <span id="blockStatusBadge" class="super-badge">نشط</span>
+        </div>
+        <p style="font-size:10.5px;color:var(--text-muted);margin-bottom:8px;">عند التفعيل، سيظهر للطلاب والمستخدمين خطأ وهمي «Check your connection» ولن يتمكنوا من فتح الموقع.</p>
+        <button type="button" id="toggleBlockBtn" class="action-btn danger" style="width:100%;justify-content:center;" onclick="toggleSiteBlock()">
+          <i class="fa-solid fa-power-off"></i> <span>تفعيل وضع الحظر (Check your connection)</span>
+        </button>
+      </div>
+
+      <!-- 3. إدارة أعضاء اللجنة -->
+      <div class="super-admin-box">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+          <span class="settings-section-title" style="margin:0;"><i class="fa-solid fa-users-gear"></i> إدارة حسابات اللجنة</span>
+          <button type="button" class="action-btn" style="padding:4px 8px;font-size:10px;" onclick="loadCommitteeMembersList()">
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </div>
+
+        <!-- إضافة مستخدم جديد -->
+        <form id="addMemberForm" onsubmit="handleAddCommitteeMember(event)" style="background:var(--bg-card);padding:10px;border-radius:var(--radius-sm);border:1px solid var(--border-light);margin-bottom:10px;">
+          <div style="font-size:11px;font-weight:800;color:var(--primary);margin-bottom:6px;"><i class="fa-solid fa-user-plus"></i> إضافة عضو جديد</div>
+          <input type="text" id="newMemberName" class="dark-input" placeholder="الاسم الكامل (مثال: أحمد علي)" style="padding:8px 10px;font-size:11.5px;margin-bottom:6px;" required />
+          <input type="email" id="newMemberEmail" class="dark-input" placeholder="email@stemdamietta.moe.edu.eg" dir="ltr" style="text-align:left;padding:8px 10px;font-size:11.5px;margin-bottom:6px;" required />
+          <input type="text" id="newMemberPwd" class="dark-input" placeholder="كلمة المرور (6 أحرف على الأقل)" dir="ltr" style="text-align:left;padding:8px 10px;font-size:11.5px;margin-bottom:8px;" minlength="6" required />
+          <button type="submit" id="addMemberBtn" class="submit-btn" style="padding:8px;font-size:11.5px;">
+            <i class="fa-solid fa-plus"></i> <span>إضافة المستخدم</span>
+          </button>
+        </form>
+
+        <!-- قائمة الأعضاء الحاليين -->
+        <div id="committeeMembersList" style="max-height:220px;overflow-y:auto;"></div>
+      </div>
+    </div>
+
+    <div class="settings-divider"><span>الحساب</span></div>
 
     <button type="button" class="logout-btn" onclick="logoutUser()">
       <i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج
@@ -1194,12 +1287,15 @@ body {
 
 <script>
 /* ================================================================
-   إعدادات Supabase
+   إعدادات Supabase والصلاحيات
 ================================================================ */
 const SUPABASE_REST_URL = "https://usmhfjfwvnfhyupikzxd.supabase.co/rest/v1";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzbWhmamZ3dm5maHl1cGlrenhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU1MzI2MjMsImV4cCI6MjExMTEwODYyM30._OtcqLNX1QBl0DlzrfE6mLb-iqlPCrVSSpeCgjrcrVM";
 const SUGGESTIONS_ENDPOINT = `${SUPABASE_REST_URL}/suggestions`;
 const ACCOUNTS_ENDPOINT = `${SUPABASE_REST_URL}/committee_accounts`;
+const SETTINGS_ENDPOINT = `${SUPABASE_REST_URL}/site_settings`;
+
+const SUPER_ADMIN_EMAIL = "youssef.3326040@stemdamietta.moe.edu.eg";
 
 const LOCAL_BACKUP_KEY = "sawtak_messages_store_v3";
 const THEME_STORAGE_KEY = "sawtak_theme";
@@ -1220,9 +1316,16 @@ let selectedKind = "اقتراح";
 let committeeUnlocked = false;
 let allMessages = [];
 let currentUser = null;
+let currentAdminView = "all";
 
-/* حالة تبويب اللجنة */
-let currentAdminView = "all"; // all | featured-suggest | featured-complaint
+let siteConfig = {
+  next_meeting_iso: null,
+  blocked_mode: false
+};
+
+function isSuperAdmin() {
+  return !!(currentUser && currentUser.email && currentUser.email.toLowerCase() === SUPER_ADMIN_EMAIL);
+}
 
 /* ================================================================
    الوضع الداكن
@@ -1304,6 +1407,139 @@ async function hashPassword(password) {
 }
 
 /* ================================================================
+   إعدادات الموقع العامة (موعد الاجتماع + الحظر المؤقت)
+================================================================ */
+async function fetchSiteSettings() {
+  try {
+    const res = await fetchWithTimeout(`${SETTINGS_ENDPOINT}?id=eq.global&select=*`, {
+      headers: supabaseHeaders()
+    });
+    if (res.ok) {
+      const rows = await res.json();
+      if (Array.isArray(rows) && rows.length > 0) {
+        siteConfig = {
+          next_meeting_iso: rows[0].next_meeting_iso || null,
+          blocked_mode: !!rows[0].blocked_mode
+        };
+      }
+    }
+  } catch (e) {}
+  applySiteSettingsUI();
+}
+
+function applySiteSettingsUI() {
+  const blockedEl = document.getElementById("blockedOverlay");
+  if (siteConfig.blocked_mode && !isSuperAdmin()) {
+    blockedEl.classList.remove("is-hidden");
+  } else {
+    blockedEl.classList.add("is-hidden");
+  }
+
+  const badge = document.getElementById("meetingTimeBadge");
+  if (badge) {
+    if (siteConfig.next_meeting_iso) {
+      const dt = new Date(siteConfig.next_meeting_iso);
+      if (!isNaN(dt.getTime())) {
+        badge.textContent = dt.toLocaleString("ar-EG", {
+          weekday: "long",
+          day: "numeric",
+          month: "short",
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+      }
+    } else {
+      badge.textContent = "الأربعاء — 8:00 مساءً";
+    }
+  }
+
+  const statusBadge = document.getElementById("blockStatusBadge");
+  const toggleBtn = document.getElementById("toggleBlockBtn");
+  if (statusBadge && toggleBtn) {
+    if (siteConfig.blocked_mode) {
+      statusBadge.textContent = "محظور حالياً";
+      statusBadge.style.background = "var(--error-bg)";
+      statusBadge.style.color = "var(--error)";
+      toggleBtn.className = "action-btn primary";
+      toggleBtn.innerHTML = `<i class="fa-solid fa-check"></i> <span>إلغاء الحظر وإعادة فتح الموقع</span>`;
+    } else {
+      statusBadge.textContent = "نشط";
+      statusBadge.style.background = "var(--success-bg)";
+      statusBadge.style.color = "var(--success)";
+      toggleBtn.className = "action-btn danger";
+      toggleBtn.innerHTML = `<i class="fa-solid fa-power-off"></i> <span>تفعيل وضع الحظر (Check your connection)</span>`;
+    }
+  }
+
+  const meetingInput = document.getElementById("adminMeetingInput");
+  if (meetingInput && siteConfig.next_meeting_iso) {
+    const dt = new Date(siteConfig.next_meeting_iso);
+    if (!isNaN(dt.getTime())) {
+      const pad = n => String(n).padStart(2, "0");
+      meetingInput.value = `${dt.getFullYear()}-${pad(dt.getMonth()+1)}-${pad(dt.getDate())}T${pad(dt.getHours())}:${pad(dt.getMinutes())}`;
+    }
+  }
+  updateCountdownTimer();
+}
+
+async function saveCustomMeetingTime() {
+  if (!isSuperAdmin()) return;
+  const val = document.getElementById("adminMeetingInput").value;
+  if (!val) return showToast("اختر التاريخ والوقت أولاً");
+  const iso = new Date(val).toISOString();
+  try {
+    const res = await fetchWithTimeout(`${SETTINGS_ENDPOINT}?id=eq.global`, {
+      method: "PATCH",
+      headers: supabaseHeaders({ "Prefer": "return=minimal" }),
+      body: JSON.stringify({ next_meeting_iso: iso })
+    });
+    if (res.ok) {
+      siteConfig.next_meeting_iso = iso;
+      applySiteSettingsUI();
+      showToast("تم تحديث موعد الاجتماع والعداد بنجاح!");
+    } else {
+      showToast("تعذر حفظ الموعد. تأكد من تشغيل كود SQL الخاص بـ site_settings.");
+    }
+  } catch (e) { showToast("حدث خطأ في الاتصال"); }
+}
+
+async function resetCustomMeetingTime() {
+  if (!isSuperAdmin()) return;
+  try {
+    const res = await fetchWithTimeout(`${SETTINGS_ENDPOINT}?id=eq.global`, {
+      method: "PATCH",
+      headers: supabaseHeaders({ "Prefer": "return=minimal" }),
+      body: JSON.stringify({ next_meeting_iso: null })
+    });
+    if (res.ok) {
+      siteConfig.next_meeting_iso = null;
+      document.getElementById("adminMeetingInput").value = "";
+      applySiteSettingsUI();
+      showToast("تمت إعادة العداد للوضع التلقائي");
+    }
+  } catch (e) {}
+}
+
+async function toggleSiteBlock() {
+  if (!isSuperAdmin()) return;
+  const nextState = !siteConfig.blocked_mode;
+  try {
+    const res = await fetchWithTimeout(`${SETTINGS_ENDPOINT}?id=eq.global`, {
+      method: "PATCH",
+      headers: supabaseHeaders({ "Prefer": "return=minimal" }),
+      body: JSON.stringify({ blocked_mode: nextState })
+    });
+    if (res.ok) {
+      siteConfig.blocked_mode = nextState;
+      applySiteSettingsUI();
+      showToast(nextState ? "تم حظر الموقع مؤقتاً للزوار" : "تم إعادة فتح الموقع للجميع");
+    } else {
+      showToast("تعذر تحديث الحالة. تأكد من تشغيل كود SQL الخاص بـ site_settings.");
+    }
+  } catch (e) { showToast("حدث خطأ في الاتصال"); }
+}
+
+/* ================================================================
    الجلسة
 ================================================================ */
 function loadSession() {
@@ -1321,13 +1557,22 @@ function clearSession() {
 
 function reflectUserUI() {
   const adminChip = document.getElementById("adminUserChip");
+  const superPanel = document.getElementById("superAdminPanel");
   if (currentUser) {
     committeeUnlocked = true;
-    adminChip.innerHTML = `<span class="user-chip"><i class="fa-solid fa-user-shield"></i><span class="u-name">${escapeHtml(currentUser.name || currentUser.email)}</span><button onclick="logoutUser()" title="خروج"><i class="fa-solid fa-right-from-bracket"></i></button></span>`;
+    const crown = isSuperAdmin() ? `<i class="fa-solid fa-crown" style="color:var(--secondary);"></i>` : `<i class="fa-solid fa-user-shield"></i>`;
+    adminChip.innerHTML = `<span class="user-chip">${crown}<span class="u-name">${escapeHtml(currentUser.name || currentUser.email)}</span><button onclick="logoutUser()" title="خروج"><i class="fa-solid fa-right-from-bracket"></i></button></span>`;
+    if (superPanel) {
+      if (isSuperAdmin()) superPanel.classList.remove("is-hidden");
+      else superPanel.classList.add("is-hidden");
+    }
   } else {
     committeeUnlocked = false;
     adminChip.innerHTML = "";
+    if (superPanel) superPanel.classList.add("is-hidden");
   }
+  applySiteSettingsUI();
+  renderAdminCards();
 }
 
 function logoutUser() {
@@ -1369,7 +1614,6 @@ function handleCommitteeClick() {
     switchTab("admin");
     return;
   }
-  switchModalAuthMode('login');
   hideAlert("pinErrorMsg");
   document.getElementById("quickEmail").value = "";
   document.getElementById("quickPassword").value = "";
@@ -1383,29 +1627,6 @@ function closePinPopup() {
 }
 
 /* ================================================================
-   تبديل وضع المودال (دخول / إنشاء حساب)
-================================================================ */
-function switchModalAuthMode(mode) {
-  const loginForm = document.getElementById("quickLoginForm");
-  const registerForm = document.getElementById("quickRegisterForm");
-  const loginTab = document.getElementById("modalLoginTab");
-  const registerTab = document.getElementById("modalRegisterTab");
-  hideAlert("pinErrorMsg");
-
-  if (mode === "register") {
-    loginForm.classList.add("is-hidden");
-    registerForm.classList.remove("is-hidden");
-    loginTab.classList.remove("active");
-    registerTab.classList.add("active");
-  } else {
-    registerForm.classList.add("is-hidden");
-    loginForm.classList.remove("is-hidden");
-    registerTab.classList.remove("active");
-    loginTab.classList.add("active");
-  }
-}
-
-/* ================================================================
    التحقق من بيانات الدخول (Supabase)
 ================================================================ */
 async function verifyCredentials(email, password) {
@@ -1416,13 +1637,13 @@ async function verifyCredentials(email, password) {
     });
 
     if (!res.ok) {
-      return { ok: false, message: "تعذر الاتصال بقاعدة البيانات. تأكد من إعدادات Supabase." };
+      return { ok: false, message: `تعذر الاتصال بقاعدة البيانات (${res.status}). تأكد من إعدادات Supabase.` };
     }
 
     const rows = await res.json();
 
     if (!Array.isArray(rows) || rows.length === 0) {
-      return { ok: false, message: "لا توجد حسابات مسجلة حتى الآن. أنشئ حساباً جديداً أولاً." };
+      return { ok: false, message: "لا توجد حسابات مسجلة حتى الآن." };
     }
 
     const matchingAccounts = rows.filter(acc => acc && acc.email && acc.email.toLowerCase() === email);
@@ -1467,6 +1688,13 @@ async function handleQuickLogin(e) {
   setBtnLoading("quickSubmitBtn", false);
 
   if (result.ok) {
+    if (siteConfig.blocked_mode && result.user.email.toLowerCase() !== SUPER_ADMIN_EMAIL) {
+      const card = document.querySelector("#pinModal .modal-card");
+      showAlert("pinErrorMsg", "Check your connection. تعذر الاتصال بالخادم.");
+      card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
+      return;
+    }
+
     currentUser = result.user;
     saveSession(currentUser);
     reflectUserUI();
@@ -1481,79 +1709,142 @@ async function handleQuickLogin(e) {
 }
 
 /* ================================================================
-   إنشاء حساب سريع (Supabase)
+   إدارة أعضاء اللجنة (Super Admin Only: Youssef Khashaba)
 ================================================================ */
-async function handleQuickRegister(e) {
-  e.preventDefault();
-  hideAlert("pinErrorMsg");
-
-  const name = document.getElementById("qregName").value.trim();
-  const email = document.getElementById("qregEmail").value.trim().toLowerCase();
-  const password = document.getElementById("qregPassword").value;
-  const password2 = document.getElementById("qregPassword2").value;
-
-  if (!name) return showAlert("pinErrorMsg", "يرجى إدخال الاسم الكامل.");
-  if (!email) return showAlert("pinErrorMsg", "يرجى إدخال البريد الإلكتروني.");
-  if (!password || password.length < 6) return showAlert("pinErrorMsg", "كلمة المرور يجب أن تكون 6 أحرف على الأقل.");
-  if (password !== password2) return showAlert("pinErrorMsg", "كلمتا المرور غير متطابقتين.");
-
-  setBtnLoading("quickRegisterBtn", true, "جاري إنشاء الحساب...");
+async function loadCommitteeMembersList() {
+  if (!isSuperAdmin()) return;
+  const container = document.getElementById("committeeMembersList");
+  if (!container) return;
+  container.innerHTML = `<div style="text-align:center;font-size:11px;color:var(--text-muted);padding:10px;">جاري تحميل الأعضاء...</div>`;
 
   try {
-    const checkRes = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}?select=email`, {
+    const res = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}?select=*`, {
       headers: supabaseHeaders()
     });
-    if (checkRes.ok) {
-      const existing = await checkRes.json();
-      if (Array.isArray(existing) && existing.some(acc => acc.email && acc.email.toLowerCase() === email)) {
-        setBtnLoading("quickRegisterBtn", false);
-        return showAlert("pinErrorMsg", "هذا البريد مسجل بالفعل. جرّب تسجيل الدخول.");
-      }
+    if (!res.ok) {
+      container.innerHTML = `<div style="text-align:center;font-size:11px;color:var(--error);padding:8px;">تعذر تحميل الحسابات</div>`;
+      return;
+    }
+    const rows = await res.json();
+    if (!Array.isArray(rows) || rows.length === 0) {
+      container.innerHTML = `<div style="text-align:center;font-size:11px;color:var(--text-muted);padding:8px;">لا توجد حسابات</div>`;
+      return;
     }
 
-    const pwdHash = await hashPassword(password);
-    const newId = "acc_" + Date.now();
+    container.innerHTML = rows.map(acc => {
+      const isMe = acc.email && acc.email.toLowerCase() === SUPER_ADMIN_EMAIL;
+      return `
+        <div class="member-row">
+          <div class="member-info">
+            <div class="member-name">${escapeHtml(acc.name || "بدون اسم")} ${isMe ? '<span class="super-badge">أنت</span>' : ''}</div>
+            <div class="member-email">${escapeHtml(acc.email || "")}</div>
+          </div>
+          <div class="member-actions">
+            <button type="button" class="action-btn" style="padding:5px 8px;font-size:10px;" onclick="adminResetMemberPassword('${escapeHtml(acc.id)}', '${escapeHtml(acc.name || acc.email)}')" title="إعادة تعيين كلمة المرور">
+              <i class="fa-solid fa-key"></i>
+            </button>
+            ${!isMe ? `
+              <button type="button" class="action-btn danger" style="padding:5px 8px;font-size:10px;" onclick="adminDeleteMember('${escapeHtml(acc.id)}', '${escapeHtml(acc.name || acc.email)}')" title="حذف العضو">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }).join("");
+  } catch (e) {
+    container.innerHTML = `<div style="text-align:center;font-size:11px;color:var(--error);padding:8px;">خطأ في الاتصال</div>`;
+  }
+}
+
+async function handleAddCommitteeMember(e) {
+  e.preventDefault();
+  if (!isSuperAdmin()) return;
+  const name = document.getElementById("newMemberName").value.trim();
+  const email = document.getElementById("newMemberEmail").value.trim().toLowerCase();
+  const pwd = document.getElementById("newMemberPwd").value;
+
+  if (!name || !email || pwd.length < 6) {
+    return showToast("أدخل الاسم والبريد وكلمة مرور (6 أحرف على الأقل)");
+  }
+
+  setBtnLoading("addMemberBtn", true, "جاري الإضافة...");
+  try {
+    const pwdHash = await hashPassword(pwd);
     const newAccount = {
-      id: newId,
+      id: "acc_" + Date.now(),
       name: name,
       email: email,
       pwdHash: pwdHash,
       role: "committee",
       createdAt: String(Date.now())
     };
-
     const res = await fetchWithTimeout(ACCOUNTS_ENDPOINT, {
       method: "POST",
-      headers: supabaseHeaders({ "Prefer": "return=representation" }),
+      headers: supabaseHeaders({ "Prefer": "return=minimal" }),
       body: JSON.stringify(newAccount)
     });
-
-    if (!res.ok) {
-      setBtnLoading("quickRegisterBtn", false);
-      return showAlert("pinErrorMsg", "تعذر إنشاء الحساب. تأكد من إعدادات Supabase RLS.");
+    setBtnLoading("addMemberBtn", false);
+    if (res.ok) {
+      document.getElementById("addMemberForm").reset();
+      showToast(`تمت إضافة ${name} بنجاح!`);
+      loadCommitteeMembersList();
+    } else {
+      showToast("تعذر إضافة العضو. تأكد من الصلاحيات.");
     }
-
-    currentUser = { id: newId, name: name, email: email };
-    saveSession(currentUser);
-    reflectUserUI();
-
-    document.getElementById("quickRegisterForm").reset();
-    setBtnLoading("quickRegisterBtn", false);
-    closePinPopup();
-    switchTab("admin");
-    showToast("تم إنشاء الحساب بنجاح! مرحباً " + name);
-
   } catch (err) {
-    console.error(err);
-    setBtnLoading("quickRegisterBtn", false);
-    showAlert("pinErrorMsg", "حدث خطأ في الاتصال. تأكد من الإنترنت وحاول مرة أخرى.");
+    setBtnLoading("addMemberBtn", false);
+    showToast("حدث خطأ في الاتصال");
   }
+}
+
+async function adminResetMemberPassword(id, label) {
+  if (!isSuperAdmin()) return;
+  const newPwd = prompt(`أدخل كلمة المرور الجديدة للعضو (${label})\n(6 أحرف على الأقل):`);
+  if (newPwd === null) return;
+  if (newPwd.trim().length < 6) {
+    return showToast("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
+  }
+  try {
+    const newHash = await hashPassword(newPwd.trim());
+    const res = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}?id=eq.${encodeURIComponent(id)}`, {
+      method: "PATCH",
+      headers: supabaseHeaders({ "Prefer": "return=minimal" }),
+      body: JSON.stringify({ pwdHash: newHash, updatedAt: String(Date.now()) })
+    });
+    if (res.ok) {
+      showToast(`تم تغيير كلمة مرور ${label} بنجاح!`);
+    } else {
+      showToast("تعذر تحديث كلمة المرور");
+    }
+  } catch (e) { showToast("حدث خطأ في الاتصال"); }
+}
+
+async function adminDeleteMember(id, label) {
+  if (!isSuperAdmin()) return;
+  if (!confirm(`هل أنت متأكد من حذف حساب (${label}) نهائياً؟`)) return;
+  try {
+    const res = await fetchWithTimeout(`${ACCOUNTS_ENDPOINT}?id=eq.${encodeURIComponent(id)}`, {
+      method: "DELETE",
+      headers: supabaseHeaders()
+    });
+    if (res.ok) {
+      showToast(`تم حذف حساب ${label}`);
+      loadCommitteeMembersList();
+    } else {
+      showToast("تعذر الحذف. تأكد من تشغيل كود SQL الخاص بـ DELETE.");
+    }
+  } catch (e) { showToast("حدث خطأ في الاتصال"); }
 }
 
 /* ================================================================
    العداد التنازلي
 ================================================================ */
 function getNextMeetingDate() {
+  if (siteConfig && siteConfig.next_meeting_iso) {
+    const custom = new Date(siteConfig.next_meeting_iso);
+    if (!isNaN(custom.getTime())) return custom;
+  }
   const anchor = new Date(2026, 10, 4, 20, 0, 0).getTime();
   const twoWeeksMs = 14 * 24 * 60 * 60 * 1000;
   const now = Date.now();
@@ -1622,6 +1913,9 @@ function setLocalMessages(list) { try { localStorage.setItem(LOCAL_BACKUP_KEY, J
 
 async function handleFormSubmit(e) {
   e.preventDefault();
+  if (siteConfig.blocked_mode && !isSuperAdmin()) {
+    return showToast("Check your connection");
+  }
   const nameVal = document.getElementById("studentName").value.trim() || "مجهول";
   const msgVal = document.getElementById("messageInput").value.trim();
   const otherVal = document.getElementById("otherPlaceInput").value.trim();
@@ -1767,6 +2061,10 @@ function openSettingsModal() {
   hideAlert("cpErrorMsg");
   hideAlert("cpSuccessMsg");
   document.getElementById("changePasswordForm").reset();
+  if (isSuperAdmin()) {
+    loadCommitteeMembersList();
+    applySiteSettingsUI();
+  }
   document.getElementById("settingsModal").classList.remove("is-hidden");
 }
 
@@ -1856,6 +2154,31 @@ async function toggleFeatured(id) {
 }
 
 /* ================================================================
+   تعديل وقت أي رسالة (Youssef Only)
+================================================================ */
+async function editMessageTime(id) {
+  if (!isSuperAdmin()) return;
+  const item = allMessages.find(m => m.id === id);
+  if (!item) return;
+  const newTime = prompt("تعديل وقت/تاريخ الرسالة:", item.time || "");
+  if (newTime === null) return;
+  const trimmed = newTime.trim();
+  if (!trimmed) return showToast("لا يمكن ترك الوقت فارغاً");
+
+  item.time = trimmed;
+  setLocalMessages(allMessages);
+  try {
+    await fetchWithTimeout(`${SUGGESTIONS_ENDPOINT}?id=eq.${encodeURIComponent(id)}`, {
+      method: "PATCH",
+      headers: supabaseHeaders({ "Prefer": "return=minimal" }),
+      body: JSON.stringify({ time: trimmed })
+    });
+  } catch (e) { console.error(e); }
+  renderAdminCards();
+  showToast("تم تعديل وقت الرسالة بنجاح!");
+}
+
+/* ================================================================
    الفلترة والعرض
 ================================================================ */
 function getFilteredAdminItems() {
@@ -1893,6 +2216,8 @@ function renderAdminCards() {
     return;
   }
 
+  const superMode = isSuperAdmin();
+
   container.innerHTML = list.map((item, idx) => {
     const isComp = item.type === "شكوى";
     const hasReply = item.reply && String(item.reply).trim() !== "";
@@ -1929,7 +2254,10 @@ function renderAdminCards() {
         </div>
         <div style="padding-top:8px;border-top:1px solid var(--border-light);display:flex;align-items:center;justify-content:space-between;font-size:10px;color:var(--text-muted);flex-wrap:wrap;gap:4px;">
           <span>👤 الاسم: <strong style="color:var(--text-secondary);">${escapeHtml(item.name || 'مجهول')}</strong></span>
-          <span>🕒 ${escapeHtml(item.time || '')}</span>
+          <span style="display:inline-flex;align-items:center;gap:4px;">
+            🕒 ${escapeHtml(item.time || '')}
+            ${superMode ? `<button type="button" onclick="editMessageTime('${escapeHtml(item.id)}')" title="تعديل الوقت" style="background:var(--primary-light);color:var(--primary);border:none;border-radius:4px;padding:2px 5px;cursor:pointer;font-size:9.5px;"><i class="fa-solid fa-pen"></i></button>` : ''}
+          </span>
         </div>
       </div>`;
   }).join("");
@@ -2006,6 +2334,7 @@ function exportWhatsApp() {
 ================================================================ */
 currentUser = loadSession();
 reflectUserUI();
+fetchSiteSettings();
 fetchAllMessages();
 </script>
 </body>
