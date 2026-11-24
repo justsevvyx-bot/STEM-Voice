@@ -1208,6 +1208,7 @@ const SESSION_KEY = "sawtak_committee_session";
 function supabaseHeaders(extra = {}) {
   return {
     "apikey": SUPABASE_KEY,
+    "Authorization": `Bearer ${SUPABASE_KEY}`,
     "Content-Type": "application/json",
     ...extra
   };
